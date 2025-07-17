@@ -49,7 +49,7 @@ const App: FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="min-h-screen bg-gray-900">
         <Hero />
         <main className="container mx-auto px-4 py-10" role="main">
           <Masonry className="w-full">{cardElements}</Masonry>
