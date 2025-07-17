@@ -44,6 +44,7 @@ const Card: React.FC<CardProps> = ({
     <article
       className={clsx(DESIGN_TOKENS.card.container, className)}
       data-card-title={title}
+      data-testid="card"
     >
       <header>
         <h2 className={DESIGN_TOKENS.card.title}>{title}</h2>

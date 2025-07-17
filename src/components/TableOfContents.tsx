@@ -53,7 +53,6 @@ const TOC_SECTIONS = [
   {
     title: "Information",
     cards: [
-      { title: "Using Playing Cards", id: "Using Playing Cards" },
       { title: "Acknowledgements & Credits", id: "Acknowledgements & Credits" },
     ],
   },
@@ -68,16 +67,18 @@ const TableOfContents: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-24 z-50">
+    <div className="fixed bottom-6 right-20 z-50">
       {/* TOC Panel with Animation */}
       <div
+        role="dialog"
+        aria-labelledby="toc-title"
         className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-72 max-h-96 overflow-y-auto transition-all duration-300 ease-out transform ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-2 pointer-events-none"
         }`}
       >
-        <div className="text-white text-sm mb-3 font-medium">
+        <div id="toc-title" className="text-white text-sm mb-3 font-medium">
           Table of Contents
         </div>
 
@@ -104,6 +105,7 @@ const TableOfContents: React.FC = () => {
       {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
         className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-180" : "rotate-0"
         }`}
