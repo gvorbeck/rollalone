@@ -34,7 +34,8 @@ const hexCrawler: CardProps = {
     "**6** - Cataclysm: Natural disaster or major threat",
     "",
     "**Travel Time:** Base d6 hours + terrain modifier",
-    "*Terrain steps are circular: Desert→Swamp→Grassland→Forest→River→Ocean→Mountain→Desert",
+    "*Terrain steps are circular:",
+    "*Desert → Swamp → Grassland → Forest → River → Ocean → Mountain → Desert",
   ],
 };
 
