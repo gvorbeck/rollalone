@@ -61,64 +61,70 @@ const DiceRoller: React.FC = () => {
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Dice Roller Panel */}
-      {isOpen && (
-        <div className="absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-80">
-          <div className="text-white text-sm mb-3">Quick Dice Roller</div>
+      {/* Dice Roller Panel with Animation */}
+      <div
+        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-80 transition-all duration-300 ease-out transform ${
+          isOpen
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-2 pointer-events-none"
+        }`}
+      >
+        <div className="text-white text-sm mb-3">Quick Dice Roller</div>
 
-          {/* Results Display */}
-          {lastRoll && (
-            <div className="mb-3 p-2 bg-gray-700 rounded text-white text-sm">
-              {lastRoll}
-            </div>
-          )}
-
-          {/* Input and Roll Button */}
-          <div className="flex gap-2 mb-3">
-            <input
-              type="text"
-              value={diceInput}
-              onChange={(e) => setDiceInput(e.target.value)}
-              placeholder="1d20+3"
-              className="flex-1 bg-gray-700 text-white px-3 py-2 rounded text-sm border border-gray-600 focus:border-red-500 focus:outline-none"
-            />
-            <button
-              onClick={rollDice}
-              disabled={!diceInput.trim()}
-              className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium"
-            >
-              Roll
-            </button>
-            <button
-              onClick={clearInput}
-              className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm"
-              title="Clear"
-            >
-              ✕
-            </button>
+        {/* Results Display */}
+        {lastRoll && (
+          <div className="mb-3 p-2 bg-gray-700 rounded text-white text-sm">
+            {lastRoll}
           </div>
+        )}
 
-          {/* Dice Buttons */}
-          <div className="grid grid-cols-4 gap-2">
-            {DICE_TYPES.map(({ type, icon, label, title }) => (
-              <button
-                key={type}
-                onClick={() => addDie(type)}
-                className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-2 rounded text-xs flex flex-col items-center gap-1"
-                title={title}
-              >
-                <div className="text-lg">{icon}</div>
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
+        {/* Input and Roll Button */}
+        <div className="flex gap-2 mb-3">
+          <input
+            type="text"
+            value={diceInput}
+            onChange={(e) => setDiceInput(e.target.value)}
+            placeholder="1d20+3"
+            className="flex-1 bg-gray-700 text-white px-3 py-2 rounded text-sm border border-gray-600 focus:border-red-500 focus:outline-none"
+          />
+          <button
+            onClick={rollDice}
+            disabled={!diceInput.trim()}
+            className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium"
+          >
+            Roll
+          </button>
+          <button
+            onClick={clearInput}
+            className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm"
+            title="Clear"
+          >
+            ✕
+          </button>
         </div>
-      )}
 
-      {/* Floating Action Button */}
+        {/* Dice Buttons */}
+        <div className="grid grid-cols-4 gap-2">
+          {DICE_TYPES.map(({ type, icon, label, title }) => (
+            <button
+              key={type}
+              onClick={() => addDie(type)}
+              className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-2 rounded text-xs flex flex-col items-center gap-1"
+              title={title}
+            >
+              <div className="text-lg">{icon}</div>
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Floating Action Button with Rotation Animation */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110"
+        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
+          isOpen ? "rotate-45" : "rotate-0"
+        }`}
         title={isOpen ? "Close dice roller" : "Open dice roller"}
       >
         <svg
