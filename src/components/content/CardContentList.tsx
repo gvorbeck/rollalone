@@ -10,7 +10,8 @@ const CardContentList: React.FC<CardContentListProps> = ({ content }) => {
     <ol className={DESIGN_TOKENS.list.ordered}>
       {content.map((item, index) => (
         <li key={index} className={DESIGN_TOKENS.list.item}>
-          {item}
+          <div className={DESIGN_TOKENS.list.number}>{index + 1}</div>
+          <div className={DESIGN_TOKENS.list.content}>{item}</div>
         </li>
       ))}
     </ol>

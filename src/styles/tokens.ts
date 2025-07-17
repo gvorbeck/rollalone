@@ -44,8 +44,11 @@ export const DESIGN_TOKENS = {
 
   // List styling
   list: {
-    ordered: "list-decimal list-inside space-y-2 text-gray-300",
-    item: "leading-relaxed",
+    ordered: "list-none space-y-4 text-gray-300",
+    item: "leading-relaxed relative flex items-start gap-3",
+    number:
+      "flex-shrink-0 w-7 h-7 bg-red-600 text-white text-sm font-bold rounded-full flex items-center justify-center mt-0.5 shadow-sm",
+    content: "flex-1",
   },
 } as const;
 
