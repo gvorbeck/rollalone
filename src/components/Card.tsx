@@ -1,6 +1,13 @@
 import React from "react";
 import clsx from "clsx";
-import { CardProps } from "../data/definitions";
+import { CardProps, TableData, DiceConfig } from "../data/definitions";
+import {
+  CardContentText,
+  CardContentList,
+  CardContentTable,
+  CardContentImage,
+  CardContentDice,
+} from "./content";
 
 const Card: React.FC<CardProps> = ({
   title,
@@ -13,65 +20,15 @@ const Card: React.FC<CardProps> = ({
   const renderContent = () => {
     switch (contentType) {
       case "text":
-        return (
-          <p className="text-gray-700 dark:text-gray-300">
-            {content as string}
-          </p>
-        );
+        return <CardContentText content={content as string} />;
       case "list":
-        return (
-          <ol className="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
-            {(content as string[]).map((item, index) => (
-              <li key={index} className="leading-relaxed">
-                {item}
-              </li>
-            ))}
-          </ol>
-        );
+        return <CardContentList content={content as string[]} />;
       case "table":
-        const tableData = content as import("../data/definitions").TableData;
-        return (
-          <div className="overflow-x-auto">
-            {tableData.title && (
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-                {tableData.title}
-              </h3>
-            )}
-            <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-600">
-              <tbody>
-                {tableData.rows.map((row, rowIndex) => (
-                  <tr
-                    key={rowIndex}
-                    className="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                  >
-                    {row.map((cell, cellIndex) => (
-                      <td
-                        key={cellIndex}
-                        className={`px-4 py-3 border-r border-gray-300 dark:border-gray-600 ${
-                          cellIndex === 0
-                            ? "font-semibold text-center bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
-                            : "text-gray-700 dark:text-gray-300"
-                        }`}
-                      >
-                        {cell}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
+        return <CardContentTable content={content as TableData} />;
       case "image":
-        return (
-          <div className="text-center">
-            <img
-              src={content as string}
-              alt={title}
-              className="mx-auto rounded-lg max-w-full h-auto"
-            />
-          </div>
-        );
+        return <CardContentImage content={content as string} title={title} />;
+      case "dice":
+        return <CardContentDice content={content as DiceConfig} />;
       default:
         return (
           <p className="text-gray-700 dark:text-gray-300">
