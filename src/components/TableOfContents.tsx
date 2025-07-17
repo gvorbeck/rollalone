@@ -9,7 +9,10 @@ const TOC_SECTIONS = [
       { title: "How to Play", id: "How to Play" },
       { title: "Using Playing Cards", id: "Using Playing Cards" },
       { title: "Quick Reference", id: "Quick Reference" },
-      { title: "Gameplay Tips & Interpretation", id: "Gameplay Tips & Interpretation" },
+      {
+        title: "Gameplay Tips & Interpretation",
+        id: "Gameplay Tips & Interpretation",
+      },
     ],
   },
   {

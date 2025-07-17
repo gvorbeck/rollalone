@@ -15,7 +15,7 @@ const CARD_LINK_MAP: Record<string, string> = {
 export const scrollToCard = (linkText: string): void => {
   // First check if this is a mapped link (internal cross-references)
   let cardTitle = CARD_LINK_MAP[linkText];
-  
+
   // If no mapping found, assume it's a direct card title
   if (!cardTitle) {
     cardTitle = linkText;
