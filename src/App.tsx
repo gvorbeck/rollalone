@@ -30,7 +30,6 @@ const allCards: CardProps[] = [
   cards.advancedMoves,
 
   // Information & Credits
-  cards.aboutSystem,
   cards.gameplayTips,
   cards.cardSystemNotes,
   cards.acknowledgements,

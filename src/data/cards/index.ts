@@ -21,7 +21,6 @@ export { default as hexCrawler } from "./hexCrawler";
 export { default as advancedMoves } from "./advancedMoves";
 
 // Row 3: Information & Credits
-export { default as aboutSystem } from "./aboutSystem";
 export { default as gameplayTips } from "./gameplayTips";
 export { default as cardSystemNotes } from "./cardSystemNotes";
 export { default as acknowledgements } from "./acknowledgements";
