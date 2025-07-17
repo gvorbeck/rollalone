@@ -18,20 +18,17 @@ export const DESIGN_TOKENS = {
 
   // Table styling
   table: {
-    container:
-      "min-w-full border-collapse border border-gray-600",
+    container: "min-w-full border-collapse border border-gray-600",
     row: "border-b border-gray-600 hover:bg-gray-700 transition-colors",
     cellBorder: "border-r border-gray-600",
-    headerCell:
-      "font-semibold text-center bg-gray-700 text-white",
+    headerCell: "font-semibold text-center bg-gray-700 text-white",
     regularCell: "text-gray-300",
     title: "text-lg font-medium text-white mb-3",
   },
 
   // Post content (note) styling
   note: {
-    container:
-      "mt-4 p-4 bg-yellow-900/20 border-l-4 border-yellow-500",
+    container: "mt-4 p-4 bg-yellow-900/20 border-l-4 border-yellow-500",
     text: "text-gray-300",
   },
 
@@ -47,8 +44,7 @@ export const DESIGN_TOKENS = {
 
   // List styling
   list: {
-    ordered:
-      "list-decimal list-inside space-y-2 text-gray-300",
+    ordered: "list-decimal list-inside space-y-2 text-gray-300",
     item: "leading-relaxed",
   },
 } as const;
