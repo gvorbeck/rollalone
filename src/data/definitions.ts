@@ -3,7 +3,7 @@ export interface CardProps {
   contentType: "text" | "list" | "image" | "table" | "dice";
   content: string | string[] | TableData | DiceConfig;
   preContent?: string;
-  postContent?: string;
+  postContent?: string[];
   className?: string;
   // category?: "rules" | "oracle" | "generator" | "reference";
   // tags?: string[];

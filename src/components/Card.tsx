@@ -7,6 +7,7 @@ import {
   CardContentTable,
   CardContentImage,
   CardContentDice,
+  CardContentPostContent,
 } from "./content";
 
 const Card: React.FC<CardProps> = ({
@@ -55,9 +56,7 @@ const Card: React.FC<CardProps> = ({
       </header>
       {renderContent()}
       <footer>
-        {postContent && (
-          <p className="text-gray-600 dark:text-gray-400 mt-4">{postContent}</p>
-        )}
+        {postContent && <CardContentPostContent postContent={postContent} />}
       </footer>
     </article>
   );

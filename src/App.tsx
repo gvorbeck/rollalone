@@ -10,7 +10,7 @@ const App: FC = () => {
       <Hero />
       <main className="container mx-auto px-4 py-10" role="main">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div>
+          <div className="flex flex-col gap-6">
             <Card
               title={howToPlay.title}
               contentType={howToPlay.contentType}
@@ -21,6 +21,7 @@ const App: FC = () => {
               contentType={playingCards.contentType}
               content={playingCards.content}
               preContent={playingCards.preContent}
+              postContent={playingCards.postContent}
             />
           </div>
           <Card
