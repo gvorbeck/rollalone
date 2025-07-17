@@ -9,20 +9,20 @@ export const parseMarkdownBold = (
   text: string
 ): (string | React.ReactElement)[] => {
   const result: (string | React.ReactElement)[] = [];
-  
+
   // First handle links [text](url)
   const linkRegex = /(\[.*?\]\(.*?\))/g;
   const parts = text.split(linkRegex);
-  
+
   parts.forEach((part, partIndex) => {
     const linkMatch = part.match(/\[(.*?)\]\((.*?)\)/);
     if (linkMatch) {
       const [, linkText, url] = linkMatch;
       result.push(
-        <a 
-          key={`link-${partIndex}`} 
-          href={url} 
-          target="_blank" 
+        <a
+          key={`link-${partIndex}`}
+          href={url}
+          target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline"
         >
@@ -35,7 +35,9 @@ export const parseMarkdownBold = (
       boldParts.forEach((boldPart, boldIndex) => {
         if (boldPart.startsWith("**") && boldPart.endsWith("**")) {
           const boldText = boldPart.slice(2, -2);
-          result.push(<strong key={`bold-${partIndex}-${boldIndex}`}>{boldText}</strong>);
+          result.push(
+            <strong key={`bold-${partIndex}-${boldIndex}`}>{boldText}</strong>
+          );
         } else if (boldPart !== "") {
           result.push(boldPart);
         }
