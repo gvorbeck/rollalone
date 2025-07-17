@@ -2,13 +2,15 @@ export interface CardProps {
   title: string;
   contentType: "text" | "list" | "image" | "table" | "dice";
   content: string | string[] | TableData | DiceConfig;
+  preContent?: string;
+  postContent?: string;
   className?: string;
-  category?: "rules" | "oracle" | "generator" | "reference";
-  tags?: string[];
+  // category?: "rules" | "oracle" | "generator" | "reference";
+  // tags?: string[];
 }
 
 export interface TableData {
-  headers: string[];
+  title?: string;
   rows: string[][];
 }
 

@@ -6,6 +6,8 @@ const Card: React.FC<CardProps> = ({
   title,
   contentType,
   content,
+  preContent,
+  postContent,
   className = "",
 }) => {
   const renderContent = () => {
@@ -25,6 +27,40 @@ const Card: React.FC<CardProps> = ({
               </li>
             ))}
           </ol>
+        );
+      case "table":
+        const tableData = content as import("../data/definitions").TableData;
+        return (
+          <div className="overflow-x-auto">
+            {tableData.title && (
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                {tableData.title}
+              </h3>
+            )}
+            <table className="min-w-full border-collapse border border-gray-300 dark:border-gray-600">
+              <tbody>
+                {tableData.rows.map((row, rowIndex) => (
+                  <tr
+                    key={rowIndex}
+                    className="border-b border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    {row.map((cell, cellIndex) => (
+                      <td
+                        key={cellIndex}
+                        className={`px-4 py-3 border-r border-gray-300 dark:border-gray-600 ${
+                          cellIndex === 0
+                            ? "font-semibold text-center bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white"
+                            : "text-gray-700 dark:text-gray-300"
+                        }`}
+                      >
+                        {cell}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         );
       case "image":
         return (
@@ -52,10 +88,20 @@ const Card: React.FC<CardProps> = ({
         className
       )}
     >
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-        {title}
-      </h2>
+      <header>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          {title}
+        </h2>
+        {preContent && (
+          <p className="text-gray-600 dark:text-gray-400 mb-4">{preContent}</p>
+        )}
+      </header>
       {renderContent()}
+      <footer>
+        {postContent && (
+          <p className="text-gray-600 dark:text-gray-400 mt-4">{postContent}</p>
+        )}
+      </footer>
     </article>
   );
 };
