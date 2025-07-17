@@ -10,13 +10,15 @@ const CARD_LINK_MAP: Record<string, string> = {
 
 /**
  * Scrolls to a card by its title and highlights it
- * @param linkText - The text that was clicked (e.g., "PLOT HOOK")
+ * @param linkText - The text that was clicked (e.g., "PLOT HOOK" or actual card title)
  */
 export const scrollToCard = (linkText: string): void => {
-  const cardTitle = CARD_LINK_MAP[linkText];
+  // First check if this is a mapped link (internal cross-references)
+  let cardTitle = CARD_LINK_MAP[linkText];
+  
+  // If no mapping found, assume it's a direct card title
   if (!cardTitle) {
-    console.warn(`No card mapping found for "${linkText}"`);
-    return;
+    cardTitle = linkText;
   }
 
   // Find the card element by its title

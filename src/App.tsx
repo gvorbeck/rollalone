@@ -4,6 +4,7 @@ import Card from "@/components/Card";
 import Masonry from "@/components/Masonry";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import DiceRoller from "@/components/DiceRoller";
+import TableOfContents from "@/components/TableOfContents";
 import { CardProps } from "@/data/definitions";
 
 // Import all cards from centralized index
@@ -55,6 +56,7 @@ const App: FC = () => {
         <main className="container mx-auto px-4 py-10" role="main">
           <Masonry className="w-full">{cardElements}</Masonry>
         </main>
+        <TableOfContents />
         <DiceRoller />
       </div>
     </ErrorBoundary>
