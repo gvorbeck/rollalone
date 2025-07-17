@@ -48,24 +48,30 @@
 
 /* Card Highlight Animation */
 .card-highlight {
-  animation: cardHighlight 2s ease-in-out;
+  animation: cardShine 1.5s ease-out;
 }
 
-@keyframes cardHighlight {
+@keyframes cardShine {
   0% {
-    transform: scale(1);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
-  15% {
-    transform: scale(1.02);
-    box-shadow: 0 20px 25px -5px rgb(239 68 68 / 0.3), 0 8px 10px -6px rgb(239 68 68 / 0.3);
+  20% {
+    box-shadow: 0 0 30px 5px rgb(239 68 68 / 0.8),
+      0 0 60px 10px rgb(239 68 68 / 0.4), 0 4px 6px -1px rgb(0 0 0 / 0.1);
   }
-  30% {
-    transform: scale(1.01);
-    box-shadow: 0 15px 20px -5px rgb(239 68 68 / 0.25), 0 6px 8px -6px rgb(239 68 68 / 0.25);
+  40% {
+    box-shadow: 0 0 40px 8px rgb(239 68 68 / 0.9),
+      0 0 80px 15px rgb(239 68 68 / 0.5), 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+  60% {
+    box-shadow: 0 0 30px 5px rgb(239 68 68 / 0.7),
+      0 0 60px 10px rgb(239 68 68 / 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+  80% {
+    box-shadow: 0 0 15px 3px rgb(239 68 68 / 0.4),
+      0 0 30px 5px rgb(239 68 68 / 0.2), 0 4px 6px -1px rgb(0 0 0 / 0.1);
   }
   100% {
-    transform: scale(1);
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   }
 }

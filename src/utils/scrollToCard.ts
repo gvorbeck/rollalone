@@ -5,7 +5,7 @@ const CARD_LINK_MAP: Record<string, string> = {
   "PLOT HOOK": "Plot Hook Generator",
   "RANDOM EVENT": "Random Events",
   "SET THE SCENE": "Set the Scene",
-  "ORACLE": "Oracle: Yes/No",
+  ORACLE: "Oracle: Yes/No",
   "GM MOVES": "GM Moves",
 };
 
@@ -21,11 +21,11 @@ export const scrollToCard = (linkText: string): void => {
   }
 
   // Find the card element by its title
-  const cardElements = document.querySelectorAll('[data-card-title]');
+  const cardElements = document.querySelectorAll("[data-card-title]");
   let targetCard: Element | null = null;
 
   for (const card of cardElements) {
-    if (card.getAttribute('data-card-title') === cardTitle) {
+    if (card.getAttribute("data-card-title") === cardTitle) {
       targetCard = card;
       break;
     }
@@ -38,8 +38,8 @@ export const scrollToCard = (linkText: string): void => {
 
   // Scroll to the card with smooth animation
   targetCard.scrollIntoView({
-    behavior: 'smooth',
-    block: 'center',
+    behavior: "smooth",
+    block: "start",
   });
 
   // Add highlight animation
@@ -52,16 +52,16 @@ export const scrollToCard = (linkText: string): void => {
  */
 const highlightCard = (cardElement: HTMLElement): void => {
   // Remove any existing highlight
-  cardElement.classList.remove('card-highlight');
-  
+  cardElement.classList.remove("card-highlight");
+
   // Force a reflow to ensure the class removal takes effect
   void cardElement.offsetHeight;
-  
+
   // Add the highlight class
-  cardElement.classList.add('card-highlight');
-  
+  cardElement.classList.add("card-highlight");
+
   // Remove the highlight class after animation completes
   setTimeout(() => {
-    cardElement.classList.remove('card-highlight');
-  }, 2000); // 2 seconds to match the CSS animation duration
+    cardElement.classList.remove("card-highlight");
+  }, 1500); // 1.5 seconds to match the CSS animation duration
 };
