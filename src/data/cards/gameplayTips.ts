@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const gameplayTips: CardProps = {
   title: "Gameplay Tips & Interpretation",

@@ -1,4 +1,5 @@
 import React from "react";
+import { DESIGN_TOKENS } from "@/styles/tokens";
 
 interface CardContentListProps {
   content: string[];
@@ -6,9 +7,9 @@ interface CardContentListProps {
 
 const CardContentList: React.FC<CardContentListProps> = ({ content }) => {
   return (
-    <ol className="list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300">
+    <ol className={DESIGN_TOKENS.list.ordered}>
       {content.map((item, index) => (
-        <li key={index} className="leading-relaxed">
+        <li key={index} className={DESIGN_TOKENS.list.item}>
           {item}
         </li>
       ))}

@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const npcGenerator: CardProps = {
   title: "NPC Generator",

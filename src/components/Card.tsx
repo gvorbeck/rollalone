@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { CardProps, TableData, DiceConfig } from "../data/definitions";
+import { CardProps, TableData, DiceConfig } from "@/data/definitions";
+import { DESIGN_TOKENS } from "@/styles/tokens";
 import {
   CardContentText,
   CardContentList,
@@ -8,7 +9,7 @@ import {
   CardContentImage,
   CardContentDice,
   CardContentPostContent,
-} from "./content";
+} from "@/components/content";
 
 const Card: React.FC<CardProps> = ({
   title,
@@ -40,18 +41,11 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <article
-      className={clsx(
-        "bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 transition-shadow hover:shadow-lg",
-        className
-      )}
-    >
+    <article className={clsx(DESIGN_TOKENS.card.container, className)}>
       <header>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          {title}
-        </h2>
+        <h2 className={DESIGN_TOKENS.card.title}>{title}</h2>
         {preContent && (
-          <p className="text-gray-600 dark:text-gray-400 mb-4">{preContent}</p>
+          <p className={DESIGN_TOKENS.card.preContent}>{preContent}</p>
         )}
       </header>
       {renderContent()}

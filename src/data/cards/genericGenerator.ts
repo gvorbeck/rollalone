@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const genericGenerator: CardProps = {
   title: "Generic Generator",

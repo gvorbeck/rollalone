@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const hexCrawler: CardProps = {
   title: "Enhanced Hex Crawler",

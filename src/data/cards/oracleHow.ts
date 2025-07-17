@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const oracleHow: CardProps = {
   title: "Oracle (How)",

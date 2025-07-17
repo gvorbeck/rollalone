@@ -1,5 +1,6 @@
 import React from "react";
-import { DiceConfig } from "../../data/definitions";
+import { DiceConfig } from "@/data/definitions";
+import { DESIGN_TOKENS } from "@/styles/tokens";
 
 interface CardContentDiceProps {
   content: DiceConfig;
@@ -18,7 +19,7 @@ const CardContentDice: React.FC<CardContentDiceProps> = ({ content }) => {
           </span>
         )}
       </div>
-      <p className="text-gray-700 dark:text-gray-300 mt-3">
+      <p className={DESIGN_TOKENS.text.primary + " mt-3"}>
         {content.description}
       </p>
     </div>

@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const advancedMoves: CardProps = {
   title: "Advanced GM Moves",

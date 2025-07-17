@@ -1,4 +1,4 @@
-import { CardProps } from "../definitions";
+import { CardProps } from "@/data/definitions";
 
 const setTheScene: CardProps = {
   title: "Set the Scene",
