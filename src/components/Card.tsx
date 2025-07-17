@@ -41,7 +41,10 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <article className={clsx(DESIGN_TOKENS.card.container, className)}>
+    <article 
+      className={clsx(DESIGN_TOKENS.card.container, className)}
+      data-card-title={title}
+    >
       <header>
         <h2 className={DESIGN_TOKENS.card.title}>{title}</h2>
         {preContent && (

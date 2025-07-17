@@ -1,5 +1,6 @@
 import React from "react";
 import { DESIGN_TOKENS } from "@/styles/tokens";
+import { parseFormattedText } from "@/utils/textFormatting";
 
 interface CardContentListProps {
   content: string[];
@@ -11,7 +12,9 @@ const CardContentList: React.FC<CardContentListProps> = ({ content }) => {
       {content.map((item, index) => (
         <li key={index} className={DESIGN_TOKENS.list.item}>
           <div className={DESIGN_TOKENS.list.number}>{index + 1}</div>
-          <div className={DESIGN_TOKENS.list.content}>{item}</div>
+          <div className={DESIGN_TOKENS.list.content}>
+            {parseFormattedText(item)}
+          </div>
         </li>
       ))}
     </ol>

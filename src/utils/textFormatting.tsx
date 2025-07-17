@@ -1,16 +1,17 @@
 import React from "react";
+import { scrollToCard } from "./scrollToCard";
 
 /**
- * Parses markdown-style bold formatting (**text**) and links ([text](url)) and returns React elements
+ * Parses markdown-style bold formatting (**text**), links ([text](url)), and internal card links and returns React elements
  * @param text - The text to parse
- * @returns Array of React elements with proper bold formatting and links
+ * @returns Array of React elements with proper bold formatting, links, and internal card links
  */
 export const parseMarkdownBold = (
   text: string
 ): (string | React.ReactElement)[] => {
   const result: (string | React.ReactElement)[] = [];
 
-  // First handle links [text](url)
+  // First handle external links [text](url)
   const linkRegex = /(\[.*?\]\(.*?\))/g;
   const parts = text.split(linkRegex);
 
@@ -30,16 +31,27 @@ export const parseMarkdownBold = (
         </a>
       );
     } else {
-      // Handle bold formatting for non-link parts
-      const boldParts = part.split(/(\*\*.*?\*\*)/g);
-      boldParts.forEach((boldPart, boldIndex) => {
-        if (boldPart.startsWith("**") && boldPart.endsWith("**")) {
-          const boldText = boldPart.slice(2, -2);
-          result.push(
-            <strong key={`bold-${partIndex}-${boldIndex}`}>{boldText}</strong>
-          );
-        } else if (boldPart !== "") {
-          result.push(boldPart);
+      // Handle internal links first, then bold formatting
+      const internalLinkParts = parseInternalLinks(part);
+      internalLinkParts.forEach((linkPart, linkIndex) => {
+        if (typeof linkPart === "string") {
+          // Handle bold formatting for string parts
+          const boldParts = linkPart.split(/(\*\*.*?\*\*)/g);
+          boldParts.forEach((boldPart, boldIndex) => {
+            if (boldPart.startsWith("**") && boldPart.endsWith("**")) {
+              const boldText = boldPart.slice(2, -2);
+              result.push(
+                <strong key={`bold-${partIndex}-${linkIndex}-${boldIndex}`}>
+                  {boldText}
+                </strong>
+              );
+            } else if (boldPart !== "") {
+              result.push(boldPart);
+            }
+          });
+        } else {
+          // This is already a React element (internal link)
+          result.push(linkPart);
         }
       });
     }
@@ -90,6 +102,70 @@ export const parseFormattedText = (
       result.push(<br key={`br-${lineIndex}`} />);
     }
   });
+
+  return result;
+};
+
+// List of terms that should be converted to internal card links
+const INTERNAL_LINK_TERMS = [
+  "PLOT HOOK",
+  "RANDOM EVENT",
+  "SET THE SCENE",
+  "ORACLE",
+  "GM MOVES",
+];
+
+/**
+ * Parses text for internal card links (uppercase terms) and makes them clickable
+ * @param text - The text to parse for internal links
+ * @returns Array of React elements with clickable internal links
+ */
+export const parseInternalLinks = (
+  text: string
+): (string | React.ReactElement)[] => {
+  const result: (string | React.ReactElement)[] = [];
+  let remaining = text;
+  let elementKey = 0;
+
+  while (remaining.length > 0) {
+    let foundMatch = false;
+
+    // Check for each internal link term
+    for (const term of INTERNAL_LINK_TERMS) {
+      const index = remaining.indexOf(term);
+      if (index !== -1) {
+        // Add text before the match
+        if (index > 0) {
+          result.push(remaining.substring(0, index));
+        }
+
+        // Add the clickable link
+        result.push(
+          <button
+            key={`internal-link-${elementKey++}`}
+            onClick={() => scrollToCard(term)}
+            className="text-red-400 hover:text-red-300 underline cursor-pointer font-semibold transition-colors"
+            type="button"
+          >
+            {term}
+          </button>
+        );
+
+        // Update remaining text
+        remaining = remaining.substring(index + term.length);
+        foundMatch = true;
+        break;
+      }
+    }
+
+    // If no matches found, add remaining text and break
+    if (!foundMatch) {
+      if (remaining.length > 0) {
+        result.push(remaining);
+      }
+      break;
+    }
+  }
 
   return result;
 };
