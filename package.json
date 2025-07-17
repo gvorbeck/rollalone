@@ -11,6 +11,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@dice-roller/rpg-dice-roller": "^5.5.1",
     "@tailwindcss/vite": "^4.1.11",
     "clsx": "^2.1.1",
     "react": "^19.1.0",
