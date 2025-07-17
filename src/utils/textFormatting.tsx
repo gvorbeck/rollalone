@@ -2,7 +2,13 @@ import React from "react";
 import { scrollToCard } from "./scrollToCard";
 
 /**
- * Parses markdown-style bold formatting (**text**), links ([text](url)), and internal card links and returns React elements
+ * Parses markdown-style bold// List of terms that should be converted to internal card links
+const INTERNAL_LINK_TERMS = [
+  "PLOT HOOK",
+  "RANDOM EVENT", 
+  "SET THE SCENE",
+  "GM MOVES"
+];ing (**text**), links ([text](url)), and internal card links and returns React elements
  * @param text - The text to parse
  * @returns Array of React elements with proper bold formatting, links, and internal card links
  */

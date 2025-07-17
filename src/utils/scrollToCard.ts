@@ -3,9 +3,8 @@
 // Map of card link text to actual card titles
 const CARD_LINK_MAP: Record<string, string> = {
   "PLOT HOOK": "Plot Hook Generator",
-  "RANDOM EVENT": "Random Events",
+  "RANDOM EVENT": "Random Events & Complex Questions",
   "SET THE SCENE": "Set the Scene",
-  ORACLE: "Oracle: Yes/No",
   "GM MOVES": "GM Moves",
 };
 
