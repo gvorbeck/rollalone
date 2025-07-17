@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({
         return <CardContentDice content={content as DiceConfig} />;
       default:
         return (
-          <p className="text-gray-700 dark:text-gray-300">
+          <p className="text-gray-300">
             {typeof content === "string" ? content : "Invalid content type"}
           </p>
         );

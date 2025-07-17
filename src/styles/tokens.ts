@@ -3,36 +3,36 @@ export const DESIGN_TOKENS = {
   // Card styling
   card: {
     container:
-      "bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 transition-shadow hover:shadow-lg",
-    title: "text-xl font-semibold text-gray-900 dark:text-white mb-4",
-    preContent: "text-gray-600 dark:text-gray-400 mb-4",
-    postContent: "text-gray-600 dark:text-gray-400 mt-4",
+      "bg-gray-800 shadow-md rounded-lg p-6 transition-shadow hover:shadow-lg",
+    title: "text-xl font-semibold text-white mb-4",
+    preContent: "text-gray-400 mb-4",
+    postContent: "text-gray-400 mt-4",
   },
 
   // Text content styling
   text: {
-    primary: "text-gray-700 dark:text-gray-300",
-    secondary: "text-gray-600 dark:text-gray-400",
-    heading: "text-gray-900 dark:text-white",
+    primary: "text-gray-300",
+    secondary: "text-gray-400",
+    heading: "text-white",
   },
 
   // Table styling
   table: {
     container:
-      "min-w-full border-collapse border border-gray-300 dark:border-gray-600",
-    row: "border-b border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors",
-    cellBorder: "border-r border-gray-300 dark:border-gray-600",
+      "min-w-full border-collapse border border-gray-600",
+    row: "border-b border-gray-600 hover:bg-gray-700 transition-colors",
+    cellBorder: "border-r border-gray-600",
     headerCell:
-      "font-semibold text-center bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white",
-    regularCell: "text-gray-700 dark:text-gray-300",
-    title: "text-lg font-medium text-gray-900 dark:text-white mb-3",
+      "font-semibold text-center bg-gray-700 text-white",
+    regularCell: "text-gray-300",
+    title: "text-lg font-medium text-white mb-3",
   },
 
   // Post content (note) styling
   note: {
     container:
-      "mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 dark:border-yellow-500",
-    text: "text-gray-700 dark:text-gray-300",
+      "mt-4 p-4 bg-yellow-900/20 border-l-4 border-yellow-500",
+    text: "text-gray-300",
   },
 
   // Layout
@@ -48,7 +48,7 @@ export const DESIGN_TOKENS = {
   // List styling
   list: {
     ordered:
-      "list-decimal list-inside space-y-2 text-gray-700 dark:text-gray-300",
+      "list-decimal list-inside space-y-2 text-gray-300",
     item: "leading-relaxed",
   },
 } as const;

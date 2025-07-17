@@ -24,7 +24,7 @@ export const parseMarkdownBold = (
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 underline"
+          className="text-blue-400 hover:text-blue-200 underline"
         >
           {linkText}
         </a>
