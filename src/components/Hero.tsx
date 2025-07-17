@@ -17,7 +17,7 @@ const Hero: React.FC = () => {
                 Roll
                 <span className="text-red-500"> Alone</span>
               </h1>
-              <p className="text-xl sm:text-2xl text-gray-300 font-light leading-relaxed max-w-2xl">
+              <p className="text-xl sm:text-2xl text-gray-300 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Your complete toolkit for solo tabletop RPG adventures
               </p>
             </div>
