@@ -1,7 +1,7 @@
 import { CardProps } from "@/data/definitions";
 
 const hexCrawler: CardProps = {
-  title: "Enhanced Hex Crawler",
+  title: "Hex Crawler",
   contentType: "table",
   preContent:
     "Use this to generate overland exploration. Start by rolling HEX TERRAIN for your first hex. When entering adjacent hexes, use NEW HEX to determine terrain based on your current location.",

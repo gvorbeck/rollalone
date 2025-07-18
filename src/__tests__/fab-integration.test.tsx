@@ -8,9 +8,15 @@ describe("FAB Context Integration", () => {
     render(<App />);
 
     // Get all three FAB buttons
-    const tocFAB = screen.getByRole("button", { name: /open table of contents/i });
-    const cardDrawerFAB = screen.getByRole("button", { name: /draw playing card/i });
-    const diceRollerFAB = screen.getByRole("button", { name: /open dice roller/i });
+    const tocFAB = screen.getByRole("button", {
+      name: /open table of contents/i,
+    });
+    const cardDrawerFAB = screen.getByRole("button", {
+      name: /draw playing card/i,
+    });
+    const diceRollerFAB = screen.getByRole("button", {
+      name: /open dice roller/i,
+    });
 
     // Initially all should be closed
     expect(tocFAB).toHaveAttribute("aria-expanded", "false");
@@ -35,7 +41,9 @@ describe("FAB Context Integration", () => {
   it("should close FAB when the same FAB is clicked again", () => {
     render(<App />);
 
-    const tocFAB = screen.getByRole("button", { name: /open table of contents/i });
+    const tocFAB = screen.getByRole("button", {
+      name: /open table of contents/i,
+    });
 
     // Open table of contents
     fireEvent.click(tocFAB);

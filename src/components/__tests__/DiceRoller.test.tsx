@@ -40,7 +40,9 @@ describe("DiceRoller Component", () => {
 
     // Find and click the close button in header (different from FAB)
     const closeButtons = screen.getAllByTitle("Close dice roller");
-    const headerCloseButton = closeButtons.find(btn => btn.textContent === '✕');
+    const headerCloseButton = closeButtons.find(
+      (btn) => btn.textContent === "✕"
+    );
     expect(headerCloseButton).toBeInTheDocument();
     fireEvent.click(headerCloseButton!);
 
@@ -126,9 +128,12 @@ describe("DiceRoller Component", () => {
     fireEvent.click(rollButton);
 
     // Wait for result to appear (this one needs waitFor for the async roll operation)
-    await waitFor(() => {
-      expect(screen.getByText(/1d6: result: 1d6/i)).toBeInTheDocument();
-    }, { timeout: 1000 });
+    await waitFor(
+      () => {
+        expect(screen.getByText(/1d6: result: 1d6/i)).toBeInTheDocument();
+      },
+      { timeout: 1000 }
+    );
   });
 
   it("handles dice rolling errors gracefully", async () => {
@@ -148,10 +153,15 @@ describe("DiceRoller Component", () => {
     fireEvent.click(rollButton);
 
     // Wait for result to appear with shorter timeout
-    await waitFor(() => {
-      // The component shows "invalid: Result: invalid" format
-      expect(screen.getByText(/invalid: result: invalid/i)).toBeInTheDocument();
-    }, { timeout: 1000 });
+    await waitFor(
+      () => {
+        // The component shows "invalid: Result: invalid" format
+        expect(
+          screen.getByText(/invalid: result: invalid/i)
+        ).toBeInTheDocument();
+      },
+      { timeout: 1000 }
+    );
   });
 
   it("clears input when clear button is clicked", async () => {

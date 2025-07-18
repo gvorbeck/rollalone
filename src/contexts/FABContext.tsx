@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Types for FAB management
-export type FABType = 'toc' | 'cardDrawer' | 'diceRoller' | null;
+export type FABType = "toc" | "cardDrawer" | "diceRoller" | null;
 
 interface FABContextType {
   activeFAB: FABType;
@@ -19,7 +19,7 @@ export const FABProvider: React.FC<FABProviderProps> = ({ children }) => {
   const [activeFAB, setActiveFAB] = useState<FABType>(null);
 
   const toggleFAB = (fab: FABType) => {
-    setActiveFAB(current => current === fab ? null : fab);
+    setActiveFAB((current) => (current === fab ? null : fab));
   };
 
   return (
@@ -32,7 +32,7 @@ export const FABProvider: React.FC<FABProviderProps> = ({ children }) => {
 export const useFAB = (): FABContextType => {
   const context = useContext(FABContext);
   if (context === undefined) {
-    throw new Error('useFAB must be used within a FABProvider');
+    throw new Error("useFAB must be used within a FABProvider");
   }
   return context;
 };

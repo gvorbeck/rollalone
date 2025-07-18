@@ -48,7 +48,7 @@ const TOC_SECTIONS = [
     title: "Exploration",
     cards: [
       { title: "Dungeon Crawler", id: "Dungeon Crawler" },
-      { title: "Enhanced Hex Crawler", id: "Enhanced Hex Crawler" },
+      { title: "Hex Crawler", id: "Hex Crawler" },
     ],
   },
   {
@@ -61,11 +61,11 @@ const TOC_SECTIONS = [
 
 const TableOfContents: React.FC = () => {
   const { activeFAB, toggleFAB } = useFAB();
-  const isOpen = activeFAB === 'toc';
+  const isOpen = activeFAB === "toc";
 
   const handleCardClick = (cardId: string) => {
     scrollToCard(cardId);
-    toggleFAB('toc'); // Close TOC after navigation
+    toggleFAB("toc"); // Close TOC after navigation
   };
 
   return (
@@ -106,7 +106,7 @@ const TableOfContents: React.FC = () => {
 
       {/* Floating Action Button */}
       <button
-        onClick={() => toggleFAB('toc')}
+        onClick={() => toggleFAB("toc")}
         aria-expanded={isOpen}
         className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-180" : "rotate-0"

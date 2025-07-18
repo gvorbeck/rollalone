@@ -124,7 +124,7 @@ const DICE_TYPES = [
 
 const DiceRoller: React.FC = () => {
   const { activeFAB, toggleFAB } = useFAB();
-  const isOpen = activeFAB === 'diceRoller';
+  const isOpen = activeFAB === "diceRoller";
   const [diceInput, setDiceInput] = useState<string>("");
   const [lastRoll, setLastRoll] = useState<string>("");
 
@@ -181,9 +181,11 @@ const DiceRoller: React.FC = () => {
       >
         {/* Header */}
         <div className="flex justify-between items-center mb-3">
-          <div className="text-white text-sm font-medium">Quick Dice Roller</div>
+          <div className="text-white text-sm font-medium">
+            Quick Dice Roller
+          </div>
           <button
-            onClick={() => toggleFAB('diceRoller')}
+            onClick={() => toggleFAB("diceRoller")}
             className="text-gray-400 hover:text-gray-200 transition-colors"
             title="Close dice roller"
           >
@@ -241,7 +243,7 @@ const DiceRoller: React.FC = () => {
 
       {/* Floating Action Button with Rotation Animation */}
       <button
-        onClick={() => toggleFAB('diceRoller')}
+        onClick={() => toggleFAB("diceRoller")}
         className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}
