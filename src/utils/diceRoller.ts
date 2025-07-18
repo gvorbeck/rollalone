@@ -41,6 +41,13 @@ export class SimpleDiceRoll {
 
   private parseAndRoll(): void {
     try {
+      // Check if this is a complex expression with multiple dice groups
+      // Pattern: XdY+XdY, XdY-XdY, XdY+Z+XdY, etc.
+      if (this.hasMultipleDiceGroups(this._notation)) {
+        this.parseComplexExpression();
+        return;
+      }
+
       // Handle basic dice notation: XdY, XdY+Z, XdY-Z
       const basicPattern = /^(\d+)?d(\d+)([+-]\d+)?$/;
       const basicMatch = this._notation.match(basicPattern);
@@ -81,6 +88,94 @@ export class SimpleDiceRoll {
       this._rolls = [];
       this._breakdown = "Invalid notation";
     }
+  }
+
+  private hasMultipleDiceGroups(notation: string): boolean {
+    // Check if notation contains multiple 'd' characters with numbers, indicating multiple dice groups
+    const diceGroupPattern = /\d*d\d+/g;
+    const matches = notation.match(diceGroupPattern);
+    return matches !== null && matches.length > 1;
+  }
+
+  private parseComplexExpression(): void {
+    // Split the expression into parts (dice groups and modifiers)
+    // Handle expressions like: 2d6+1d4, 1d20+3d6-2, etc.
+    const parts = this._notation.split(/([+-])/);
+    let runningTotal = 0;
+    let allRolls: number[] = [];
+    let breakdownParts: string[] = [];
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i].trim();
+      if (!part) continue;
+
+      if (part === "+" || part === "-") {
+        continue; // Skip operators, we'll handle them in context
+      }
+
+      // Determine if this part should be added or subtracted
+      const isNegative = i > 0 && parts[i - 1] === "-";
+
+      if (part.includes("d")) {
+        // This is a dice group
+        const diceResult = this.rollSingleDiceGroup(part);
+        const contribution = isNegative ? -diceResult.total : diceResult.total;
+        runningTotal += contribution;
+        allRolls.push(...diceResult.rolls);
+
+        const prefix = i === 0 ? "" : isNegative ? "-" : "+";
+        breakdownParts.push(`${prefix}${diceResult.breakdown}`);
+      } else if (/^\d+$/.test(part)) {
+        // This is a numeric modifier
+        const modifier = parseInt(part);
+        const contribution = isNegative ? -modifier : modifier;
+        runningTotal += contribution;
+
+        const prefix = i === 0 ? "" : isNegative ? "-" : "+";
+        breakdownParts.push(`${prefix}${modifier}`);
+      }
+    }
+
+    this._total = runningTotal;
+    this._rolls = allRolls;
+    this._breakdown = `${breakdownParts.join("")} = ${runningTotal}`;
+  }
+
+  private rollSingleDiceGroup(notation: string): {
+    total: number;
+    rolls: number[];
+    breakdown: string;
+  } {
+    // Parse a single dice group like "2d6" or "1d4"
+    const pattern = /^(\d+)?d(\d+)$/;
+    const match = notation.match(pattern);
+
+    if (!match) {
+      throw new Error(`Invalid dice group: ${notation}`);
+    }
+
+    const count = parseInt(match[1] || "1");
+    const sides = parseInt(match[2]);
+
+    if (count <= 0 || count > 100 || sides <= 0 || sides > 1000) {
+      throw new Error("Invalid dice parameters");
+    }
+
+    const rolls = [];
+    for (let i = 0; i < count; i++) {
+      rolls.push(this.rollSingle(sides));
+    }
+
+    const total = rolls.reduce((sum, roll) => sum + roll, 0);
+
+    let breakdown;
+    if (count === 1) {
+      breakdown = `${rolls[0]}`;
+    } else {
+      breakdown = `[${rolls.join(", ")}]`;
+    }
+
+    return { total, rolls, breakdown };
   }
 
   private rollBasicDice(count: number, sides: number, modifier: number): void {

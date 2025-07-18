@@ -252,7 +252,7 @@ describe("App Component", () => {
     });
 
     expect(diceRollerFAB.closest("div")).toHaveClass("right-6");
-    expect(tocFAB.closest("div")).toHaveClass("right-20");
+    expect(tocFAB.closest("div")).toHaveClass("right-24");
   });
 
   it("handles scroll behavior", () => {
@@ -260,7 +260,7 @@ describe("App Component", () => {
 
     // Check that the app renders without scroll-related errors
     expect(screen.getByRole("main")).toBeInTheDocument();
-    
+
     // The scroll behavior is handled by the scrollToCard utility
     // which is already tested in scrollToCard.test.ts
   });

@@ -27,24 +27,26 @@ describe("DiceRoller Component", () => {
     render(<DiceRoller />);
 
     // Initially panel should be hidden via CSS
-    const panel = document.querySelector('.fixed .absolute');
-    expect(panel).toHaveClass('opacity-0', 'pointer-events-none');
+    const panel = document.querySelector(".fixed .absolute");
+    expect(panel).toHaveClass("opacity-0", "pointer-events-none");
 
     // Click to open
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
     await waitFor(() => {
-      expect(panel).toHaveClass('opacity-100');
-      expect(panel).not.toHaveClass('pointer-events-none');
+      expect(panel).toHaveClass("opacity-100");
+      expect(panel).not.toHaveClass("pointer-events-none");
     });
 
     // Click to close
-    const closeButton = screen.getByRole("button", { name: /close dice roller/i });
+    const closeButton = screen.getByRole("button", {
+      name: /close dice roller/i,
+    });
     fireEvent.click(closeButton);
 
     await waitFor(() => {
-      expect(panel).toHaveClass('opacity-0', 'pointer-events-none');
+      expect(panel).toHaveClass("opacity-0", "pointer-events-none");
     });
   });
 
@@ -185,7 +187,7 @@ describe("DiceRoller Component", () => {
 
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     // The FAB doesn't have aria-expanded, remove this assertion
-    
+
     fireEvent.click(fab);
 
     await waitFor(() => {

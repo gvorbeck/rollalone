@@ -29,9 +29,7 @@ const setTheScene: CardProps = {
       ],
     },
   ],
-  postContent: [
-    "**Roll 1d6, on a 5+, it is an ALTERED SCENE**",
-  ],
+  postContent: ["**Roll 1d6, on a 5+, it is an ALTERED SCENE**"],
 };
 
 export default setTheScene;

@@ -89,7 +89,8 @@ describe("Card Component", () => {
   it("handles long titles properly", () => {
     const longTitleCard = {
       ...sampleCard,
-      title: "This is a very long card title that should wrap properly and not break the layout",
+      title:
+        "This is a very long card title that should wrap properly and not break the layout",
     };
 
     render(<Card {...longTitleCard} />);

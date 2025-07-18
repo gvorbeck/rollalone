@@ -78,6 +78,32 @@ describe("SimpleDiceRoll", () => {
     });
   });
 
+  describe("Multiple dice groups", () => {
+    it("should handle multiple dice groups with addition", () => {
+      const diceRoll = new SimpleDiceRoll("2d2+1d4");
+      expect(diceRoll.total).toBe(7); // [2,2] + [3] = 7
+      expect(diceRoll.output).toBe("[2, 2]+3 = 7");
+    });
+
+    it("should handle multiple dice groups with subtraction", () => {
+      const diceRoll = new SimpleDiceRoll("2d6-1d4");
+      expect(diceRoll.total).toBe(5); // [4,4] - [3] = 5
+      expect(diceRoll.output).toBe("[4, 4]-3 = 5");
+    });
+
+    it("should handle complex expressions with modifiers", () => {
+      const diceRoll = new SimpleDiceRoll("1d20+2d6+3");
+      expect(diceRoll.total).toBe(22); // [11] + [4,4] + 3 = 22
+      expect(diceRoll.output).toBe("11+[4, 4]+3 = 22");
+    });
+
+    it("should handle single die in multiple group expression", () => {
+      const diceRoll = new SimpleDiceRoll("1d6+1d4");
+      expect(diceRoll.total).toBe(7); // 4 + 3 = 7
+      expect(diceRoll.output).toBe("4+3 = 7");
+    });
+  });
+
   describe("Edge cases and validation", () => {
     it("should handle invalid notation gracefully", () => {
       const consoleSpy = vi

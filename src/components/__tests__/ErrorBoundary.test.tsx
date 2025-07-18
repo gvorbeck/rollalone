@@ -39,7 +39,9 @@ describe("ErrorBoundary Component", () => {
     );
 
     expect(screen.getByText(/something went wrong/i)).toBeInTheDocument();
-    expect(screen.getByText(/please try refreshing the page/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please try refreshing the page/i)
+    ).toBeInTheDocument();
   });
 
   it("displays refresh button in error state", () => {
@@ -61,11 +63,15 @@ describe("ErrorBoundary Component", () => {
     );
 
     // Check for main container with dark background
-    const container = screen.getByText(/something went wrong/i).closest('.min-h-screen');
+    const container = screen
+      .getByText(/something went wrong/i)
+      .closest(".min-h-screen");
     expect(container).toHaveClass("bg-gray-900");
-    
+
     // Check for error card styling
-    const errorCard = screen.getByText(/something went wrong/i).closest('.bg-red-900\\/20');
+    const errorCard = screen
+      .getByText(/something went wrong/i)
+      .closest(".bg-red-900\\/20");
     expect(errorCard).toHaveClass("border-red-800");
   });
 
@@ -77,7 +83,9 @@ describe("ErrorBoundary Component", () => {
     );
 
     // Check for the main error heading
-    const heading = screen.getByRole("heading", { name: "Something went wrong" });
+    const heading = screen.getByRole("heading", {
+      name: "Something went wrong",
+    });
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveClass("text-lg", "font-semibold", "text-red-200");
   });
@@ -90,7 +98,7 @@ describe("ErrorBoundary Component", () => {
     );
 
     // Check for SVG warning icon by class or content
-    const svg = document.querySelector('svg.w-6.h-6.text-red-400');
+    const svg = document.querySelector("svg.w-6.h-6.text-red-400");
     expect(svg).toBeInTheDocument();
     expect(svg).toHaveClass("text-red-400");
   });

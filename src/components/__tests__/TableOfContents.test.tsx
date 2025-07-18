@@ -67,19 +67,37 @@ describe("TableOfContents Component", () => {
 
     await waitFor(() => {
       // Core Gameplay section
-      expect(screen.getByRole("button", { name: "How to Play" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Using Playing Cards" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Quick Reference" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "How to Play" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Using Playing Cards" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Quick Reference" })
+      ).toBeInTheDocument();
 
       // Oracles & Decisions section
-      expect(screen.getByRole("button", { name: "Oracle (Yes/No)" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Oracle (How)" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Oracle (Focus)" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Oracle (Yes/No)" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Oracle (How)" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Oracle (Focus)" })
+      ).toBeInTheDocument();
 
       // Scene & Story section
-      expect(screen.getByRole("button", { name: "Set the Scene" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "Plot Hook Generator" })).toBeInTheDocument();
-      expect(screen.getByRole("button", { name: "GM Moves" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Set the Scene" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Plot Hook Generator" })
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "GM Moves" })
+      ).toBeInTheDocument();
     });
   });
 
@@ -108,11 +126,14 @@ describe("TableOfContents Component", () => {
       fireEvent.click(cardButton);
     });
 
-    await waitFor(() => {
-      const panel = screen.getByRole("dialog");
-      expect(panel).toHaveClass("pointer-events-none");
-      expect(panel).toHaveClass("opacity-0");
-    }, { timeout: 2000 });
+    await waitFor(
+      () => {
+        const panel = screen.getByRole("dialog");
+        expect(panel).toHaveClass("pointer-events-none");
+        expect(panel).toHaveClass("opacity-0");
+      },
+      { timeout: 2000 }
+    );
   });
 
   it("has proper accessibility attributes", async () => {
@@ -125,7 +146,7 @@ describe("TableOfContents Component", () => {
 
     await waitFor(() => {
       expect(fab).toHaveAttribute("aria-expanded", "true");
-      
+
       const panel = screen.getByRole("dialog");
       expect(panel).toHaveAttribute("aria-labelledby");
     });
@@ -139,12 +160,17 @@ describe("TableOfContents Component", () => {
 
     await waitFor(() => {
       // Count buttons in Core Gameplay section (4 cards)
-      const coreGameplaySection = screen.getByText("Core Gameplay").closest("div")?.nextElementSibling;
-      const coreGameplayButtons = coreGameplaySection?.querySelectorAll("button");
+      const coreGameplaySection = screen
+        .getByText("Core Gameplay")
+        .closest("div")?.nextElementSibling;
+      const coreGameplayButtons =
+        coreGameplaySection?.querySelectorAll("button");
       expect(coreGameplayButtons).toHaveLength(4);
 
       // Count buttons in Oracles & Decisions section (3 cards)
-      const oracleSection = screen.getByText("Oracles & Decisions").closest("div")?.nextElementSibling;
+      const oracleSection = screen
+        .getByText("Oracles & Decisions")
+        .closest("div")?.nextElementSibling;
       const oracleButtons = oracleSection?.querySelectorAll("button");
       expect(oracleButtons).toHaveLength(3);
     });
@@ -169,8 +195,10 @@ describe("TableOfContents Component", () => {
   it("positions FAB correctly relative to dice roller", () => {
     render(<TableOfContents />);
 
-    const fabContainer = screen.getByRole("button", { name: /open table of contents/i }).closest("div");
-    expect(fabContainer).toHaveClass("right-20"); // Positioned to the left of dice roller
+    const fabContainer = screen
+      .getByRole("button", { name: /open table of contents/i })
+      .closest("div");
+    expect(fabContainer).toHaveClass("right-24"); // Positioned to the left of dice roller with proper spacing
   });
 
   it("applies smooth animations", async () => {

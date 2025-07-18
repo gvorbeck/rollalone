@@ -185,7 +185,9 @@ describe("Accessibility Tests", () => {
     render(<ThrowError />);
 
     // Test error boundary with proper role
-    const errorContainer = screen.getByText(/something went wrong/i).closest('div');
+    const errorContainer = screen
+      .getByText(/something went wrong/i)
+      .closest("div");
     expect(errorContainer).toBeInTheDocument();
   });
 

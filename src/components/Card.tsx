@@ -26,7 +26,9 @@ const Card: React.FC<CardProps> = ({
       case "list":
         return <CardContentList content={content as string[]} />;
       case "table":
-        return <CardContentTable content={content as TableData | TableData[]} />;
+        return (
+          <CardContentTable content={content as TableData | TableData[]} />
+        );
       case "image":
         return <CardContentImage content={content as string} title={title} />;
       case "dice":

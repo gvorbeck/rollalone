@@ -22,7 +22,9 @@ describe("Hero Component", () => {
     expect(
       screen.getByText(/one page engine - everything you need/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/works with any ttrpg system/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/works with any ttrpg system/i)
+    ).toBeInTheDocument();
     expect(screen.getByText(/no gm required/i)).toBeInTheDocument();
   });
 
@@ -48,7 +50,7 @@ describe("Hero Component", () => {
     render(<Hero />);
 
     // Check the grid container inside the header
-    const gridContainer = document.querySelector('.grid.lg\\:grid-cols-2');
+    const gridContainer = document.querySelector(".grid.lg\\:grid-cols-2");
     expect(gridContainer).toBeInTheDocument();
   });
 

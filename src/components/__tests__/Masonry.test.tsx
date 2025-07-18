@@ -19,9 +19,15 @@ describe("Masonry Component", () => {
     render(
       <Masonry>
         {[
-          <div key="1" data-testid="item-1">Item 1</div>,
-          <div key="2" data-testid="item-2">Item 2</div>,
-          <div key="3" data-testid="item-3">Item 3</div>,
+          <div key="1" data-testid="item-1">
+            Item 1
+          </div>,
+          <div key="2" data-testid="item-2">
+            Item 2
+          </div>,
+          <div key="3" data-testid="item-3">
+            Item 3
+          </div>,
         ]}
       </Masonry>
     );
@@ -39,7 +45,9 @@ describe("Masonry Component", () => {
     );
 
     // Check for the masonry container (native masonry or fallback behavior)
-    const masonryContainer = container.querySelector('.masonry-grid') || container.querySelector('.grid.gap-6');
+    const masonryContainer =
+      container.querySelector(".masonry-grid") ||
+      container.querySelector(".grid.gap-6");
     expect(masonryContainer).toBeInTheDocument();
     expect(masonryContainer).toHaveClass("masonry-grid");
   });
@@ -47,7 +55,9 @@ describe("Masonry Component", () => {
   it("handles empty children gracefully", () => {
     const { container } = render(<Masonry>{[]}</Masonry>);
 
-    const masonryContainer = container.querySelector('.masonry-grid') || container.querySelector('.grid.gap-6');
+    const masonryContainer =
+      container.querySelector(".masonry-grid") ||
+      container.querySelector(".grid.gap-6");
     expect(masonryContainer).toBeInTheDocument();
     expect(masonryContainer?.children).toHaveLength(0);
   });
@@ -55,7 +65,11 @@ describe("Masonry Component", () => {
   it("handles single child", () => {
     render(
       <Masonry>
-        {[<div key="1" data-testid="single-item">Single Item</div>]}
+        {[
+          <div key="1" data-testid="single-item">
+            Single Item
+          </div>,
+        ]}
       </Masonry>
     );
 
@@ -77,11 +91,7 @@ describe("Masonry Component", () => {
   });
 
   it("sets up ResizeObserver for responsive behavior", () => {
-    render(
-      <Masonry>
-        {[<div key="1">Item</div>]}
-      </Masonry>
-    );
+    render(<Masonry>{[<div key="1">Item</div>]}</Masonry>);
 
     // Since native masonry support is not available in tests, component should not use ResizeObserver
     expect(mockResizeObserver).not.toHaveBeenCalled();
@@ -90,18 +100,14 @@ describe("Masonry Component", () => {
   it("cleans up ResizeObserver on unmount", () => {
     const disconnectMock = vi.fn();
     const observeMock = vi.fn();
-    
+
     global.ResizeObserver = vi.fn().mockImplementation(() => ({
       observe: observeMock,
       unobserve: vi.fn(),
       disconnect: disconnectMock,
     }));
 
-    const { unmount } = render(
-      <Masonry>
-        {[<div key="1">Item</div>]}
-      </Masonry>
-    );
+    const { unmount } = render(<Masonry>{[<div key="1">Item</div>]}</Masonry>);
 
     unmount();
 
@@ -117,7 +123,9 @@ describe("Masonry Component", () => {
     );
 
     // For native masonry, there's no gap-6 class, so we check for the container presence
-    const masonryContainer = container.querySelector('.masonry-grid') || container.querySelector('.grid.gap-6');
+    const masonryContainer =
+      container.querySelector(".masonry-grid") ||
+      container.querySelector(".grid.gap-6");
     expect(masonryContainer).toBeInTheDocument();
   });
 
@@ -125,9 +133,15 @@ describe("Masonry Component", () => {
     render(
       <Masonry>
         {[
-          <div key="1" data-testid="first">First</div>,
-          <div key="2" data-testid="second">Second</div>,
-          <div key="3" data-testid="third">Third</div>,
+          <div key="1" data-testid="first">
+            First
+          </div>,
+          <div key="2" data-testid="second">
+            Second
+          </div>,
+          <div key="3" data-testid="third">
+            Third
+          </div>,
         ]}
       </Masonry>
     );
@@ -144,12 +158,12 @@ describe("Masonry Component", () => {
 
   it("applies custom className", () => {
     const { container } = render(
-      <Masonry className="custom-class">
-        {[<div key="1">Item</div>]}
-      </Masonry>
+      <Masonry className="custom-class">{[<div key="1">Item</div>]}</Masonry>
     );
 
-    const masonryContainer = container.querySelector('.masonry-grid.custom-class') || container.querySelector('.grid.gap-6.custom-class');
+    const masonryContainer =
+      container.querySelector(".masonry-grid.custom-class") ||
+      container.querySelector(".grid.gap-6.custom-class");
     expect(masonryContainer).toHaveClass("custom-class");
   });
 
@@ -160,7 +174,7 @@ describe("Masonry Component", () => {
       </Masonry>
     );
 
-    const itemContainer = container.querySelector('.custom-item-class');
+    const itemContainer = container.querySelector(".custom-item-class");
     expect(itemContainer).toBeInTheDocument();
   });
 });
