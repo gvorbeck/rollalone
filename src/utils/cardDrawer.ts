@@ -1,5 +1,7 @@
 // Card drawing utility with deck management and localStorage persistence
 
+import { StorageManager } from "./storage";
+
 export interface PlayingCard {
   rank: string;
   suit: string;
@@ -24,10 +26,14 @@ export interface DeckState {
 class CardDrawer {
   private static instance: CardDrawer;
   private state: DeckState;
-  private readonly STORAGE_KEY = "rollalone-card-deck";
+  private storage: StorageManager;
 
   private constructor() {
-    this.state = this.loadState() || this.createFreshDeck();
+    this.storage = new StorageManager({
+      key: "rollalone-card-deck",
+      version: "1.0",
+    });
+    this.state = this.storage.load<DeckState>() || this.createFreshDeck();
   }
 
   public static getInstance(): CardDrawer {
@@ -181,21 +187,7 @@ class CardDrawer {
   }
 
   private saveState(): void {
-    try {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.state));
-    } catch (error) {
-      console.warn("Failed to save deck state to localStorage:", error);
-    }
-  }
-
-  private loadState(): DeckState | null {
-    try {
-      const saved = localStorage.getItem(this.STORAGE_KEY);
-      return saved ? JSON.parse(saved) : null;
-    } catch (error) {
-      console.warn("Failed to load deck state from localStorage:", error);
-      return null;
-    }
+    this.storage.save(this.state);
   }
 
   public resetDeck(): void {

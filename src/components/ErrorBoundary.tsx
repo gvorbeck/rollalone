@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from "react";
+import { createErrorBoundaryHandler } from "@/utils/errorHandling";
 
 interface Props {
   children: ReactNode;
@@ -15,6 +16,8 @@ interface State {
  * Provides a graceful fallback UI when an error occurs
  */
 class ErrorBoundary extends Component<Props, State> {
+  private errorHandler = createErrorBoundaryHandler("ErrorBoundary");
+
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -26,8 +29,10 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // You can log the error to an error reporting service here
-    console.error("ErrorBoundary caught an error:", error, errorInfo);
+    // Use the centralized error handler with proper type conversion
+    this.errorHandler.onError(error, {
+      componentStack: errorInfo.componentStack || "Unknown component stack",
+    });
   }
 
   render() {

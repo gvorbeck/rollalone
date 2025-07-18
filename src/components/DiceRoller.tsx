@@ -4,8 +4,11 @@ import { diceHistory, type DiceHistoryEntry } from "../utils/diceHistory";
 import { useFAB } from "@/contexts/FABContext";
 import { FAB } from "@/components/ui/FAB";
 import { Button } from "@/components/ui/Button";
+import { CloseButton } from "@/components/ui/CloseButton";
 import { AnimatedPanel } from "@/components/ui/AnimatedPanel";
 import { DiceIcons, UIIcons } from "@/components/ui/Icons";
+import { CARD_STYLES, TEXT_STYLES, EMPTY_STATE } from "@/utils/layout";
+import { SCROLL_CONTAINERS } from "@/utils/scrollbar";
 
 // Dice configuration data with Icon components
 const DICE_TYPES = [
@@ -51,8 +54,8 @@ const DiceRoller: React.FC = () => {
       const newCount = currentCount + 1;
       setDiceInput(diceInput.replace(match[0], `${newCount}${dieType}`));
     } else {
-      // Add new die type
-      setDiceInput(`${diceInput}+1${dieType}`);
+      // Add new die to expression
+      setDiceInput(diceInput + `+1${dieType}`);
     }
   };
 
@@ -104,9 +107,122 @@ const DiceRoller: React.FC = () => {
         <AnimatedPanel
           isOpen={isOpen}
           variant="floating"
+          title="Quick Dice Roller"
           className="absolute bottom-16 right-0 w-96 max-w-[calc(100vw-2rem)]"
         >
-          {/* ...existing code... */}
+          <div className="flex justify-between items-center mb-4">
+            <h3
+              id="quick-dice-roller-title"
+              className="text-lg font-semibold text-white"
+            >
+              Quick Dice Roller
+            </h3>
+            <CloseButton
+              onClick={() => toggleFAB("diceRoller")}
+              title="Close panel"
+            />
+          </div>
+
+          {/* Dice Input */}
+          <div className="mb-4">
+            <input
+              type="text"
+              value={diceInput}
+              onChange={(e) => setDiceInput(e.target.value)}
+              placeholder="1d20+3"
+              className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
+            />
+          </div>
+
+          {/* Quick Dice Buttons */}
+          <div className="grid grid-cols-4 gap-2 mb-4">
+            {DICE_TYPES.map((dice) => (
+              <Button
+                key={dice.type}
+                onClick={() => addDie(dice.type)}
+                variant="secondary"
+                size="sm"
+                className="flex flex-col items-center gap-1 py-3"
+                title={dice.title}
+              >
+                {dice.icon}
+                <span className="text-xs">{dice.label}</span>
+              </Button>
+            ))}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-2 mb-4">
+            <Button
+              onClick={rollDice}
+              variant="primary"
+              className="flex-1"
+              disabled={!diceInput.trim()}
+            >
+              Roll
+            </Button>
+            <Button
+              onClick={clearInput}
+              variant="secondary"
+              size="sm"
+              title="Clear input"
+            >
+              Clear
+            </Button>
+          </div>
+
+          {/* Last Roll Result */}
+          {lastRoll && (
+            <div className={CARD_STYLES.content}>
+              <div className={TEXT_STYLES.muted}>Last roll:</div>
+              <div className="font-mono text-white">{lastRoll}</div>
+            </div>
+          )}
+
+          {/* History Toggle */}
+          <div className="flex justify-between items-center mb-2">
+            <Button
+              onClick={() => setShowHistory(!showHistory)}
+              variant="ghost"
+              size="sm"
+              className="text-gray-400"
+            >
+              {showHistory ? "Hide" : "Show"} History ({history.length})
+            </Button>
+            {history.length > 0 && (
+              <Button
+                onClick={clearHistory}
+                variant="ghost"
+                size="sm"
+                className="text-red-400"
+                title="Clear history"
+              >
+                Clear History
+              </Button>
+            )}
+          </div>
+
+          {/* History List */}
+          {showHistory && (
+            <div className={SCROLL_CONTAINERS.short}>
+              {history.length === 0 ? (
+                <div className={EMPTY_STATE}>No rolls yet</div>
+              ) : (
+                <div className="space-y-2">
+                  {history.map((entry) => (
+                    <div key={entry.id} className={CARD_STYLES.item}>
+                      <div className="font-mono text-white">
+                        {entry.notation}: {entry.result}
+                      </div>
+                      <div className={TEXT_STYLES.caption}>
+                        {formatTimestamp(entry.timestamp)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </AnimatedPanel>
       </div>
 

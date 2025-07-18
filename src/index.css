@@ -117,6 +117,23 @@
   background: rgb(156 163 175); /* gray-400 full opacity */
 }
 
+/* Scrollbar size variants */
+.scrollbar-xs::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-sm::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-md::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-lg::-webkit-scrollbar {
+  width: 12px;
+}
+
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;

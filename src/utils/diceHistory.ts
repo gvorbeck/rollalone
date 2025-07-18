@@ -1,6 +1,8 @@
 // Dice roll history utility with localStorage persistence
 // Stores the last 20 dice rolls with timestamps
 
+import { StorageManager, dateTransforms } from "./storage";
+
 export interface DiceHistoryEntry {
   id: string;
   notation: string;
@@ -9,22 +11,16 @@ export interface DiceHistoryEntry {
   timestamp: Date;
 }
 
-export interface DiceHistoryState {
-  entries: DiceHistoryEntry[];
-  maxEntries: number;
-}
-
 class DiceHistory {
   private static instance: DiceHistory;
-  private state: DiceHistoryState;
-  private readonly STORAGE_KEY = "rollalone-dice-history";
+  private storage: StorageManager;
   private readonly MAX_ENTRIES = 20;
 
   private constructor() {
-    this.state = this.loadState() || {
-      entries: [],
-      maxEntries: this.MAX_ENTRIES,
-    };
+    this.storage = new StorageManager({
+      key: "rollalone-dice-history",
+      version: "1.0",
+    });
   }
 
   public static getInstance(): DiceHistory {
@@ -43,24 +39,37 @@ class DiceHistory {
       timestamp: new Date(),
     };
 
-    // Add to the beginning of the array (most recent first)
-    this.state.entries.unshift(entry);
+    // Load current entries, add new one, and trim to max
+    const currentEntries = this.getHistory();
+    const updatedEntries = [entry, ...currentEntries].slice(
+      0,
+      this.MAX_ENTRIES
+    );
 
-    // Keep only the most recent MAX_ENTRIES
-    if (this.state.entries.length > this.MAX_ENTRIES) {
-      this.state.entries = this.state.entries.slice(0, this.MAX_ENTRIES);
-    }
-
-    this.saveState();
+    // Save with date transformation
+    this.storage.save(updatedEntries, dateTransforms.serialize);
   }
 
   public getHistory(): DiceHistoryEntry[] {
-    return [...this.state.entries];
+    return (
+      this.storage.load<DiceHistoryEntry[]>(
+        (data: unknown) =>
+          Array.isArray(data)
+            ? data.map((entry) => ({
+                ...entry,
+                timestamp:
+                  typeof entry.timestamp === "string"
+                    ? new Date(entry.timestamp)
+                    : entry.timestamp,
+              }))
+            : [],
+        []
+      ) || []
+    );
   }
 
   public clearHistory(): void {
-    this.state.entries = [];
-    this.saveState();
+    this.storage.save<DiceHistoryEntry[]>([]);
   }
 
   public getHistoryInfo(): {
@@ -68,7 +77,7 @@ class DiceHistory {
     oldestEntry: Date | null;
     newestEntry: Date | null;
   } {
-    const entries = this.state.entries;
+    const entries = this.getHistory();
     return {
       totalRolls: entries.length,
       oldestEntry:
@@ -79,53 +88,6 @@ class DiceHistory {
 
   private generateId(): string {
     return `roll_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-  }
-
-  private saveState(): void {
-    try {
-      // Convert dates to ISO strings for JSON serialization
-      const serializedState = {
-        ...this.state,
-        entries: this.state.entries.map((entry) => ({
-          ...entry,
-          timestamp: entry.timestamp.toISOString(),
-        })),
-      };
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(serializedState));
-    } catch (error) {
-      console.warn("Failed to save dice history to localStorage:", error);
-    }
-  }
-
-  private loadState(): DiceHistoryState | null {
-    try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
-      if (!stored) return null;
-
-      const parsed = JSON.parse(stored);
-
-      // Convert ISO strings back to Date objects
-      const entries = parsed.entries.map(
-        (entry: {
-          id: string;
-          notation: string;
-          result: number;
-          breakdown: string;
-          timestamp: string;
-        }) => ({
-          ...entry,
-          timestamp: new Date(entry.timestamp),
-        })
-      );
-
-      return {
-        entries,
-        maxEntries: parsed.maxEntries || this.MAX_ENTRIES,
-      };
-    } catch (error) {
-      console.warn("Failed to load dice history from localStorage:", error);
-      return null;
-    }
   }
 }
 

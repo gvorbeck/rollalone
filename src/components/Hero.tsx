@@ -1,5 +1,6 @@
 import React from "react";
 import heroImage from "@/assets/hero.webp";
+import { generateFloatingElements } from "@/utils/decorative";
 
 const Hero: React.FC = () => {
   return (
@@ -67,9 +68,11 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-8 h-8 bg-red-500 rounded-lg rotate-12 opacity-80 animate-bounce delay-1000"></div>
-            <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-blue-500 rounded rotate-45 opacity-60 animate-bounce delay-500"></div>
-            <div className="absolute top-1/2 -left-8 w-4 h-4 bg-green-500 rounded-full opacity-40 animate-pulse delay-300"></div>
+            {generateFloatingElements("heroDecorative").map(
+              (className, index) => (
+                <div key={index} className={className} />
+              )
+            )}
           </div>
         </div>
       </div>

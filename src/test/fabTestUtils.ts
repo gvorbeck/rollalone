@@ -35,7 +35,9 @@ export class FABTestHelper {
     });
 
     if (this.config.expectedPosition) {
-      expect(fab).toHaveClass(this.config.expectedPosition);
+      // Check the parent wrapper div for position class
+      const fabContainer = fab.parentElement;
+      expect(fabContainer).toHaveClass(this.config.expectedPosition);
     }
 
     return { fab };
@@ -121,7 +123,7 @@ export const FAB_CONFIGS = {
     fabName: "open table of contents",
     panelText: "Table of Contents",
     fabClass: "bg-blue-600",
-    expectedPosition: "right-40",
+    expectedPosition: "44",
   },
 } as const;
 

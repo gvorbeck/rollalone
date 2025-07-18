@@ -35,9 +35,11 @@ describe("FAB Context Integration", () => {
     fireEvent.click(diceRollerFAB);
     // Check if dice roller panel is visible and card drawer is closed
     expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
-    
+
     // Card drawer panel is still in DOM but hidden via CSS classes
-    const cardDrawerPanel = screen.getByText("Card Drawer").closest(".absolute");
+    const cardDrawerPanel = screen
+      .getByText("Card Drawer")
+      .closest(".absolute");
     expect(cardDrawerPanel).toHaveClass("opacity-0", "pointer-events-none");
   });
 

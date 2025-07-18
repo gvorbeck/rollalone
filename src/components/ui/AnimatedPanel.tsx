@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { cn } from "@/utils/cn";
+import { createPanelStates } from "@/utils/animations";
 
 // Reusable animated panel component
 export interface AnimatedPanelProps {
@@ -23,19 +24,24 @@ export const AnimatedPanel: React.FC<AnimatedPanelProps> = ({
   width = "md",
   variant = "overlay",
 }) => {
+  const panelStates = createPanelStates(isOpen);
+
   // For floating variant, return a simple animated div
   if (variant === "floating") {
     return (
       <div
         className={cn(
-          "bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 transition-all duration-300 ease-out transform",
-          isOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-2 pointer-events-none",
+          "bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4",
+          panelStates.base,
+          panelStates.visible,
           className
         )}
         role="dialog"
-        aria-labelledby={title ? `${title.toLowerCase().replace(/\s+/g, "-")}-title` : undefined}
+        aria-labelledby={
+          title
+            ? `${title.toLowerCase().replace(/\s+/g, "-")}-title`
+            : undefined
+        }
       >
         {children}
       </div>
@@ -43,19 +49,7 @@ export const AnimatedPanel: React.FC<AnimatedPanelProps> = ({
   }
 
   // Original overlay variant
-  const baseClasses = [
-    "fixed",
-    "inset-0",
-    "z-40",
-    "transition-all",
-    "duration-300",
-    "ease-out",
-    "transform",
-  ];
-
-  const visibilityClasses = isOpen
-    ? ["opacity-100", "scale-100", "translate-y-0"]
-    : ["opacity-0", "scale-95", "translate-y-2", "pointer-events-none"];
+  const baseClasses = ["fixed", "inset-0", "z-40"];
 
   const positionClasses = {
     right: "flex justify-end items-start p-4",
@@ -78,9 +72,6 @@ export const AnimatedPanel: React.FC<AnimatedPanelProps> = ({
     "border-gray-700",
     "max-h-[90vh]",
     "overflow-y-auto",
-    "transition-all",
-    "duration-300",
-    "ease-out",
   ];
 
   return (
@@ -88,11 +79,14 @@ export const AnimatedPanel: React.FC<AnimatedPanelProps> = ({
       className={cn(
         baseClasses,
         positionClasses[position],
-        visibilityClasses,
+        panelStates.base,
+        panelStates.visible,
         className
       )}
       role="dialog"
-      aria-labelledby={title ? `${title.toLowerCase().replace(/\s+/g, "-")}-title` : undefined}
+      aria-labelledby={
+        title ? `${title.toLowerCase().replace(/\s+/g, "-")}-title` : undefined
+      }
     >
       <div className={cn(panelClasses, widthClasses[width])}>
         {/* Header - only render if title and onClose are provided */}

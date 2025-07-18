@@ -1,7 +1,11 @@
-// Utility functions for scrolling to cards and highlighting them
+// Utility to scroll to cards and highlight them with animations
+// Handles internal links and card navigation
 
-// Map of card link text to actual card titles
-const CARD_LINK_MAP: Record<string, string> = {
+import { errorHandlers } from "./errorHandling";
+import { triggerAnimation, CARD_HIGHLIGHT_ANIMATION } from "./animations";
+
+// Internal link mappings for common card references
+const INTERNAL_LINK_MAPPINGS: Record<string, string> = {
   "PLOT HOOK": "Plot Hook Generator",
   "RANDOM EVENT": "Random Events & Complex Questions",
   "SET THE SCENE": "Set the Scene",
@@ -9,67 +13,62 @@ const CARD_LINK_MAP: Record<string, string> = {
   "ORACLE (FOCUS)": "Oracle (Focus)",
   "ORACLE (HOW)": "Oracle (How)",
   "ORACLE (YES/NO)": "Oracle (Yes/No)",
-  ORACLE: "Oracle (Yes/No)", // Default Oracle links to Yes/No
+  ORACLE: "Oracle (Yes/No)",
   "ACTION FOCUS": "Oracle (Focus)",
   "DETAIL FOCUS": "Oracle (Focus)",
   "TOPIC FOCUS": "Oracle (Focus)",
 };
 
 /**
- * Scrolls to a card by its title and highlights it
- * @param linkText - The text that was clicked (e.g., "PLOT HOOK" or actual card title)
+ * Find a card element by its title
  */
-export const scrollToCard = (linkText: string): void => {
-  // First check if this is a mapped link (internal cross-references)
-  let cardTitle = CARD_LINK_MAP[linkText];
-
-  // If no mapping found, assume it's a direct card title
-  if (!cardTitle) {
-    cardTitle = linkText;
-  }
-
-  // Find the card element by its title
-  const cardElements = document.querySelectorAll("[data-card-title]");
-  let targetCard: Element | null = null;
-
-  for (const card of cardElements) {
-    if (card.getAttribute("data-card-title") === cardTitle) {
-      targetCard = card;
-      break;
-    }
-  }
-
-  if (!targetCard) {
-    console.warn(`Could not find card with title "${cardTitle}"`);
-    return;
-  }
-
-  // Scroll to the card with smooth animation
-  targetCard.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-  });
-
-  // Add highlight animation
-  highlightCard(targetCard as HTMLElement);
+const findCardElement = (cardTitle: string): Element | null => {
+  return errorHandlers.dom.querySelector(`[data-card-title="${cardTitle}"]`);
 };
 
 /**
- * Adds a highlight animation to a card element
- * @param cardElement - The card DOM element to highlight
+ * Scroll to element with smooth behavior
  */
-const highlightCard = (cardElement: HTMLElement): void => {
-  // Remove any existing highlight
-  cardElement.classList.remove("card-highlight");
+const scrollToElement = (element: Element): boolean => {
+  return errorHandlers.dom.scrollToElement(element, {
+    behavior: "smooth",
+    block: "start",
+  });
+};
 
-  // Force a reflow to ensure the class removal takes effect
-  void cardElement.offsetHeight;
+/**
+ * Highlight a card with animation
+ */
+const highlightCard = async (cardElement: HTMLElement): Promise<void> => {
+  await triggerAnimation(cardElement, CARD_HIGHLIGHT_ANIMATION, 1500);
+};
 
-  // Add the highlight class
-  cardElement.classList.add("card-highlight");
+/**
+ * Main scroll to card function
+ * @param cardTitle - The title of the card to scroll to
+ */
+export const scrollToCard = async (cardTitle: string): Promise<void> => {
+  if (!cardTitle?.trim()) {
+    return;
+  }
 
-  // Remove the highlight class after animation completes
-  setTimeout(() => {
-    cardElement.classList.remove("card-highlight");
-  }, 1500); // 1.5 seconds to match the CSS animation duration
+  // Check if it's an internal link mapping
+  const mappedTitle =
+    INTERNAL_LINK_MAPPINGS[cardTitle.toUpperCase()] || cardTitle;
+
+  // Find the card element
+  const cardElement = findCardElement(mappedTitle);
+
+  if (!cardElement) {
+    console.warn(`Could not find card with title "${mappedTitle}"`);
+    return;
+  }
+
+  // Scroll to the card
+  const scrolled = scrollToElement(cardElement);
+
+  if (scrolled && cardElement instanceof HTMLElement) {
+    // Highlight the card after scrolling
+    await highlightCard(cardElement);
+  }
 };

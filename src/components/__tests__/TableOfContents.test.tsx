@@ -188,7 +188,7 @@ describe("TableOfContents Component", () => {
     const fabContainer = screen
       .getByRole("button", { name: /open table of contents/i })
       .closest("div");
-    expect(fabContainer).toHaveClass("right-40"); // Positioned to the left of card drawer with proper spacing
+    expect(fabContainer).toHaveClass("right-44"); // Positioned to the left of card drawer with proper spacing
   });
 
   it("applies smooth animations", async () => {

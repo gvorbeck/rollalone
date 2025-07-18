@@ -168,7 +168,10 @@ describe("App Component", () => {
 
     // Check that TOC closes after navigation
     await waitFor(() => {
-      const panel = screen.getByRole("dialog");
+      // Target the TOC panel specifically by its aria-labelledby attribute
+      const panel = document.querySelector(
+        '[aria-labelledby="table-of-contents-title"]'
+      );
       expect(panel).toHaveClass("pointer-events-none");
       expect(panel).toHaveClass("opacity-0");
     });
@@ -256,7 +259,7 @@ describe("App Component", () => {
 
     expect(diceRollerFAB.closest("div")).toHaveClass("right-6");
     expect(cardDrawerFAB.closest("div")).toHaveClass("right-23");
-    expect(tocFAB.closest("div")).toHaveClass("right-40");
+    expect(tocFAB.closest("div")).toHaveClass("right-44");
   });
 
   it("handles scroll behavior", () => {

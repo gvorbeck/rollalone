@@ -75,13 +75,17 @@ const TableOfContents: React.FC = () => {
   return (
     <>
       {/* TOC Panel with Animation */}
-      <div className="fixed bottom-6 right-40 z-50">
+      <div className="fixed bottom-6 right-44 z-50">
         <AnimatedPanel
           isOpen={isOpen}
           variant="floating"
+          title="Table of Contents"
           className="absolute bottom-16 right-0 w-72 max-h-96 overflow-y-auto custom-scrollbar"
         >
-          <div id="toc-title" className="text-white text-sm mb-3 font-medium">
+          <div
+            id="table-of-contents-title"
+            className="text-white text-sm mb-3 font-medium"
+          >
             Table of Contents
           </div>
 
@@ -112,7 +116,7 @@ const TableOfContents: React.FC = () => {
       <FAB
         onClick={() => toggleFAB("toc")}
         variant="blue"
-        position="right-40"
+        position="right-44"
         isOpen={isOpen}
         className={isOpen ? "rotate-180" : "rotate-0"}
         aria-expanded={isOpen}
