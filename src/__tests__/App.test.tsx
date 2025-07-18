@@ -257,9 +257,16 @@ describe("App Component", () => {
       name: /open table of contents/i,
     });
 
-    expect(diceRollerFAB.closest("div")).toHaveClass("right-6");
-    expect(cardDrawerFAB.closest("div")).toHaveClass("right-23");
-    expect(tocFAB.closest("div")).toHaveClass("right-44");
+    // All FABs should be in the same flex container now
+    const fabContainer = screen
+      .getByRole("main")
+      .parentElement?.querySelector(
+        "div.fixed.bottom-4.right-4.flex.gap-4.z-50"
+      );
+    expect(fabContainer).toBeInTheDocument();
+    expect(fabContainer).toContainElement(tocFAB.closest("div"));
+    expect(fabContainer).toContainElement(cardDrawerFAB.closest("div"));
+    expect(fabContainer).toContainElement(diceRollerFAB.closest("div"));
   });
 
   it("handles scroll behavior", () => {

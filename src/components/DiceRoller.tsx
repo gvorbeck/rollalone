@@ -70,6 +70,7 @@ const DiceRoller: React.FC = () => {
       // Add to history
       diceHistory.addRoll(diceInput, roll.total, roll.output);
       setHistory(diceHistory.getHistory());
+      setDiceInput(""); // Clear input after successful roll
     } catch (error) {
       console.error("Invalid dice notation:", error);
       setLastRoll("Invalid dice notation");

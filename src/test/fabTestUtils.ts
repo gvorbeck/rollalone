@@ -34,11 +34,9 @@ export class FABTestHelper {
       name: new RegExp(this.config.fabName, "i"),
     });
 
-    if (this.config.expectedPosition) {
-      // Check the parent wrapper div for position class
-      const fabContainer = fab.parentElement;
-      expect(fabContainer).toHaveClass(this.config.expectedPosition);
-    }
+    // With the new flex container layout, we just verify the FAB is present
+    // Individual positioning is handled by the flex container in App.tsx
+    expect(fab).toBeInTheDocument();
 
     return { fab };
   }
