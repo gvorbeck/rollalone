@@ -15,11 +15,6 @@ vi.mock("@/data/cards", () => ({
     contentType: "text",
     content: "This system uses a deck of playing cards",
   },
-  quickReference: {
-    title: "Quick Reference",
-    contentType: "list",
-    content: ["Reference 1", "Reference 2"],
-  },
   oracleYesNo: {
     title: "Oracle (Yes/No)",
     contentType: "text",

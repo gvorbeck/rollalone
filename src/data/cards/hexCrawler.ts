@@ -37,7 +37,8 @@ const hexCrawler: CardProps = {
       ],
     },
     {
-      title: "Points of Interest (d12, on 1)",
+      title:
+        "Points of Interest (Roll d6. On a 1, the hex has a point of interest. Use Detail Focus + Action Focus to determine what it is, or roll d12)",
       rows: [
         ["1-2", "Settlement"],
         ["3-4", "Structure"],

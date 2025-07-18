@@ -17,7 +17,6 @@ const allCards: CardProps[] = [
   // Core Gameplay
   cards.howToPlay,
   cards.playingCards,
-  cards.quickReference,
   cards.oracleYesNo,
   cards.oracleHow,
   cards.setTheScene,

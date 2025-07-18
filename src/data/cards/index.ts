@@ -4,7 +4,6 @@
 // Row 1: Core Gameplay
 export { default as howToPlay } from "./howToPlay";
 export { default as playingCards } from "./playingCards";
-export { default as quickReference } from "./quickReference";
 export { default as oracleYesNo } from "./oracleYesNo";
 export { default as oracleHow } from "./oracleHow";
 export { default as setTheScene } from "./setTheScene";
