@@ -1,6 +1,11 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@/test/utils";
 import TableOfContents from "../TableOfContents";
+import { FABTestHelper, FAB_CONFIGS } from "@/test/fabTestUtils";
+import { createLocalStorageMock } from "@/test/mockUtils";
+
+// Mock localStorage
+createLocalStorageMock();
 
 // Mock the scrollToCard utility
 vi.mock("@/utils/scrollToCard", () => ({
@@ -11,36 +16,21 @@ import { scrollToCard } from "@/utils/scrollToCard";
 const mockScrollToCard = vi.mocked(scrollToCard);
 
 describe("TableOfContents Component", () => {
+  let fabHelper: FABTestHelper;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    fabHelper = new FABTestHelper(FAB_CONFIGS.tableOfContents);
   });
 
-  it("renders floating action button", () => {
+  it("renders floating action button", async () => {
     render(<TableOfContents />);
-
-    const fab = screen.getByRole("button", { name: /open table of contents/i });
-    expect(fab).toBeInTheDocument();
-    expect(fab).toHaveClass("bg-blue-600");
+    await fabHelper.testFABRender();
   });
 
   it("opens and closes navigation panel", async () => {
     render(<TableOfContents />);
-
-    const fab = screen.getByRole("button", { name: /open table of contents/i });
-    fireEvent.click(fab);
-
-    await waitFor(() => {
-      expect(screen.getByText(/table of contents/i)).toBeInTheDocument();
-    });
-
-    const closeButton = screen.getByRole("button", { name: /close/i });
-    fireEvent.click(closeButton);
-
-    await waitFor(() => {
-      const panel = screen.getByRole("dialog");
-      expect(panel).toHaveClass("pointer-events-none");
-      expect(panel).toHaveClass("opacity-0");
-    });
+    await fabHelper.testPanelOpenClose();
   });
 
   it("displays all navigation sections", async () => {

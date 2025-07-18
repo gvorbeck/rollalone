@@ -3,18 +3,11 @@ import { screen, fireEvent, waitFor } from "@testing-library/react";
 import { render } from "@/test/utils";
 import CardDrawer from "@/components/CardDrawer";
 import { cardDrawer } from "@/utils/cardDrawer";
+import { FABTestHelper, FAB_CONFIGS } from "@/test/fabTestUtils";
+import { createLocalStorageMock } from "@/test/mockUtils";
 
 // Mock localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-
-Object.defineProperty(window, "localStorage", {
-  value: localStorageMock,
-});
+createLocalStorageMock();
 
 // Mock the cardDrawer utility
 vi.mock("@/utils/cardDrawer", () => ({
@@ -28,8 +21,11 @@ vi.mock("@/utils/cardDrawer", () => ({
 }));
 
 describe("CardDrawer", () => {
+  let fabHelper: FABTestHelper;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    fabHelper = new FABTestHelper(FAB_CONFIGS.cardDrawer);
 
     // Default mock implementations
     (cardDrawer.getDeckInfo as ReturnType<typeof vi.fn>).mockReturnValue({
@@ -55,20 +51,14 @@ describe("CardDrawer", () => {
   });
 
   describe("Component Rendering", () => {
-    it("should render the FAB button", () => {
+    it("should render the FAB button", async () => {
       render(<CardDrawer />);
-
-      const fabButton = screen.getByTitle("Draw playing card");
-      expect(fabButton).toBeInTheDocument();
-      expect(fabButton).toHaveClass("bg-red-600");
+      await fabHelper.testFABRender();
     });
 
-    it("should be positioned correctly", () => {
+    it("should be positioned correctly", async () => {
       render(<CardDrawer />);
-
-      const container = screen.getByTitle("Draw playing card").parentElement;
-      expect(container).toHaveClass("right-23");
-      expect(container).toHaveClass("bottom-6");
+      await fabHelper.testFABPositioning();
     });
 
     it("should not show the panel initially", () => {
@@ -81,32 +71,9 @@ describe("CardDrawer", () => {
   });
 
   describe("Panel Interaction", () => {
-    it("should open panel when FAB is clicked", () => {
+    it("should open and close panel", async () => {
       render(<CardDrawer />);
-
-      const fabButton = screen.getByTitle("Draw playing card");
-      fireEvent.click(fabButton);
-
-      expect(screen.getByText("Card Drawer")).toBeInTheDocument();
-      expect(screen.getByText("Draw Card")).toBeInTheDocument();
-    });
-
-    it("should close panel when close button is clicked", () => {
-      render(<CardDrawer />);
-
-      const fabButton = screen.getByTitle("Draw playing card");
-      fireEvent.click(fabButton);
-
-      // Panel should be visible now
-      const panel = document.querySelector(".fixed .absolute");
-      expect(panel).toHaveClass("opacity-100");
-      expect(panel).not.toHaveClass("pointer-events-none");
-
-      const closeButton = screen.getByText("✕");
-      fireEvent.click(closeButton);
-
-      // Panel should be hidden again via CSS classes
-      expect(panel).toHaveClass("opacity-0", "pointer-events-none");
+      await fabHelper.testPanelOpenClose();
     });
 
     it("should show deck status information", () => {

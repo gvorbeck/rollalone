@@ -1,6 +1,10 @@
 import React from "react";
 import { scrollToCard } from "@/utils/scrollToCard";
 import { useFAB } from "@/contexts/FABContext";
+import { FAB } from "@/components/ui/FAB";
+import { Button } from "@/components/ui/Button";
+import { AnimatedPanel } from "@/components/ui/AnimatedPanel";
+import { UIIcons } from "@/components/ui/Icons";
 
 // Table of Contents data - organized by logical sections
 const TOC_SECTIONS = [
@@ -69,65 +73,54 @@ const TableOfContents: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-40 z-50">
+    <>
       {/* TOC Panel with Animation */}
-      <div
-        role="dialog"
-        aria-labelledby="toc-title"
-        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-72 max-h-96 overflow-y-auto custom-scrollbar transition-all duration-300 ease-out transform ${
-          isOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 translate-y-2 pointer-events-none"
-        }`}
-      >
-        <div id="toc-title" className="text-white text-sm mb-3 font-medium">
-          Table of Contents
-        </div>
-
-        {TOC_SECTIONS.map((section, sectionIndex) => (
-          <div key={section.title} className={sectionIndex > 0 ? "mt-4" : ""}>
-            <div className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
-              {section.title}
-            </div>
-            <div className="space-y-1">
-              {section.cards.map((card) => (
-                <button
-                  key={card.id}
-                  onClick={() => handleCardClick(card.id)}
-                  className="w-full text-left px-2 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded transition-colors duration-150 cursor-pointer"
-                >
-                  {card.title}
-                </button>
-              ))}
-            </div>
+      <div className="fixed bottom-6 right-40 z-50">
+        <AnimatedPanel
+          isOpen={isOpen}
+          variant="floating"
+          className="absolute bottom-16 right-0 w-72 max-h-96 overflow-y-auto custom-scrollbar"
+        >
+          <div id="toc-title" className="text-white text-sm mb-3 font-medium">
+            Table of Contents
           </div>
-        ))}
+
+          {TOC_SECTIONS.map((section, sectionIndex) => (
+            <div key={section.title} className={sectionIndex > 0 ? "mt-4" : ""}>
+              <div className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
+                {section.title}
+              </div>
+              <div className="space-y-1">
+                {section.cards.map((card) => (
+                  <Button
+                    key={card.id}
+                    onClick={() => handleCardClick(card.id)}
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start px-2 py-1.5 text-sm text-gray-300 hover:text-white"
+                  >
+                    {card.title}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </AnimatedPanel>
       </div>
 
       {/* Floating Action Button */}
-      <button
+      <FAB
         onClick={() => toggleFAB("toc")}
+        variant="blue"
+        position="right-40"
+        isOpen={isOpen}
+        className={isOpen ? "rotate-180" : "rotate-0"}
         aria-expanded={isOpen}
-        className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 cursor-pointer ${
-          isOpen ? "rotate-180" : "rotate-0"
-        }`}
         title={isOpen ? "Close table of contents" : "Open table of contents"}
       >
-        <svg
-          className="w-6 h-6 text-white"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
-    </div>
+        <UIIcons.Menu />
+      </FAB>
+    </>
   );
 };
 

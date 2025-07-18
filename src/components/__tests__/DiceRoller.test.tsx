@@ -1,6 +1,11 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@/test/utils";
 import DiceRoller from "../DiceRoller";
+import { FABTestHelper, FAB_CONFIGS } from "@/test/fabTestUtils";
+import { createLocalStorageMock } from "@/test/mockUtils";
+
+// Mock localStorage
+createLocalStorageMock();
 
 // Mock the DiceRoll utility
 vi.mock("@/utils/diceRoller", () => ({
@@ -46,45 +51,23 @@ vi.mock("@/utils/diceHistory", () => ({
 }));
 
 describe("DiceRoller Component", () => {
+  let fabHelper: FABTestHelper;
+
   beforeEach(() => {
     vi.clearAllMocks();
+    fabHelper = new FABTestHelper(FAB_CONFIGS.diceRoller);
     // Clear mock history between tests
     mockHistory.length = 0;
   });
 
-  it("renders floating action button", () => {
+  it("renders floating action button", async () => {
     render(<DiceRoller />);
-
-    const fab = screen.getByRole("button", { name: /open dice roller/i });
-    expect(fab).toBeInTheDocument();
-    expect(fab).toHaveClass("bg-red-600");
+    await fabHelper.testFABRender();
   });
 
   it("opens and closes dice panel", async () => {
     render(<DiceRoller />);
-
-    // Initially panel should be hidden via CSS
-    const panel = document.querySelector(".fixed .absolute");
-    expect(panel).toHaveClass("opacity-0", "pointer-events-none");
-
-    // Click to open
-    const fab = screen.getByRole("button", { name: /open dice roller/i });
-    fireEvent.click(fab);
-
-    // Check panel is now visible (without waitFor to avoid hanging)
-    expect(panel).toHaveClass("opacity-100");
-    expect(panel).not.toHaveClass("pointer-events-none");
-
-    // Find and click the close button in header (different from FAB)
-    const closeButtons = screen.getAllByTitle("Close dice roller");
-    const headerCloseButton = closeButtons.find(
-      (btn) => btn.textContent === "✕"
-    );
-    expect(headerCloseButton).toBeInTheDocument();
-    fireEvent.click(headerCloseButton!);
-
-    // Check panel is hidden again
-    expect(panel).toHaveClass("opacity-0", "pointer-events-none");
+    await fabHelper.testPanelOpenClose();
   });
 
   it("displays all dice types", async () => {
