@@ -82,89 +82,92 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
       )}
 
       {/* Expanded Panel */}
-      {isOpen && (
-        <div className="absolute bottom-16 right-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-80 border border-gray-200 dark:border-gray-700">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Card Drawer
-            </h3>
-            <button
-              onClick={() => toggleFAB("cardDrawer")}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
-            >
-              ✕
-            </button>
+      <div
+        className={`absolute bottom-16 right-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-80 border border-gray-200 dark:border-gray-700 transition-all duration-300 ease-out transform ${
+          isOpen
+            ? "opacity-100 scale-100 translate-y-0"
+            : "opacity-0 scale-95 translate-y-2 pointer-events-none"
+        }`}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Card Drawer
+          </h3>
+          <button
+            onClick={() => toggleFAB("cardDrawer")}
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+
+        {/* Deck Status */}
+        <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
+          <div className="flex justify-between">
+            <span>Cards remaining:</span>
+            <span className="font-mono">{deckInfo.remainingCards}/54</span>
           </div>
-
-          {/* Deck Status */}
-          <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-            <div className="flex justify-between">
-              <span>Cards remaining:</span>
-              <span className="font-mono">{deckInfo.remainingCards}/54</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Cards drawn:</span>
-              <span className="font-mono">{deckInfo.drawnCards}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Shuffles:</span>
-              <span className="font-mono">{deckInfo.shuffleCount}</span>
-            </div>
+          <div className="flex justify-between">
+            <span>Cards drawn:</span>
+            <span className="font-mono">{deckInfo.drawnCards}</span>
           </div>
-
-          {/* Last Drawn Card */}
-          {lastDrawnCard && (
-            <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded">
-              <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
-                Last drawn:
-              </div>
-              <div className="text-lg font-mono text-center">
-                {lastDrawnCard.display}
-              </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                {cardDrawer.getCardMeaning(lastDrawnCard)}
-              </div>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="space-y-2">
-            <button
-              onClick={handleDrawCard}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium cursor-pointer"
-            >
-              Draw Card
-            </button>
-
-            <div className="flex gap-2">
-              <button
-                onClick={handleReshuffleDeck}
-                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
-              >
-                Reshuffle
-              </button>
-              <button
-                onClick={handleResetDeck}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
-              >
-                Reset Deck
-              </button>
-            </div>
-          </div>
-
-          {/* Help Text */}
-          <div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
-            <p className="mb-1">
-              <strong>Suits:</strong> ♠ Physical, ♦ Technical, ♣ Mystical, ♥
-              Social
-            </p>
-            <p>
-              <strong>Jokers:</strong> Trigger automatic reshuffle + random
-              event
-            </p>
+          <div className="flex justify-between">
+            <span>Shuffles:</span>
+            <span className="font-mono">{deckInfo.shuffleCount}</span>
           </div>
         </div>
-      )}
+
+        {/* Last Drawn Card */}
+        {lastDrawnCard && (
+          <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded">
+            <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+              Last drawn:
+            </div>
+            <div className="text-lg font-mono text-center text-gray-300">
+              {lastDrawnCard.display}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+              {cardDrawer.getCardMeaning(lastDrawnCard)}
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          <button
+            onClick={handleDrawCard}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium cursor-pointer"
+          >
+            Draw Card
+          </button>
+
+          <div className="flex gap-2">
+            <button
+              onClick={handleReshuffleDeck}
+              className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
+            >
+              Reshuffle
+            </button>
+            <button
+              onClick={handleResetDeck}
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
+            >
+              Reset Deck
+            </button>
+          </div>
+        </div>
+
+        {/* Help Text */}
+        <div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mb-1">
+            <strong>Suits:</strong> ♠ Physical, ♦ Technical, ♣ Mystical, ♥
+            Social
+          </p>
+          <p>
+            <strong>Jokers:</strong> Trigger automatic reshuffle + random event
+          </p>
+        </div>
+      </div>
 
       {/* Floating Action Button */}
       <button

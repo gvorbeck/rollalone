@@ -253,7 +253,7 @@ const DiceRoller: React.FC = () => {
 
         {/* Dice History */}
         {showHistory && history.length > 0 && (
-          <div className="mb-3 max-h-32 overflow-y-auto border border-gray-600 rounded">
+          <div className="mb-3 max-h-32 overflow-y-auto border border-gray-600 rounded custom-scrollbar">
             {history.map((entry) => (
               <div
                 key={entry.id}

@@ -28,14 +28,17 @@ describe("FAB Context Integration", () => {
     // Open card drawer - should close table of contents
     fireEvent.click(cardDrawerFAB);
     expect(tocFAB).toHaveAttribute("aria-expanded", "false");
-    // Check if card drawer panel is visible
+    // Check if card drawer panel is visible via CSS classes
     expect(screen.getByText("Card Drawer")).toBeInTheDocument();
 
     // Open dice roller - should close card drawer
     fireEvent.click(diceRollerFAB);
     // Check if dice roller panel is visible and card drawer is closed
     expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
-    expect(screen.queryByText("Card Drawer")).not.toBeInTheDocument();
+    
+    // Card drawer panel is still in DOM but hidden via CSS classes
+    const cardDrawerPanel = screen.getByText("Card Drawer").closest(".absolute");
+    expect(cardDrawerPanel).toHaveClass("opacity-0", "pointer-events-none");
   });
 
   it("should close FAB when the same FAB is clicked again", () => {

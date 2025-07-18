@@ -74,7 +74,7 @@ const TableOfContents: React.FC = () => {
       <div
         role="dialog"
         aria-labelledby="toc-title"
-        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-72 max-h-96 overflow-y-auto transition-all duration-300 ease-out transform ${
+        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-72 max-h-96 overflow-y-auto custom-scrollbar transition-all duration-300 ease-out transform ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-2 pointer-events-none"

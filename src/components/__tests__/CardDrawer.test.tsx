@@ -74,7 +74,9 @@ describe("CardDrawer", () => {
     it("should not show the panel initially", () => {
       render(<CardDrawer />);
 
-      expect(screen.queryByText("Card Drawer")).not.toBeInTheDocument();
+      // Panel is in DOM but hidden via CSS classes
+      const panel = document.querySelector(".fixed .absolute");
+      expect(panel).toHaveClass("opacity-0", "pointer-events-none");
     });
   });
 
@@ -95,10 +97,16 @@ describe("CardDrawer", () => {
       const fabButton = screen.getByTitle("Draw playing card");
       fireEvent.click(fabButton);
 
+      // Panel should be visible now
+      const panel = document.querySelector(".fixed .absolute");
+      expect(panel).toHaveClass("opacity-100");
+      expect(panel).not.toHaveClass("pointer-events-none");
+
       const closeButton = screen.getByText("✕");
       fireEvent.click(closeButton);
 
-      expect(screen.queryByText("Card Drawer")).not.toBeInTheDocument();
+      // Panel should be hidden again via CSS classes
+      expect(panel).toHaveClass("opacity-0", "pointer-events-none");
     });
 
     it("should show deck status information", () => {
