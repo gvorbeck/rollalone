@@ -29,7 +29,6 @@ const Masonry: React.FC<MasonryProps> = ({
         if (width < 768) setColumns(1);
         else if (width < 1024) setColumns(2);
         else if (width < 1280) setColumns(3);
-        else setColumns(4);
       };
 
       updateColumns();
