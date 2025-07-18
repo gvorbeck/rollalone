@@ -12,7 +12,7 @@ export interface FABProps {
   onClick: () => void;
   title: string;
   className?: string;
-  position?: "right-6" | "right-24" | "right-44";
+  position?: "right-6" | "right-23" | "right-24" | "right-40" | "right-42" | "right-44";
   variant?: "red" | "blue" | "gray";
   isOpen?: boolean;
   size?: "sm" | "md" | "lg";
@@ -40,7 +40,10 @@ export const FAB: React.FC<FABProps> = ({
 
   const positionClasses = {
     "right-6": "right-6",
+    "right-23": "right-23",
     "right-24": "right-24",
+    "right-40": "right-40",
+    "right-42": "right-42",
     "right-44": "right-44",
   };
 

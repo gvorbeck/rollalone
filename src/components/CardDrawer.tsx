@@ -181,7 +181,7 @@ const CardDrawer: React.FC = () => {
       <FAB
         onClick={() => toggleFAB("cardDrawer")}
         variant="red"
-        position="right-24"
+        position="right-23"
         isOpen={isOpen}
         title={isOpen ? "Close card drawer" : "Draw playing card"}
       >
