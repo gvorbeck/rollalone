@@ -12,7 +12,13 @@ export interface FABProps {
   onClick: () => void;
   title: string;
   className?: string;
-  position?: "right-6" | "right-23" | "right-24" | "right-40" | "right-42" | "right-44";
+  position?:
+    | "right-6"
+    | "right-23"
+    | "right-24"
+    | "right-40"
+    | "right-42"
+    | "right-44";
   variant?: "red" | "blue" | "gray";
   isOpen?: boolean;
   size?: "sm" | "md" | "lg";
@@ -23,7 +29,6 @@ export const FAB: React.FC<FABProps> = ({
   onClick,
   title,
   className,
-  position = "right-6",
   variant = "red",
   isOpen = false,
   size = "md",
@@ -36,16 +41,8 @@ export const FAB: React.FC<FABProps> = ({
     "justify-center",
     "cursor-pointer",
     "select-none",
+    "z-50",
   ];
-
-  const positionClasses = {
-    "right-6": "right-6",
-    "right-23": "right-23",
-    "right-24": "right-24",
-    "right-40": "right-40",
-    "right-42": "right-42",
-    "right-44": "right-44",
-  };
 
   const variantClasses = {
     red: "bg-red-600 hover:bg-red-700 text-white",
@@ -62,29 +59,22 @@ export const FAB: React.FC<FABProps> = ({
   const animationStates = createFABStates(isOpen);
 
   return (
-    <div
+    <button
+      onClick={onClick}
+      title={title}
+      aria-expanded={isOpen}
       className={cn(
-        "fixed bottom-6 z-50 flex flex-col items-end gap-4 w-auto",
-        positionClasses[position]
+        baseClasses,
+        variantClasses[variant],
+        sizeClasses[size],
+        animationStates.base,
+        animationStates.rotation,
+        HOVER_EFFECTS.lift,
+        FOCUS_EFFECTS.ring,
+        className
       )}
     >
-      <button
-        onClick={onClick}
-        title={title}
-        aria-expanded={isOpen}
-        className={cn(
-          baseClasses,
-          variantClasses[variant],
-          sizeClasses[size],
-          animationStates.base,
-          animationStates.rotation,
-          HOVER_EFFECTS.lift,
-          FOCUS_EFFECTS.ring,
-          className
-        )}
-      >
-        {children}
-      </button>
-    </div>
+      {children}
+    </button>
   );
 };

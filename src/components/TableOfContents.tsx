@@ -116,7 +116,7 @@ const TableOfContents: React.FC = () => {
       <FAB
         onClick={() => toggleFAB("toc")}
         variant="blue"
-        position="right-44"
+        // position="right-44"
         isOpen={isOpen}
         className={isOpen ? "rotate-180" : "rotate-0"}
         aria-expanded={isOpen}
