@@ -32,7 +32,7 @@ describe("CardDrawer", () => {
     vi.clearAllMocks();
 
     // Default mock implementations
-    (cardDrawer.getDeckInfo as any).mockReturnValue({
+    (cardDrawer.getDeckInfo as ReturnType<typeof vi.fn>).mockReturnValue({
       remainingCards: 52,
       drawnCards: 2,
       lastDrawn: {
@@ -45,7 +45,7 @@ describe("CardDrawer", () => {
       shuffleCount: 0,
     });
 
-    (cardDrawer.getCardMeaning as any).mockReturnValue(
+    (cardDrawer.getCardMeaning as ReturnType<typeof vi.fn>).mockReturnValue(
       "A♠ - Physical (appearance, existence)"
     );
   });
@@ -134,12 +134,12 @@ describe("CardDrawer", () => {
         value: 13,
         isJoker: false,
       };
-      (cardDrawer.drawCard as any).mockReturnValue({
+      (cardDrawer.drawCard as ReturnType<typeof vi.fn>).mockReturnValue({
         card: mockCard,
         remainingCards: 51,
         deckReshuffled: false,
       });
-      (cardDrawer.getCardMeaning as any).mockReturnValue(
+      (cardDrawer.getCardMeaning as ReturnType<typeof vi.fn>).mockReturnValue(
         "K♥ - Social (personal, connection)"
       );
 
@@ -162,12 +162,12 @@ describe("CardDrawer", () => {
         value: 0,
         isJoker: true,
       };
-      (cardDrawer.drawCard as any).mockReturnValue({
+      (cardDrawer.drawCard as ReturnType<typeof vi.fn>).mockReturnValue({
         card: mockJoker,
         remainingCards: 51,
         deckReshuffled: false,
       });
-      (cardDrawer.getCardMeaning as any).mockReturnValue(
+      (cardDrawer.getCardMeaning as ReturnType<typeof vi.fn>).mockReturnValue(
         "Shuffle the deck and add a RANDOM EVENT"
       );
 
@@ -194,7 +194,7 @@ describe("CardDrawer", () => {
         value: 2,
         isJoker: false,
       };
-      (cardDrawer.drawCard as any).mockReturnValue({
+      (cardDrawer.drawCard as ReturnType<typeof vi.fn>).mockReturnValue({
         card: mockCard,
         remainingCards: 54,
         deckReshuffled: true,

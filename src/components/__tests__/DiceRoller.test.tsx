@@ -10,9 +10,46 @@ vi.mock("@/utils/diceRoller", () => ({
   })),
 }));
 
+// Mock the dice history utility with a simple approach
+const mockHistory: Array<{
+  id: string;
+  notation: string;
+  result: number;
+  breakdown: string;
+  timestamp: Date;
+}> = [];
+
+vi.mock("@/utils/diceHistory", () => ({
+  diceHistory: {
+    addRoll: vi.fn((notation: string, result: number, breakdown: string) => {
+      mockHistory.unshift({
+        id: `mock_${Date.now()}`,
+        notation,
+        result,
+        breakdown,
+        timestamp: new Date(),
+      });
+    }),
+    getHistory: vi.fn(() => [...mockHistory]),
+    clearHistory: vi.fn(() => {
+      mockHistory.length = 0;
+    }),
+    getHistoryInfo: vi.fn(() => ({
+      totalRolls: mockHistory.length,
+      oldestEntry:
+        mockHistory.length > 0
+          ? mockHistory[mockHistory.length - 1].timestamp
+          : null,
+      newestEntry: mockHistory.length > 0 ? mockHistory[0].timestamp : null,
+    })),
+  },
+}));
+
 describe("DiceRoller Component", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    // Clear mock history between tests
+    mockHistory.length = 0;
   });
 
   it("renders floating action button", () => {
@@ -229,5 +266,66 @@ describe("DiceRoller Component", () => {
     expect(screen.getByText("d12")).toBeInTheDocument();
     expect(screen.getByText("d20")).toBeInTheDocument();
     expect(screen.getByText("d%")).toBeInTheDocument();
+  });
+
+  it("shows dice history when toggled", async () => {
+    render(<DiceRoller />);
+
+    const fab = screen.getByRole("button", { name: /open dice roller/i });
+    fireEvent.click(fab);
+
+    // Input a dice expression and roll
+    const input = screen.getByPlaceholderText("1d20+3");
+    fireEvent.change(input, { target: { value: "1d6" } });
+
+    const rollButton = screen.getByRole("button", { name: "Roll" });
+    fireEvent.click(rollButton);
+
+    // Check that history section appears
+    const historyButton = screen.getByText(/History/);
+    expect(historyButton).toBeInTheDocument();
+
+    // Should show count of 1 after rolling
+    expect(screen.getByText(/History \(1\)/)).toBeInTheDocument();
+
+    // Click to show history
+    fireEvent.click(historyButton);
+
+    // Should show the roll we just made in history (check for the history panel content)
+    const historyEntries = screen.getAllByText(/Result: 1d6/);
+    expect(historyEntries.length).toBeGreaterThan(1); // Main result + history entry
+
+    // Check that the history section contains the expected notation
+    expect(screen.getByText("1d6")).toBeInTheDocument();
+    expect(screen.getByText(/Just now/)).toBeInTheDocument();
+  });
+
+  it("clears dice history when clear button is clicked", async () => {
+    render(<DiceRoller />);
+
+    const fab = screen.getByRole("button", { name: /open dice roller/i });
+    fireEvent.click(fab);
+
+    // Roll some dice first
+    const input = screen.getByPlaceholderText("1d20+3");
+    fireEvent.change(input, { target: { value: "2d6" } });
+
+    const rollButton = screen.getByRole("button", { name: "Roll" });
+    fireEvent.click(rollButton);
+
+    // Open history
+    const historyButton = screen.getByText(/History/);
+    fireEvent.click(historyButton);
+
+    // Clear history - need to find the clear button by title since it might not be visible initially
+    const clearButton = screen.getByTitle("Clear history");
+    fireEvent.click(clearButton);
+
+    // History should now show empty message
+    expect(
+      screen.getByText(
+        "No dice rolls yet. Start rolling to build your history!"
+      )
+    ).toBeInTheDocument();
   });
 });

@@ -13,12 +13,14 @@ Roll Alone is a digital adaptation and extension of Karl Hendricks' **One Page S
 ### ✨ Key Features
 
 #### 🎲 **Advanced Dice Roller**
+
 - **Complex expressions** - Roll `2d6+1d4`, `1d20+3d6-2`, or any combination
 - **Keep highest/lowest** - Use `4d6kh3` or `2d20kl1` for advantage/disadvantage
 - **Professional SVG icons** - Beautiful dice representations for d4, d6, d8, d10, d12, d20
 - **Detailed breakdowns** - See individual rolls and calculations
 
 #### 🃏 **Playing Card System**
+
 - **Full 54-card deck** - Standard deck plus jokers with suit meanings
 - **Persistent state** - Deck remembers what's been drawn across sessions
 - **Automatic reshuffling** - Deck reshuffles when empty or joker is drawn
@@ -26,18 +28,21 @@ Roll Alone is a digital adaptation and extension of Karl Hendricks' **One Page S
 - **Random events** - Jokers trigger automatic reshuffle + random event generation
 
 #### 📋 **Smart Navigation**
+
 - **Floating Table of Contents** - Quick access to any card with organized sections
 - **Intelligent positioning** - Three floating action buttons that never overlap
 - **Smart scrolling** - Instantly jump to any oracle, generator, or reference card
 - **One-click access** - Everything you need is just a click away
 
 #### 🧭 **Complete Oracle System**
+
 - **Yes/No Oracle** - Likelihood-based answers with modifiers
 - **How Oracle** - Intensity and quality determination
 - **Focus Oracles** - Action, Detail, and Topic focus tables
 - **Internal linking** - Seamless navigation between related oracle content
 
 #### 🏰 **Adventure Generators**
+
 - **Plot hooks** - Generate objectives, adversaries, and rewards
 - **NPC Generator** - Create memorable characters with goals and secrets
 - **Dungeon Crawler** - Room-by-room exploration with encounters
@@ -45,12 +50,14 @@ Roll Alone is a digital adaptation and extension of Karl Hendricks' **One Page S
 - **Generic Generator** - Universal tool for any game element
 
 #### 🎭 **GM Moves & Story Tools**
+
 - **Pacing Moves** - Keep the action moving during lulls
 - **Failure Moves** - Turn setbacks into story opportunities
 - **Random Events** - Combine Action + Topic Focus for surprises
 - **Scene Setting** - Complications and alterations for any situation
 
 #### 💻 **Modern Web Experience**
+
 - **🌙 Dark Theme** - Optimized for extended gaming sessions
 - **📱 Responsive Design** - Works seamlessly on desktop, tablet, and mobile
 - **⚡ No Installation** - Browser-based, works offline after first load
@@ -63,12 +70,14 @@ Visit **[rollal.one](https://rollal.one)** to start your solo RPG adventure imme
 ## ⚡ Technical Highlights
 
 ### 🎯 **Production-Ready Quality**
+
 - **184 passing tests** with comprehensive coverage including unit, integration, and accessibility tests
 - **Zero build warnings** with strict TypeScript configuration
 - **Optimized bundle** - Only 73KB gzipped for the entire application
 - **Accessibility compliant** with proper ARIA attributes and keyboard navigation
 
 ### 🔧 **Advanced Features**
+
 - **Custom dice engine** that parses complex expressions like `2d6+1d4+3`
 - **Persistent state management** using localStorage for card deck and preferences
 - **Smart UI patterns** with mutually exclusive floating action buttons
@@ -76,6 +85,7 @@ Visit **[rollal.one](https://rollal.one)** to start your solo RPG adventure imme
 - **Error boundaries** with graceful fallback handling
 
 ### 🎨 **Design System**
+
 - **Design tokens** for consistent styling across components
 - **Professional SVG icons** replacing emoji for crisp rendering
 - **Smooth animations** with CSS transitions and transforms
@@ -86,18 +96,21 @@ Visit **[rollal.one](https://rollal.one)** to start your solo RPG adventure imme
 Roll Alone features three floating action buttons in the bottom-right corner for instant access to all tools:
 
 ### 🎲 **Dice Roller** (Red Button)
+
 - **Simple rolls**: Type `d20`, `3d6`, or `2d10+5`
 - **Complex expressions**: Use `2d6+1d4+3` or `1d20+2d6-1`
 - **Advantage/Disadvantage**: Try `2d20kh1` (keep highest) or `2d20kl1` (keep lowest)
 - **Results show**: Individual rolls, modifiers, and final total
 
 ### 🃏 **Card Drawer** (Red Button, Middle)
+
 - **Draw cards** for inspiration using the SUIT DOMAIN system
 - **Persistent deck** remembers your progress across sessions
 - **Jokers** automatically reshuffle and trigger random events
 - **Card meanings** combine rank with suit for rich interpretation
 
 ### 📋 **Table of Contents** (Blue Button, Left)
+
 - **Quick navigation** to any card with organized sections:
   - **Core Gameplay** - Rules, references, and tips
   - **Oracles & Decisions** - Yes/No, How, and Focus oracles
@@ -106,6 +119,7 @@ Roll Alone features three floating action buttons in the bottom-right corner for
   - **Exploration** - Dungeon and hex crawling tools
 
 ### 🎯 **Getting Started**
+
 1. **Start with "How to Play"** - Get oriented with the basic mechanics
 2. **Try the dice roller** - Roll `2d6` or `1d20` to get comfortable
 3. **Draw a card** - See how the suit domain system works

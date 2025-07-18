@@ -14,7 +14,8 @@ class MockPerformanceObserver {
   }
 }
 
-global.PerformanceObserver = MockPerformanceObserver as any;
+global.PerformanceObserver =
+  MockPerformanceObserver as unknown as typeof PerformanceObserver;
 
 describe("Performance Tests", () => {
   it("renders within acceptable time", () => {

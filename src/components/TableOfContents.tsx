@@ -94,7 +94,7 @@ const TableOfContents: React.FC = () => {
                 <button
                   key={card.id}
                   onClick={() => handleCardClick(card.id)}
-                  className="w-full text-left px-2 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded transition-colors duration-150"
+                  className="w-full text-left px-2 py-1.5 text-sm text-gray-300 hover:text-white hover:bg-gray-700 rounded transition-colors duration-150 cursor-pointer"
                 >
                   {card.title}
                 </button>
@@ -108,7 +108,7 @@ const TableOfContents: React.FC = () => {
       <button
         onClick={() => toggleFAB("toc")}
         aria-expanded={isOpen}
-        className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
+        className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 cursor-pointer ${
           isOpen ? "rotate-180" : "rotate-0"
         }`}
         title={isOpen ? "Close table of contents" : "Open table of contents"}

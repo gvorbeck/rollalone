@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DiceRoll } from "../utils/diceRoller";
+import { diceHistory, type DiceHistoryEntry } from "../utils/diceHistory";
 import { useFAB } from "@/contexts/FABContext";
 
 // SVG dice icon components
@@ -127,6 +128,13 @@ const DiceRoller: React.FC = () => {
   const isOpen = activeFAB === "diceRoller";
   const [diceInput, setDiceInput] = useState<string>("");
   const [lastRoll, setLastRoll] = useState<string>("");
+  const [history, setHistory] = useState<DiceHistoryEntry[]>([]);
+  const [showHistory, setShowHistory] = useState<boolean>(false);
+
+  // Load history when component mounts
+  useEffect(() => {
+    setHistory(diceHistory.getHistory());
+  }, []);
 
   const addDie = (dieType: string) => {
     if (!diceInput) {
@@ -157,7 +165,12 @@ const DiceRoller: React.FC = () => {
 
     try {
       const roll = new DiceRoll(diceInput);
-      setLastRoll(`${diceInput}: ${roll.output}`);
+      const result = `${diceInput}: ${roll.output}`;
+      setLastRoll(result);
+
+      // Add to history
+      diceHistory.addRoll(diceInput, roll.total, roll.output);
+      setHistory(diceHistory.getHistory());
     } catch (error) {
       console.error("Invalid dice notation:", error);
       setLastRoll("Invalid dice notation");
@@ -169,11 +182,30 @@ const DiceRoller: React.FC = () => {
     setLastRoll("");
   };
 
+  const clearHistory = () => {
+    diceHistory.clearHistory();
+    setHistory([]);
+  };
+
+  const formatTimestamp = (timestamp: Date): string => {
+    const now = new Date();
+    const diffMs = now.getTime() - timestamp.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return "Just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return timestamp.toLocaleDateString();
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {/* Dice Roller Panel with Animation */}
       <div
-        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-80 max-w-[calc(100vw-2rem)] transition-all duration-300 ease-out transform ${
+        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-96 max-w-[calc(100vw-2rem)] transition-all duration-300 ease-out transform ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-2 pointer-events-none"
@@ -186,7 +218,7 @@ const DiceRoller: React.FC = () => {
           </div>
           <button
             onClick={() => toggleFAB("diceRoller")}
-            className="text-gray-400 hover:text-gray-200 transition-colors"
+            className="text-gray-400 hover:text-gray-200 transition-colors cursor-pointer"
             title="Close dice roller"
           >
             ✕
@@ -197,6 +229,52 @@ const DiceRoller: React.FC = () => {
         {lastRoll && (
           <div className="mb-3 p-2 bg-gray-700 rounded text-white text-sm break-words">
             {lastRoll}
+          </div>
+        )}
+
+        {/* History Toggle and Clear */}
+        <div className="flex justify-between items-center mb-3">
+          <button
+            onClick={() => setShowHistory(!showHistory)}
+            className="text-gray-300 hover:text-white text-sm flex items-center gap-1 cursor-pointer"
+          >
+            History ({history.length})
+          </button>
+          {history.length > 0 && (
+            <button
+              onClick={clearHistory}
+              className="text-gray-400 hover:text-gray-200 text-xs cursor-pointer"
+              title="Clear history"
+            >
+              Clear
+            </button>
+          )}
+        </div>
+
+        {/* Dice History */}
+        {showHistory && history.length > 0 && (
+          <div className="mb-3 max-h-32 overflow-y-auto border border-gray-600 rounded">
+            {history.map((entry) => (
+              <div
+                key={entry.id}
+                className="p-2 border-b border-gray-600 last:border-b-0 text-xs"
+              >
+                <div className="flex justify-between items-start">
+                  <span className="text-white font-mono">{entry.notation}</span>
+                  <span className="text-gray-400 text-xs ml-2 flex-shrink-0">
+                    {formatTimestamp(entry.timestamp)}
+                  </span>
+                </div>
+                <div className="text-gray-300 mt-1">{entry.breakdown}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Empty history message */}
+        {showHistory && history.length === 0 && (
+          <div className="mb-3 p-3 text-center text-gray-400 text-sm border border-gray-600 rounded">
+            No dice rolls yet. Start rolling to build your history!
           </div>
         )}
 
@@ -212,13 +290,13 @@ const DiceRoller: React.FC = () => {
           <button
             onClick={rollDice}
             disabled={!diceInput.trim()}
-            className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium flex-shrink-0"
+            className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium flex-shrink-0 cursor-pointer"
           >
             Roll
           </button>
           <button
             onClick={clearInput}
-            className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm flex-shrink-0"
+            className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm flex-shrink-0 cursor-pointer"
             title="Clear input"
           >
             ↻
@@ -231,7 +309,7 @@ const DiceRoller: React.FC = () => {
             <button
               key={type}
               onClick={() => addDie(type)}
-              className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-2 rounded text-xs flex flex-col items-center gap-1"
+              className="bg-gray-700 hover:bg-gray-600 text-white py-3 px-2 rounded text-xs flex flex-col items-center gap-1 cursor-pointer"
               title={title}
             >
               <div className="text-lg">{icon}</div>
@@ -244,7 +322,7 @@ const DiceRoller: React.FC = () => {
       {/* Floating Action Button with Rotation Animation */}
       <button
         onClick={() => toggleFAB("diceRoller")}
-        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
+        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 cursor-pointer ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}
         title={isOpen ? "Close dice roller" : "Open dice roller"}

@@ -90,7 +90,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
             </h3>
             <button
               onClick={() => toggleFAB("cardDrawer")}
-              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
             >
               ✕
             </button>
@@ -131,7 +131,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
           <div className="space-y-2">
             <button
               onClick={handleDrawCard}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded font-medium cursor-pointer"
             >
               Draw Card
             </button>
@@ -139,13 +139,13 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
             <div className="flex gap-2">
               <button
                 onClick={handleReshuffleDeck}
-                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded text-sm"
+                className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
               >
                 Reshuffle
               </button>
               <button
                 onClick={handleResetDeck}
-                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm"
+                className="flex-1 bg-red-600 hover:bg-red-700 text-white py-1 px-3 rounded text-sm cursor-pointer"
               >
                 Reset Deck
               </button>
@@ -169,7 +169,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
       {/* Floating Action Button */}
       <button
         onClick={() => toggleFAB("cardDrawer")}
-        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
+        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 cursor-pointer ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}
         title={isOpen ? "Close card drawer" : "Draw playing card"}
