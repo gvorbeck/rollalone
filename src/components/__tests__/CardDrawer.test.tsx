@@ -59,15 +59,15 @@ describe("CardDrawer", () => {
 
       const fabButton = screen.getByTitle("Draw playing card");
       expect(fabButton).toBeInTheDocument();
-      expect(fabButton).toHaveClass("bg-blue-600");
+      expect(fabButton).toHaveClass("bg-red-600");
     });
 
     it("should be positioned correctly", () => {
       render(<CardDrawer />);
 
       const container = screen.getByTitle("Draw playing card").parentElement;
-      expect(container).toHaveClass("right-32");
-      expect(container).toHaveClass("bottom-4");
+      expect(container).toHaveClass("right-23");
+      expect(container).toHaveClass("bottom-6");
     });
 
     it("should not show the panel initially", () => {

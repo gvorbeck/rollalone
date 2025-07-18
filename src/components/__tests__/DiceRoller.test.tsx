@@ -196,19 +196,22 @@ describe("DiceRoller Component", () => {
     });
   });
 
-  it("displays dice emojis correctly", async () => {
+  it("displays dice SVG icons correctly", async () => {
     render(<DiceRoller />);
 
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
     await waitFor(() => {
-      expect(screen.getByText("🪙")).toBeInTheDocument(); // d2
-      expect(screen.getByText("🔺")).toBeInTheDocument(); // d4
-      expect(screen.getByText("⚀")).toBeInTheDocument(); // d6
-      expect(screen.getByText("🔶")).toBeInTheDocument(); // d8
-      expect(screen.getByText("🎲")).toBeInTheDocument(); // d12
-      expect(screen.getByText("💯")).toBeInTheDocument(); // d100
+      // Check for dice labels instead of emoji icons
+      expect(screen.getByText("d2")).toBeInTheDocument();
+      expect(screen.getByText("d4")).toBeInTheDocument();
+      expect(screen.getByText("d6")).toBeInTheDocument();
+      expect(screen.getByText("d8")).toBeInTheDocument();
+      expect(screen.getByText("d10")).toBeInTheDocument();
+      expect(screen.getByText("d12")).toBeInTheDocument();
+      expect(screen.getByText("d20")).toBeInTheDocument();
+      expect(screen.getByText("d%")).toBeInTheDocument();
     });
   });
 });

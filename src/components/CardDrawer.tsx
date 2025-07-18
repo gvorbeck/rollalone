@@ -68,7 +68,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
   };
 
   return (
-    <div className={`fixed bottom-4 right-32 z-50 ${className}`}>
+    <div className={`fixed bottom-6 right-23 z-50 ${className}`}>
       {/* Card Draw Result Popup */}
       {showResult && (
         <div className="absolute bottom-16 right-0 bg-gray-800 text-white p-4 rounded-lg shadow-lg max-w-xs animate-fade-in">
@@ -167,39 +167,37 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
       {/* Floating Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
+        className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}
         title={isOpen ? "Close card drawer" : "Draw playing card"}
       >
         <svg
           className="w-6 h-6 text-white"
-          fill="none"
-          stroke="currentColor"
+          fill="currentColor"
           viewBox="0 0 24 24"
         >
+          {/* Playing card shape */}
+          <rect
+            x="5"
+            y="4"
+            width="14"
+            height="16"
+            rx="2"
+            ry="2"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            fill="none"
+          />
+          {/* Spade symbol */}
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+            d="M12 6.5c-1.5 2-3 3-3 4.5 0 1 0.5 1.5 1.5 1.5h3c1 0 1.5-0.5 1.5-1.5 0-1.5-1.5-2.5-3-4.5z"
+            fill="currentColor"
           />
-          <rect
-            x="6"
-            y="9"
-            width="12"
-            height="8"
-            rx="1"
-            className="fill-current opacity-30"
-          />
-          <rect
-            x="8"
-            y="11"
-            width="8"
-            height="4"
-            rx="0.5"
-            className="fill-current opacity-60"
-          />
+          <rect x="11.5" y="12" width="1" height="2" fill="currentColor" />
+          {/* Small corner marks */}
+          <circle cx="7.5" cy="7" r="0.5" fill="currentColor" />
+          <circle cx="16.5" cy="17" r="0.5" fill="currentColor" />
         </svg>
       </button>
     </div>

@@ -255,7 +255,7 @@ describe("App Component", () => {
     });
 
     expect(diceRollerFAB.closest("div")).toHaveClass("right-6");
-    expect(cardDrawerFAB.closest("div")).toHaveClass("right-32");
+    expect(cardDrawerFAB.closest("div")).toHaveClass("right-23");
     expect(tocFAB.closest("div")).toHaveClass("right-40");
   });
 

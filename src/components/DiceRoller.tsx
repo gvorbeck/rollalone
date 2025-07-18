@@ -1,16 +1,124 @@
 import React, { useState } from "react";
 import { DiceRoll } from "../utils/diceRoller";
 
-// Dice configuration data
+// SVG dice icon components
+const DiceIcons = {
+  d2: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10" fill="currentColor" />
+    </svg>
+  ),
+  d4: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l10 18H2L12 2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <circle cx="12" cy="14" r="1" fill="currentColor" />
+    </svg>
+  ),
+  d6: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="2"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <circle cx="8" cy="8" r="1.5" fill="currentColor" />
+      <circle cx="16" cy="8" r="1.5" fill="currentColor" />
+      <circle cx="8" cy="16" r="1.5" fill="currentColor" />
+      <circle cx="16" cy="16" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+  d8: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l8 8-8 12L4 10l8-8z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <circle cx="12" cy="12" r="1" fill="currentColor" />
+    </svg>
+  ),
+  d10: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l7 6v8l-7 6-7-6V8l7-6z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <circle cx="12" cy="9" r="1" fill="currentColor" />
+      <circle cx="12" cy="15" r="1" fill="currentColor" />
+    </svg>
+  ),
+  d12: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l4 3 4-1 2 4-2 4 2 4-2 4-4-1-4 3-4-3-4 1-2-4 2-4-2-4 2-4 4 1 4-3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      <circle cx="12" cy="12" r="1" fill="currentColor" />
+    </svg>
+  ),
+  d20: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l6 4 2 6-2 6-6 4-6-4-2-6 2-6 6-4z"
+        stroke="currentColor"
+        strokeWidth="2"
+        fill="none"
+      />
+      <circle cx="12" cy="8" r="1" fill="currentColor" />
+      <circle cx="12" cy="16" r="1" fill="currentColor" />
+      <circle cx="8" cy="12" r="1" fill="currentColor" />
+      <circle cx="16" cy="12" r="1" fill="currentColor" />
+    </svg>
+  ),
+  d100: () => (
+    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+      <path
+        d="M12 2l5 3 3 5-3 5 3 5-3 5-5 3-5-3-3-5 3-5-3-5 3-5 5-3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      <text x="12" y="14" textAnchor="middle" fontSize="8" fill="currentColor">
+        %
+      </text>
+    </svg>
+  ),
+};
+
+// Dice configuration data with SVG icons
 const DICE_TYPES = [
-  { type: "d2", icon: "🪙", label: "d2", title: "Coin flip" },
-  { type: "d4", icon: "🔺", label: "d4", title: undefined },
-  { type: "d6", icon: "⚀", label: "d6", title: undefined },
-  { type: "d8", icon: "🔶", label: "d8", title: undefined },
-  { type: "d10", icon: "🔟", label: "d10", title: undefined },
-  { type: "d12", icon: "🎲", label: "d12", title: undefined },
-  { type: "d20", icon: "🎯", label: "d20", title: undefined },
-  { type: "d100", icon: "💯", label: "d%", title: undefined },
+  { type: "d2", icon: <DiceIcons.d2 />, label: "d2", title: "Coin flip" },
+  { type: "d4", icon: <DiceIcons.d4 />, label: "d4", title: undefined },
+  { type: "d6", icon: <DiceIcons.d6 />, label: "d6", title: undefined },
+  { type: "d8", icon: <DiceIcons.d8 />, label: "d8", title: undefined },
+  { type: "d10", icon: <DiceIcons.d10 />, label: "d10", title: undefined },
+  { type: "d12", icon: <DiceIcons.d12 />, label: "d12", title: undefined },
+  { type: "d20", icon: <DiceIcons.d20 />, label: "d20", title: undefined },
+  { type: "d100", icon: <DiceIcons.d100 />, label: "d%", title: undefined },
 ] as const;
 
 const DiceRoller: React.FC = () => {
