@@ -83,26 +83,26 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
 
       {/* Expanded Panel */}
       <div
-        className={`absolute bottom-16 right-0 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-4 w-80 border border-gray-200 dark:border-gray-700 transition-all duration-300 ease-out transform ${
+        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg p-4 w-80 border border-gray-700 transition-all duration-300 ease-out transform ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-2 pointer-events-none"
         }`}
       >
         <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <h3 className="text-lg font-semibold text-white">
             Card Drawer
           </h3>
           <button
             onClick={() => toggleFAB("cardDrawer")}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 cursor-pointer"
+            className="text-gray-400 hover:text-gray-200 cursor-pointer"
           >
             ✕
           </button>
         </div>
 
         {/* Deck Status */}
-        <div className="mb-4 text-sm text-gray-600 dark:text-gray-300">
+        <div className="mb-4 text-sm text-gray-300">
           <div className="flex justify-between">
             <span>Cards remaining:</span>
             <span className="font-mono">{deckInfo.remainingCards}/54</span>
@@ -119,14 +119,14 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
 
         {/* Last Drawn Card */}
         {lastDrawnCard && (
-          <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded">
-            <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">
+          <div className="mb-4 p-3 bg-gray-700 rounded">
+            <div className="text-sm text-gray-300 mb-1">
               Last drawn:
             </div>
             <div className="text-lg font-mono text-center text-gray-300">
               {lastDrawnCard.display}
             </div>
-            <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            <div className="text-xs text-gray-400 mt-1">
               {cardDrawer.getCardMeaning(lastDrawnCard)}
             </div>
           </div>
@@ -158,7 +158,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
         </div>
 
         {/* Help Text */}
-        <div className="mt-4 text-xs text-gray-500 dark:text-gray-400">
+        <div className="mt-4 text-xs text-gray-400">
           <p className="mb-1">
             <strong>Suits:</strong> ♠ Physical, ♦ Technical, ♣ Mystical, ♥
             Social
