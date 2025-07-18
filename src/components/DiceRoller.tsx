@@ -123,106 +123,107 @@ const DiceRoller: React.FC = () => {
             />
           </div>
 
-          {/* Dice Input */}
-          <div className="mb-4">
+          <div className="flex flex-col gap-2">
+            {/* History List */}
+            {showHistory && (
+              <div className={SCROLL_CONTAINERS.short}>
+                {history.length === 0 ? (
+                  <div className={EMPTY_STATE}>No rolls yet</div>
+                ) : (
+                  <div className="space-y-2">
+                    {history.map((entry) => (
+                      <div key={entry.id} className={CARD_STYLES.item}>
+                        <div className="font-mono text-white">
+                          {entry.notation}: {entry.result}
+                        </div>
+                        <div className={TEXT_STYLES.caption}>
+                          {formatTimestamp(entry.timestamp)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* History Toggle */}
+            <div className="flex justify-between items-center">
+              <Button
+                onClick={() => setShowHistory(!showHistory)}
+                variant="ghost"
+                size="sm"
+                className="text-gray-400"
+              >
+                {showHistory ? "Hide" : "Show"} History ({history.length})
+              </Button>
+              {history.length > 0 && (
+                <Button
+                  onClick={clearHistory}
+                  variant="ghost"
+                  size="sm"
+                  className="text-red-400"
+                  title="Clear history"
+                >
+                  Clear History
+                </Button>
+              )}
+            </div>
+
+            {/* Last Roll Result */}
+            {lastRoll && (
+              <div className={CARD_STYLES.content}>
+                <div className={TEXT_STYLES.muted}>Last roll:</div>
+                <div className="font-mono text-white">{lastRoll}</div>
+              </div>
+            )}
+
+            {/* Dice Input */}
             <input
               type="text"
               value={diceInput}
               onChange={(e) => setDiceInput(e.target.value)}
               placeholder="1d20+3"
+              name="dice-input"
               className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
             />
-          </div>
 
-          {/* Quick Dice Buttons */}
-          <div className="grid grid-cols-4 gap-2 mb-4">
-            {DICE_TYPES.map((dice) => (
+            {/* Quick Dice Buttons */}
+            <div className="grid grid-cols-4 gap-2">
+              {DICE_TYPES.map((dice) => (
+                <Button
+                  key={dice.type}
+                  onClick={() => addDie(dice.type)}
+                  variant="secondary"
+                  size="sm"
+                  className="flex flex-col items-center gap-1 py-3"
+                  title={dice.title}
+                >
+                  {dice.icon}
+                  <span className="text-xs">{dice.label}</span>
+                </Button>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-2">
               <Button
-                key={dice.type}
-                onClick={() => addDie(dice.type)}
+                onClick={rollDice}
+                variant="primary"
+                className="flex-1"
+                disabled={!diceInput.trim()}
+              >
+                Roll
+              </Button>
+              <Button
+                onClick={clearInput}
                 variant="secondary"
                 size="sm"
-                className="flex flex-col items-center gap-1 py-3"
-                title={dice.title}
+                title="Clear input"
               >
-                {dice.icon}
-                <span className="text-xs">{dice.label}</span>
+                Clear
               </Button>
-            ))}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex gap-2 mb-4">
-            <Button
-              onClick={rollDice}
-              variant="primary"
-              className="flex-1"
-              disabled={!diceInput.trim()}
-            >
-              Roll
-            </Button>
-            <Button
-              onClick={clearInput}
-              variant="secondary"
-              size="sm"
-              title="Clear input"
-            >
-              Clear
-            </Button>
-          </div>
-
-          {/* Last Roll Result */}
-          {lastRoll && (
-            <div className={CARD_STYLES.content}>
-              <div className={TEXT_STYLES.muted}>Last roll:</div>
-              <div className="font-mono text-white">{lastRoll}</div>
             </div>
-          )}
-
-          {/* History Toggle */}
-          <div className="flex justify-between items-center mb-2">
-            <Button
-              onClick={() => setShowHistory(!showHistory)}
-              variant="ghost"
-              size="sm"
-              className="text-gray-400"
-            >
-              {showHistory ? "Hide" : "Show"} History ({history.length})
-            </Button>
-            {history.length > 0 && (
-              <Button
-                onClick={clearHistory}
-                variant="ghost"
-                size="sm"
-                className="text-red-400"
-                title="Clear history"
-              >
-                Clear History
-              </Button>
-            )}
           </div>
-
-          {/* History List */}
-          {showHistory && (
-            <div className={SCROLL_CONTAINERS.short}>
-              {history.length === 0 ? (
-                <div className={EMPTY_STATE}>No rolls yet</div>
-              ) : (
-                <div className="space-y-2">
-                  {history.map((entry) => (
-                    <div key={entry.id} className={CARD_STYLES.item}>
-                      <div className="font-mono text-white">
-                        {entry.notation}: {entry.result}
-                      </div>
-                      <div className={TEXT_STYLES.caption}>
-                        {formatTimestamp(entry.timestamp)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
         </AnimatedPanel>
       </div>
 
