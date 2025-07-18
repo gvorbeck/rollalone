@@ -48,7 +48,7 @@ describe("scrollToCard", () => {
         "ORACLE (FOCUS)": "Oracle (Focus)",
         "ORACLE (HOW)": "Oracle (How)",
         "ORACLE (YES/NO)": "Oracle (Yes/No)",
-        "ORACLE": "Oracle (Yes/No)",
+        ORACLE: "Oracle (Yes/No)",
         "ACTION FOCUS": "Oracle (Focus)",
         "DETAIL FOCUS": "Oracle (Focus)",
         "TOPIC FOCUS": "Oracle (Focus)",

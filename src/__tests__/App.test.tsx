@@ -247,12 +247,16 @@ describe("App Component", () => {
     const diceRollerFAB = screen.getByRole("button", {
       name: /open dice roller/i,
     });
+    const cardDrawerFAB = screen.getByRole("button", {
+      name: /draw playing card/i,
+    });
     const tocFAB = screen.getByRole("button", {
       name: /open table of contents/i,
     });
 
     expect(diceRollerFAB.closest("div")).toHaveClass("right-6");
-    expect(tocFAB.closest("div")).toHaveClass("right-24");
+    expect(cardDrawerFAB.closest("div")).toHaveClass("right-32");
+    expect(tocFAB.closest("div")).toHaveClass("right-40");
   });
 
   it("handles scroll behavior", () => {
@@ -303,5 +307,19 @@ describe("App Component", () => {
     const banners = screen.getAllByRole("banner");
     expect(banners[0]).toBeInTheDocument(); // Main page banner
     expect(screen.getByRole("main")).toBeInTheDocument();
+  });
+
+  it("card drawer functions work", async () => {
+    render(<App />);
+
+    // Open card drawer
+    const cardDrawerFAB = screen.getByRole("button", {
+      name: /draw playing card/i,
+    });
+    fireEvent.click(cardDrawerFAB);
+
+    await waitFor(() => {
+      expect(screen.getByText(/card drawer/i)).toBeInTheDocument();
+    });
   });
 });

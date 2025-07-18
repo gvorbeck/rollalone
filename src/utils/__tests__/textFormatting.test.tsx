@@ -90,9 +90,9 @@ describe("textFormatting utilities", () => {
 
     it("handles all internal link terms", () => {
       const terms = [
-        "PLOT HOOK", 
-        "RANDOM EVENT", 
-        "SET THE SCENE", 
+        "PLOT HOOK",
+        "RANDOM EVENT",
+        "SET THE SCENE",
         "GM MOVES",
         "ORACLE (FOCUS)",
         "ORACLE (HOW)",

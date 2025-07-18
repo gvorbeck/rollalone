@@ -4,6 +4,7 @@ import Card from "@/components/Card";
 import Masonry from "@/components/Masonry";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import DiceRoller from "@/components/DiceRoller";
+import CardDrawer from "@/components/CardDrawer";
 import TableOfContents from "@/components/TableOfContents";
 import { CardProps } from "@/data/definitions";
 
@@ -57,6 +58,7 @@ const App: FC = () => {
           <Masonry className="w-full">{cardElements}</Masonry>
         </main>
         <TableOfContents />
+        <CardDrawer />
         <DiceRoller />
       </div>
     </ErrorBoundary>

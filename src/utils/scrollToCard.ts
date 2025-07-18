@@ -9,7 +9,7 @@ const CARD_LINK_MAP: Record<string, string> = {
   "ORACLE (FOCUS)": "Oracle (Focus)",
   "ORACLE (HOW)": "Oracle (How)",
   "ORACLE (YES/NO)": "Oracle (Yes/No)",
-  "ORACLE": "Oracle (Yes/No)", // Default Oracle links to Yes/No
+  ORACLE: "Oracle (Yes/No)", // Default Oracle links to Yes/No
   "ACTION FOCUS": "Oracle (Focus)",
   "DETAIL FOCUS": "Oracle (Focus)",
   "TOPIC FOCUS": "Oracle (Focus)",
