@@ -128,7 +128,7 @@ describe("cardDrawer", () => {
       expect(deckInfo.shuffleCount).toBe(1);
     });
 
-    it("should handle joker draws with automatic reshuffle", (done) => {
+    it("should handle joker draws with automatic reshuffle", async () => {
       // Create a deck state with a joker on top
       cardDrawer.resetDeck();
 
@@ -147,15 +147,13 @@ describe("cardDrawer", () => {
         expect(result.card.isJoker).toBe(true);
 
         // Give the automatic reshuffle time to trigger
-        setTimeout(() => {
-          const deckInfo = cardDrawer.getDeckInfo();
-          expect(deckInfo.shuffleCount).toBeGreaterThan(0);
-          done();
-        }, 150);
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
+        const deckInfo = cardDrawer.getDeckInfo();
+        expect(deckInfo.shuffleCount).toBeGreaterThan(0);
       } else {
         // If no joker found, the test still passes as deck creation is correct
         expect(attempts).toBeLessThanOrEqual(maxAttempts);
-        done();
       }
     });
   });
