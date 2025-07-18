@@ -1,7 +1,7 @@
 export interface CardProps {
   title: string;
   contentType: "text" | "list" | "image" | "table" | "dice";
-  content: string | string[] | TableData | DiceConfig;
+  content: string | string[] | TableData | TableData[] | DiceConfig;
   preContent?: string;
   postContent?: string[];
   className?: string;

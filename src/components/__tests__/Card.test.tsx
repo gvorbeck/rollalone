@@ -51,6 +51,20 @@ describe("Card Component", () => {
     rerender(<Card {...listCard} />);
     expect(screen.getByText("Item 1")).toBeInTheDocument();
     expect(screen.getByText("Item 2")).toBeInTheDocument();
+
+    // Test single table card
+    const tableCard = mockCardData.table;
+    rerender(<Card {...tableCard} />);
+    expect(screen.getByText("Test Table")).toBeInTheDocument();
+    expect(screen.getByText("First row")).toBeInTheDocument();
+
+    // Test multiple tables card
+    const tablesCard = mockCardData.tables;
+    rerender(<Card {...tablesCard} />);
+    expect(screen.getByText("First Table")).toBeInTheDocument();
+    expect(screen.getByText("Second Table")).toBeInTheDocument();
+    expect(screen.getByText("First row")).toBeInTheDocument();
+    expect(screen.getByText("Row A")).toBeInTheDocument();
   });
 
   it("handles cards without tags gracefully", () => {

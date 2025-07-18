@@ -38,6 +38,26 @@ export const mockCardData = {
       ],
     },
   },
+  tables: {
+    title: "Test Multiple Tables Card",
+    contentType: "table" as const,
+    content: [
+      {
+        title: "First Table",
+        rows: [
+          ["1", "First row"],
+          ["2", "Second row"],
+        ],
+      },
+      {
+        title: "Second Table",
+        rows: [
+          ["A", "Row A"],
+          ["B", "Row B"],
+        ],
+      },
+    ],
+  },
   dice: {
     title: "Test Dice Card",
     contentType: "dice" as const,
