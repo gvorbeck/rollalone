@@ -102,8 +102,8 @@ export class SimpleDiceRoll {
     // Handle expressions like: 2d6+1d4, 1d20+3d6-2, etc.
     const parts = this._notation.split(/([+-])/);
     let runningTotal = 0;
-    let allRolls: number[] = [];
-    let breakdownParts: string[] = [];
+    const allRolls: number[] = [];
+    const breakdownParts: string[] = [];
 
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i].trim();
