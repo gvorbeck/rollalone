@@ -31,7 +31,7 @@ export const AnimatedPanel: React.FC<AnimatedPanelProps> = ({
     return (
       <div
         className={cn(
-          "bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4",
+          "bg-gray-800 rounded-lg shadow-2xl border border-gray-700 p-4 ring-4 ring-black/40 ring-offset-2 ring-offset-gray-900",
           panelStates.base,
           panelStates.visible,
           className
