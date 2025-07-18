@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { DiceRoll } from "../utils/diceRoller";
+import { useFAB } from "@/contexts/FABContext";
 
 // SVG dice icon components
 const DiceIcons = {
@@ -122,7 +123,8 @@ const DICE_TYPES = [
 ] as const;
 
 const DiceRoller: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { activeFAB, toggleFAB } = useFAB();
+  const isOpen = activeFAB === 'diceRoller';
   const [diceInput, setDiceInput] = useState<string>("");
   const [lastRoll, setLastRoll] = useState<string>("");
 
@@ -171,17 +173,27 @@ const DiceRoller: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-50">
       {/* Dice Roller Panel with Animation */}
       <div
-        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-80 transition-all duration-300 ease-out transform ${
+        className={`absolute bottom-16 right-0 bg-gray-800 rounded-lg shadow-lg border border-gray-700 p-4 w-80 max-w-[calc(100vw-2rem)] transition-all duration-300 ease-out transform ${
           isOpen
             ? "opacity-100 scale-100 translate-y-0"
             : "opacity-0 scale-95 translate-y-2 pointer-events-none"
         }`}
       >
-        <div className="text-white text-sm mb-3">Quick Dice Roller</div>
+        {/* Header */}
+        <div className="flex justify-between items-center mb-3">
+          <div className="text-white text-sm font-medium">Quick Dice Roller</div>
+          <button
+            onClick={() => toggleFAB('diceRoller')}
+            className="text-gray-400 hover:text-gray-200 transition-colors"
+            title="Close dice roller"
+          >
+            ✕
+          </button>
+        </div>
 
         {/* Results Display */}
         {lastRoll && (
-          <div className="mb-3 p-2 bg-gray-700 rounded text-white text-sm">
+          <div className="mb-3 p-2 bg-gray-700 rounded text-white text-sm break-words">
             {lastRoll}
           </div>
         )}
@@ -193,21 +205,21 @@ const DiceRoller: React.FC = () => {
             value={diceInput}
             onChange={(e) => setDiceInput(e.target.value)}
             placeholder="1d20+3"
-            className="flex-1 bg-gray-700 text-white px-3 py-2 rounded text-sm border border-gray-600 focus:border-red-500 focus:outline-none"
+            className="flex-1 bg-gray-700 text-white px-3 py-2 rounded text-sm border border-gray-600 focus:border-red-500 focus:outline-none min-w-0"
           />
           <button
             onClick={rollDice}
             disabled={!diceInput.trim()}
-            className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium"
+            className="bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded text-sm font-medium flex-shrink-0"
           >
             Roll
           </button>
           <button
             onClick={clearInput}
-            className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm"
-            title="Clear"
+            className="bg-gray-600 hover:bg-gray-500 text-white px-3 py-2 rounded text-sm flex-shrink-0"
+            title="Clear input"
           >
-            ✕
+            ↻
           </button>
         </div>
 
@@ -229,7 +241,7 @@ const DiceRoller: React.FC = () => {
 
       {/* Floating Action Button with Rotation Animation */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleFAB('diceRoller')}
         className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}

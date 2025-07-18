@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { scrollToCard } from "@/utils/scrollToCard";
+import { useFAB } from "@/contexts/FABContext";
 
 // Table of Contents data - organized by logical sections
 const TOC_SECTIONS = [
@@ -59,11 +60,12 @@ const TOC_SECTIONS = [
 ] as const;
 
 const TableOfContents: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { activeFAB, toggleFAB } = useFAB();
+  const isOpen = activeFAB === 'toc';
 
   const handleCardClick = (cardId: string) => {
     scrollToCard(cardId);
-    setIsOpen(false); // Close TOC after navigation
+    toggleFAB('toc'); // Close TOC after navigation
   };
 
   return (
@@ -104,7 +106,7 @@ const TableOfContents: React.FC = () => {
 
       {/* Floating Action Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleFAB('toc')}
         aria-expanded={isOpen}
         className={`w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-180" : "rotate-0"

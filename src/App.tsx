@@ -6,6 +6,7 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import DiceRoller from "@/components/DiceRoller";
 import CardDrawer from "@/components/CardDrawer";
 import TableOfContents from "@/components/TableOfContents";
+import { FABProvider } from "@/contexts/FABContext";
 import { CardProps } from "@/data/definitions";
 
 // Import all cards from centralized index
@@ -52,15 +53,17 @@ const App: FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gray-900">
-        <Hero />
-        <main className="container mx-auto px-4 py-10" role="main">
-          <Masonry className="w-full">{cardElements}</Masonry>
-        </main>
-        <TableOfContents />
-        <CardDrawer />
-        <DiceRoller />
-      </div>
+      <FABProvider>
+        <div className="min-h-screen bg-gray-900">
+          <Hero />
+          <main className="container mx-auto px-4 py-10" role="main">
+            <Masonry className="w-full">{cardElements}</Masonry>
+          </main>
+          <TableOfContents />
+          <CardDrawer />
+          <DiceRoller />
+        </div>
+      </FABProvider>
     </ErrorBoundary>
   );
 };

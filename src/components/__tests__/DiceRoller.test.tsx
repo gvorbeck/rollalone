@@ -34,20 +34,18 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      expect(panel).toHaveClass("opacity-100");
-      expect(panel).not.toHaveClass("pointer-events-none");
-    });
+    // Check panel is now visible (without waitFor to avoid hanging)
+    expect(panel).toHaveClass("opacity-100");
+    expect(panel).not.toHaveClass("pointer-events-none");
 
-    // Click to close
-    const closeButton = screen.getByRole("button", {
-      name: /close dice roller/i,
-    });
-    fireEvent.click(closeButton);
+    // Find and click the close button in header (different from FAB)
+    const closeButtons = screen.getAllByTitle("Close dice roller");
+    const headerCloseButton = closeButtons.find(btn => btn.textContent === '✕');
+    expect(headerCloseButton).toBeInTheDocument();
+    fireEvent.click(headerCloseButton!);
 
-    await waitFor(() => {
-      expect(panel).toHaveClass("opacity-0", "pointer-events-none");
-    });
+    // Check panel is hidden again
+    expect(panel).toHaveClass("opacity-0", "pointer-events-none");
   });
 
   it("displays all dice types", async () => {
@@ -56,17 +54,16 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      expect(screen.getByText(/quick dice roller/i)).toBeInTheDocument();
-      expect(screen.getByText("d2")).toBeInTheDocument();
-      expect(screen.getByText("d4")).toBeInTheDocument();
-      expect(screen.getByText("d6")).toBeInTheDocument();
-      expect(screen.getByText("d8")).toBeInTheDocument();
-      expect(screen.getByText("d10")).toBeInTheDocument();
-      expect(screen.getByText("d12")).toBeInTheDocument();
-      expect(screen.getByText("d20")).toBeInTheDocument();
-      expect(screen.getByText("d%")).toBeInTheDocument();
-    });
+    // Check dice types are visible (sync check since FAB context updates immediately)
+    expect(screen.getByText(/quick dice roller/i)).toBeInTheDocument();
+    expect(screen.getByText("d2")).toBeInTheDocument();
+    expect(screen.getByText("d4")).toBeInTheDocument();
+    expect(screen.getByText("d6")).toBeInTheDocument();
+    expect(screen.getByText("d8")).toBeInTheDocument();
+    expect(screen.getByText("d10")).toBeInTheDocument();
+    expect(screen.getByText("d12")).toBeInTheDocument();
+    expect(screen.getByText("d20")).toBeInTheDocument();
+    expect(screen.getByText("d%")).toBeInTheDocument();
   });
 
   it("builds dice expression when clicking dice buttons", async () => {
@@ -75,9 +72,8 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      expect(screen.getByText(/dice roller/i)).toBeInTheDocument();
-    });
+    // Check panel is open
+    expect(screen.getByText(/dice roller/i)).toBeInTheDocument();
 
     // Click d6 button
     const d6Button = screen.getByRole("button", { name: /d6/i });
@@ -102,13 +98,15 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const input = screen.getByPlaceholderText("1d20+3");
-      expect(input).toBeInTheDocument();
+    // Panel should be open immediately with FAB context
+    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
 
-      fireEvent.change(input, { target: { value: "3d6+2" } });
-      expect(input).toHaveValue("3d6+2");
-    });
+    // Find and edit the input
+    const input = screen.getByPlaceholderText("1d20+3");
+    expect(input).toBeInTheDocument();
+
+    fireEvent.change(input, { target: { value: "3d6+2" } });
+    expect(input).toHaveValue("3d6+2");
   });
 
   it("rolls dice and displays result", async () => {
@@ -117,17 +115,20 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const input = screen.getByPlaceholderText("1d20+3");
-      fireEvent.change(input, { target: { value: "1d6" } });
+    // Panel should be open immediately
+    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
 
-      const rollButton = screen.getByText("Roll");
-      fireEvent.click(rollButton);
-    });
+    // Find input and roll button
+    const input = screen.getByPlaceholderText("1d20+3");
+    fireEvent.change(input, { target: { value: "1d6" } });
 
+    const rollButton = screen.getByText("Roll");
+    fireEvent.click(rollButton);
+
+    // Wait for result to appear (this one needs waitFor for the async roll operation)
     await waitFor(() => {
       expect(screen.getByText(/1d6: result: 1d6/i)).toBeInTheDocument();
-    });
+    }, { timeout: 1000 });
   });
 
   it("handles dice rolling errors gracefully", async () => {
@@ -136,18 +137,21 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const input = screen.getByPlaceholderText("1d20+3");
-      fireEvent.change(input, { target: { value: "invalid" } });
+    // Panel should be open immediately
+    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
 
-      const rollButton = screen.getByText("Roll");
-      fireEvent.click(rollButton);
-    });
+    // Find input and enter invalid dice notation
+    const input = screen.getByPlaceholderText("1d20+3");
+    fireEvent.change(input, { target: { value: "invalid" } });
 
+    const rollButton = screen.getByText("Roll");
+    fireEvent.click(rollButton);
+
+    // Wait for result to appear with shorter timeout
     await waitFor(() => {
       // The component shows "invalid: Result: invalid" format
       expect(screen.getByText(/invalid: result: invalid/i)).toBeInTheDocument();
-    });
+    }, { timeout: 1000 });
   });
 
   it("clears input when clear button is clicked", async () => {
@@ -156,15 +160,18 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const input = screen.getByPlaceholderText("1d20+3");
-      fireEvent.change(input, { target: { value: "1d6" } });
-      expect(input).toHaveValue("1d6");
+    // Panel should be open immediately
+    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
 
-      const clearButton = screen.getByText("✕");
-      fireEvent.click(clearButton);
-      expect(input).toHaveValue("");
-    });
+    // Find input and add some text
+    const input = screen.getByPlaceholderText("1d20+3");
+    fireEvent.change(input, { target: { value: "1d6" } });
+    expect(input).toHaveValue("1d6");
+
+    // Note: Clear button is now "↻" not "✕"
+    const clearButton = screen.getByTitle("Clear input");
+    fireEvent.click(clearButton);
+    expect(input).toHaveValue("");
   });
 
   it("prevents rolling empty dice expression", async () => {
@@ -173,27 +180,26 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const rollButton = screen.getByText("Roll");
-      fireEvent.click(rollButton);
+    // Panel should be open immediately
+    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
 
-      // Should not display any result
-      expect(screen.queryByText(/result:/i)).not.toBeInTheDocument();
-    });
+    // Try to roll without any input
+    const rollButton = screen.getByText("Roll");
+    fireEvent.click(rollButton);
+
+    // Should not display any result
+    expect(screen.queryByText(/result:/i)).not.toBeInTheDocument();
   });
 
   it("has proper accessibility attributes", async () => {
     render(<DiceRoller />);
 
     const fab = screen.getByRole("button", { name: /open dice roller/i });
-    // The FAB doesn't have aria-expanded, remove this assertion
-
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      const panel = screen.getByText("Quick Dice Roller");
-      expect(panel).toBeInTheDocument();
-    });
+    // Panel should be open immediately
+    const panel = screen.getByText("Quick Dice Roller");
+    expect(panel).toBeInTheDocument();
   });
 
   it("displays dice SVG icons correctly", async () => {
@@ -202,16 +208,16 @@ describe("DiceRoller Component", () => {
     const fab = screen.getByRole("button", { name: /open dice roller/i });
     fireEvent.click(fab);
 
-    await waitFor(() => {
-      // Check for dice labels instead of emoji icons
-      expect(screen.getByText("d2")).toBeInTheDocument();
-      expect(screen.getByText("d4")).toBeInTheDocument();
-      expect(screen.getByText("d6")).toBeInTheDocument();
-      expect(screen.getByText("d8")).toBeInTheDocument();
-      expect(screen.getByText("d10")).toBeInTheDocument();
-      expect(screen.getByText("d12")).toBeInTheDocument();
-      expect(screen.getByText("d20")).toBeInTheDocument();
-      expect(screen.getByText("d%")).toBeInTheDocument();
-    });
+    // Panel should be open immediately, check for dice labels
+    expect(screen.getByText("d2")).toBeInTheDocument();
+    expect(screen.getByText("d4")).toBeInTheDocument();
+    expect(screen.getByText("d6")).toBeInTheDocument();
+    expect(screen.getByText("d8")).toBeInTheDocument();
+    expect(screen.getByText("d10")).toBeInTheDocument();
+    expect(screen.getByText("d12")).toBeInTheDocument();
+    expect(screen.getByText("d10")).toBeInTheDocument();
+    expect(screen.getByText("d12")).toBeInTheDocument();
+    expect(screen.getByText("d20")).toBeInTheDocument();
+    expect(screen.getByText("d%")).toBeInTheDocument();
   });
 });

@@ -4,13 +4,15 @@ import {
   type PlayingCard,
   type CardDrawResult,
 } from "@/utils/cardDrawer";
+import { useFAB } from "@/contexts/FABContext";
 
 interface CardDrawerProps {
   className?: string;
 }
 
 const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { activeFAB, toggleFAB } = useFAB();
+  const isOpen = activeFAB === 'cardDrawer';
   const [lastDrawnCard, setLastDrawnCard] = useState<PlayingCard | null>(null);
   const [deckInfo, setDeckInfo] = useState(cardDrawer.getDeckInfo());
   const [showResult, setShowResult] = useState(false);
@@ -87,7 +89,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
               Card Drawer
             </h3>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => toggleFAB('cardDrawer')}
               className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             >
               ✕
@@ -166,7 +168,7 @@ const CardDrawer: React.FC<CardDrawerProps> = ({ className = "" }) => {
 
       {/* Floating Action Button */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => toggleFAB('cardDrawer')}
         className={`w-14 h-14 bg-red-600 hover:bg-red-700 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110 ${
           isOpen ? "rotate-45" : "rotate-0"
         }`}

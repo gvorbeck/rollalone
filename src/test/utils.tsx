@@ -1,14 +1,19 @@
 import { render, RenderOptions } from "@testing-library/react";
 import { ReactElement } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { FABProvider } from "@/contexts/FABContext";
 
-// Custom render function with ErrorBoundary
+// Custom render function with ErrorBoundary and FABProvider
 const customRender = (
   ui: ReactElement,
   options?: Omit<RenderOptions, "wrapper">
 ) => {
   return render(ui, {
-    wrapper: ({ children }) => <ErrorBoundary>{children}</ErrorBoundary>,
+    wrapper: ({ children }) => (
+      <ErrorBoundary>
+        <FABProvider>{children}</FABProvider>
+      </ErrorBoundary>
+    ),
     ...options,
   });
 };
