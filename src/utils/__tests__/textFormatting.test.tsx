@@ -89,7 +89,19 @@ describe("textFormatting utilities", () => {
     });
 
     it("handles all internal link terms", () => {
-      const terms = ["PLOT HOOK", "RANDOM EVENT", "SET THE SCENE", "GM MOVES"];
+      const terms = [
+        "PLOT HOOK", 
+        "RANDOM EVENT", 
+        "SET THE SCENE", 
+        "GM MOVES",
+        "ORACLE (FOCUS)",
+        "ORACLE (HOW)",
+        "ORACLE (YES/NO)",
+        "ORACLE",
+        "ACTION FOCUS",
+        "DETAIL FOCUS",
+        "TOPIC FOCUS",
+      ];
 
       terms.forEach((term) => {
         const result = parseMarkdownBold(`Use ${term} here`);

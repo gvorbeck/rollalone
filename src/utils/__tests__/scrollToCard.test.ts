@@ -45,6 +45,13 @@ describe("scrollToCard", () => {
         "RANDOM EVENT": "Random Events & Complex Questions",
         "SET THE SCENE": "Set the Scene",
         "GM MOVES": "GM Moves",
+        "ORACLE (FOCUS)": "Oracle (Focus)",
+        "ORACLE (HOW)": "Oracle (How)",
+        "ORACLE (YES/NO)": "Oracle (Yes/No)",
+        "ORACLE": "Oracle (Yes/No)",
+        "ACTION FOCUS": "Oracle (Focus)",
+        "DETAIL FOCUS": "Oracle (Focus)",
+        "TOPIC FOCUS": "Oracle (Focus)",
       };
 
       Object.entries(mappings).forEach(([linkText, cardTitle]) => {
