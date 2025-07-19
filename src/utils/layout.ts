@@ -17,18 +17,6 @@ export const TEXT_STYLES = {
 } as const;
 
 /**
- * Scroll area styling for consistent scrollbars
- */
-export const SCROLL_AREA = "overflow-y-auto custom-scrollbar";
-
-/**
  * Empty state styling
  */
 export const EMPTY_STATE = "text-gray-400 text-sm text-center py-4";
-
-/**
- * Screen reader utilities
- */
-export const SR_ONLY = "sr-only";
-export const VISUALLY_HIDDEN =
-  "absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0";

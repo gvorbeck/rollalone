@@ -110,8 +110,8 @@ export class SimpleDiceRoll {
     const parts = notation.split(/([+-])/).filter((p) => p);
 
     let total = 0;
-    let allRolls: number[] = [];
-    let breakdownParts: string[] = [];
+    const allRolls: number[] = [];
+    const breakdownParts: string[] = [];
     let currentOp = "+";
 
     for (let i = 0; i < parts.length; i++) {

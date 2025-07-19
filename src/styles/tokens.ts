@@ -51,26 +51,3 @@ export const DESIGN_TOKENS = {
     content: "flex-1",
   },
 } as const;
-
-// Helper function to get nested token values
-// Example usage: getToken('card.title') or getToken('text.primary')
-export const getToken = (path: string): string => {
-  try {
-    const result = path
-      .split(".")
-      .reduce((obj: Record<string, unknown>, key: string) => {
-        if (obj && typeof obj === "object" && key in obj) {
-          return obj[key] as Record<string, unknown>;
-        }
-        throw new Error(`Token path '${path}' not found`);
-      }, DESIGN_TOKENS as Record<string, unknown>);
-
-    if (typeof result === "string") {
-      return result;
-    }
-    throw new Error(`Token at path '${path}' is not a string`);
-  } catch (error) {
-    console.warn(`Failed to get token '${path}':`, error);
-    return ""; // Return empty string as fallback
-  }
-};

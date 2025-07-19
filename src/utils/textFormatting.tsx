@@ -67,27 +67,6 @@ export const parseMarkdownBold = (
 };
 
 /**
- * Converts newline characters to <br> elements for React rendering
- * @param text - The text containing newline characters
- * @returns Array of React elements with line breaks
- */
-export const parseLineBreaks = (
-  text: string
-): (string | React.ReactElement)[] => {
-  return text.split("\n").map((line, index, array) => {
-    if (index === array.length - 1) {
-      return line; // Don't add <br> after the last line
-    }
-    return (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    );
-  });
-};
-
-/**
  * Combines markdown bold parsing with line break handling
  * @param text - The text to parse
  * @returns Array of React elements with both bold formatting and line breaks

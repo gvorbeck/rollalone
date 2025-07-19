@@ -1,13 +1,6 @@
 // Simple error handling utilities
 
 /**
- * Simple error logging with console fallback
- */
-export const logError = (message: string, error?: unknown): void => {
-  console.error(message, error);
-};
-
-/**
  * Safe DOM operations
  */
 export const errorHandlers = {
@@ -44,7 +37,7 @@ export const errorHandlers = {
  */
 export const createErrorBoundaryHandler = (componentName: string) => ({
   onError: (error: Error, errorInfo: { componentStack: string }) => {
-    logError(`Error in ${componentName} component`, {
+    console.error(`Error in ${componentName} component`, {
       originalError: error.message,
       stack: error.stack,
       componentStack: errorInfo.componentStack,
