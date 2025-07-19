@@ -1,276 +1,177 @@
-// Lightweight dice roller utility - replaces @dice-roller/rpg-dice-roller
-// Supports common dice notation: 1d20, 3d6+2, 2d20kh1, etc.
-
-interface DiceRollResult {
+export interface DiceResult {
   total: number;
   rolls: number[];
   notation: string;
   breakdown: string;
 }
 
-/**
- * Rolls dice based on standard RPG notation
- * Supports: XdY, XdY+Z, XdY-Z, XdYkhZ (keep highest), XdYklZ (keep lowest)
- */
 export class SimpleDiceRoll {
-  private _total: number = 0;
-  private _rolls: number[] = [];
-  private _notation: string = "";
-  private _breakdown: string = "";
+  public total: number;
+  public rolls: number[];
+  public notation: string;
+  public output: string;
 
   constructor(notation: string) {
-    this._notation = notation.toLowerCase().replace(/\s/g, "");
-    this.parseAndRoll();
+    this.notation = notation.trim();
+    const result = this.parse(notation);
+    this.total = result.total;
+    this.rolls = result.rolls;
+    this.output = result.breakdown;
   }
 
-  get total(): number {
-    return this._total;
-  }
-
-  get rolls(): number[] {
-    return [...this._rolls];
-  }
-
-  get notation(): string {
-    return this._notation;
-  }
-
-  get output(): string {
-    return this._breakdown;
-  }
-
-  private parseAndRoll(): void {
+  private parse(notation: string): DiceResult {
     try {
-      // Check if this is a complex expression with multiple dice groups
-      // Pattern: XdY+XdY, XdY-XdY, XdY+Z+XdY, etc.
-      if (this.hasMultipleDiceGroups(this._notation)) {
-        this.parseComplexExpression();
-        return;
+      const cleanNotation = notation.replace(/\s+/g, "");
+
+      // Check if this is truly multiple dice groups or just single dice with modifier
+      const dicePattern = /d\d+/gi;
+      const diceMatches = cleanNotation.match(dicePattern);
+
+      // If more than one dice group (e.g., "2d6+1d4"), use multiple groups parser
+      if (diceMatches && diceMatches.length > 1) {
+        return this.parseMultipleGroups(cleanNotation);
       }
 
-      // Handle basic dice notation: XdY, XdY+Z, XdY-Z
-      const basicPattern = /^(\d+)?d(\d+)([+-]\d+)?$/;
-      const basicMatch = this._notation.match(basicPattern);
-
-      if (basicMatch) {
-        const count = parseInt(basicMatch[1] || "1");
-        const sides = parseInt(basicMatch[2]);
-        const modifier = basicMatch[3] ? parseInt(basicMatch[3]) : 0;
-
-        this.rollBasicDice(count, sides, modifier);
-        return;
-      }
-
-      // Handle keep highest/lowest: XdYkhZ, XdYklZ
-      const keepPattern = /^(\d+)?d(\d+)k([hl])(\d+)$/;
-      const keepMatch = this._notation.match(keepPattern);
-
-      if (keepMatch) {
-        const count = parseInt(keepMatch[1] || "1");
-        const sides = parseInt(keepMatch[2]);
-        const keepType = keepMatch[3]; // 'h' or 'l'
-        const keepCount = parseInt(keepMatch[4]);
-
-        this.rollKeepDice(count, sides, keepType, keepCount);
-        return;
-      }
-
-      // Handle percentage dice
-      if (this._notation === "d100" || this._notation === "1d100") {
-        this.rollBasicDice(1, 100, 0);
-        return;
-      }
-
-      throw new Error(`Unsupported dice notation: ${this._notation}`);
+      return this.parseSingleGroup(cleanNotation);
     } catch (error) {
-      console.error("Dice parsing error:", error);
-      this._total = 0;
-      this._rolls = [];
-      this._breakdown = "Invalid notation";
+      console.error("Error parsing dice notation:", notation, error);
+      return { total: 0, rolls: [], notation, breakdown: "Invalid notation" };
     }
   }
 
-  private hasMultipleDiceGroups(notation: string): boolean {
-    // Check if notation contains multiple 'd' characters with numbers, indicating multiple dice groups
-    const diceGroupPattern = /\d*d\d+/g;
-    const matches = notation.match(diceGroupPattern);
-    return matches !== null && matches.length > 1;
-  }
-
-  private parseComplexExpression(): void {
-    // Split the expression into parts (dice groups and modifiers)
-    // Handle expressions like: 2d6+1d4, 1d20+3d6-2, etc.
-    const parts = this._notation.split(/([+-])/);
-    let runningTotal = 0;
-    const allRolls: number[] = [];
-    const breakdownParts: string[] = [];
-
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i].trim();
-      if (!part) continue;
-
-      if (part === "+" || part === "-") {
-        continue; // Skip operators, we'll handle them in context
-      }
-
-      // Determine if this part should be added or subtracted
-      const isNegative = i > 0 && parts[i - 1] === "-";
-
-      if (part.includes("d")) {
-        // This is a dice group
-        const diceResult = this.rollSingleDiceGroup(part);
-        const contribution = isNegative ? -diceResult.total : diceResult.total;
-        runningTotal += contribution;
-        allRolls.push(...diceResult.rolls);
-
-        const prefix = i === 0 ? "" : isNegative ? "-" : "+";
-        breakdownParts.push(`${prefix}${diceResult.breakdown}`);
-      } else if (/^\d+$/.test(part)) {
-        // This is a numeric modifier
-        const modifier = parseInt(part);
-        const contribution = isNegative ? -modifier : modifier;
-        runningTotal += contribution;
-
-        const prefix = i === 0 ? "" : isNegative ? "-" : "+";
-        breakdownParts.push(`${prefix}${modifier}`);
-      }
-    }
-
-    this._total = runningTotal;
-    this._rolls = allRolls;
-    this._breakdown = `${breakdownParts.join("")} = ${runningTotal}`;
-  }
-
-  private rollSingleDiceGroup(notation: string): {
-    total: number;
-    rolls: number[];
-    breakdown: string;
-  } {
-    // Parse a single dice group like "2d6" or "1d4"
-    const pattern = /^(\d+)?d(\d+)$/;
-    const match = notation.match(pattern);
-
+  private parseSingleGroup(notation: string): DiceResult {
+    // Match patterns like "2d20kh1", "1d6+5", "d100"
+    const match = notation.match(/^(\d*)d(\d+)(?:k([hl])(\d+))?([+-]\d+)?$/i);
     if (!match) {
-      throw new Error(`Invalid dice group: ${notation}`);
+      throw new Error(`Invalid notation: ${notation}`);
     }
 
     const count = parseInt(match[1] || "1");
     const sides = parseInt(match[2]);
+    const keepType = match[3]; // 'h' for highest, 'l' for lowest
+    const keepCount = match[4] ? parseInt(match[4]) : null;
+    const modifier = match[5] ? parseInt(match[5]) : 0;
 
-    if (count <= 0 || count > 100 || sides <= 0 || sides > 1000) {
-      throw new Error("Invalid dice parameters");
+    // Validation
+    if (count > 100 || sides > 1000) {
+      throw new Error("Dice parameters too large");
     }
 
-    const rolls = [];
+    // Roll dice
+    const allRolls: number[] = [];
     for (let i = 0; i < count; i++) {
-      rolls.push(this.rollSingle(sides));
+      allRolls.push(Math.floor(Math.random() * sides) + 1);
     }
 
-    const total = rolls.reduce((sum, roll) => sum + roll, 0);
+    let finalRolls = allRolls;
+    let rollBreakdown = "";
 
-    let breakdown;
-    if (count === 1) {
-      breakdown = `${rolls[0]}`;
+    // Handle keep highest/lowest
+    if (keepType && keepCount) {
+      const sorted = [...allRolls].sort((a, b) =>
+        keepType === "h" ? b - a : a - b
+      );
+      finalRolls = sorted.slice(0, keepCount);
+      rollBreakdown = `[${allRolls.join(", ")}] keep ${
+        keepType === "h" ? "highest" : "lowest"
+      } ${keepCount}: [${finalRolls.join(", ")}]`;
+    }
+
+    const rollTotal = finalRolls.reduce((sum, roll) => sum + roll, 0);
+    const total = rollTotal + modifier;
+
+    let breakdown: string;
+    if (rollBreakdown) {
+      breakdown =
+        modifier === 0
+          ? `${rollBreakdown} = ${total}`
+          : `${rollBreakdown}${modifier >= 0 ? "+" : ""}${modifier} = ${total}`;
+    } else if (count === 1) {
+      breakdown =
+        modifier === 0
+          ? `${total}`
+          : `[${finalRolls[0]}]${
+              modifier >= 0 ? "+" : ""
+            }${modifier} = ${total}`;
     } else {
-      breakdown = `[${rolls.join(", ")}]`;
+      breakdown =
+        modifier === 0
+          ? `[${finalRolls.join(", ")}] = ${total}`
+          : `[${finalRolls.join(", ")}]${
+              modifier >= 0 ? "+" : ""
+            }${modifier} = ${total}`;
     }
 
-    return { total, rolls, breakdown };
+    return { total, rolls: finalRolls, notation, breakdown };
   }
 
-  private rollBasicDice(count: number, sides: number, modifier: number): void {
-    if (count <= 0 || count > 100 || sides <= 0 || sides > 1000) {
-      throw new Error("Invalid dice parameters");
+  private parseMultipleGroups(notation: string): DiceResult {
+    // Split on + and - while preserving the operators
+    const parts = notation.split(/([+-])/).filter((p) => p);
+
+    let total = 0;
+    let allRolls: number[] = [];
+    let breakdownParts: string[] = [];
+    let currentOp = "+";
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+
+      if (part === "+" || part === "-") {
+        currentOp = part;
+        continue;
+      }
+
+      if (/^\d+$/.test(part)) {
+        // Pure number modifier
+        const value = parseInt(part);
+        const adjustedValue = currentOp === "+" ? value : -value;
+        total += adjustedValue;
+        breakdownParts.push(
+          currentOp === "+" && i > 0
+            ? `+${value}`
+            : currentOp === "-"
+            ? `-${value}`
+            : `${value}`
+        );
+      } else {
+        // Dice notation
+        const result = this.parseSingleGroup(part);
+        const adjustedTotal = currentOp === "+" ? result.total : -result.total;
+        total += adjustedTotal;
+        allRolls.push(...result.rolls);
+
+        if (result.rolls.length === 1) {
+          breakdownParts.push(
+            currentOp === "+" && i > 0
+              ? `+${result.rolls[0]}`
+              : currentOp === "-"
+              ? `-${result.rolls[0]}`
+              : `${result.rolls[0]}`
+          );
+        } else {
+          const rollStr = `[${result.rolls.join(", ")}]`;
+          breakdownParts.push(
+            currentOp === "+" && i > 0
+              ? `+${rollStr}`
+              : currentOp === "-"
+              ? `-${rollStr}`
+              : rollStr
+          );
+        }
+      }
     }
 
-    this._rolls = [];
-    for (let i = 0; i < count; i++) {
-      this._rolls.push(this.rollSingle(sides));
-    }
-
-    const rollSum = this._rolls.reduce((sum, roll) => sum + roll, 0);
-    this._total = rollSum + modifier;
-
-    // Create breakdown string
-    if (count === 1 && modifier === 0) {
-      this._breakdown = `${this._rolls[0]}`;
-    } else if (modifier === 0) {
-      this._breakdown = `[${this._rolls.join(", ")}] = ${rollSum}`;
-    } else {
-      const modStr = modifier >= 0 ? `+${modifier}` : `${modifier}`;
-      this._breakdown = `[${this._rolls.join(", ")}]${modStr} = ${this._total}`;
-    }
-  }
-
-  private rollKeepDice(
-    count: number,
-    sides: number,
-    keepType: string,
-    keepCount: number
-  ): void {
-    if (
-      count <= 0 ||
-      count > 100 ||
-      sides <= 0 ||
-      sides > 1000 ||
-      keepCount <= 0 ||
-      keepCount > count
-    ) {
-      throw new Error("Invalid dice parameters");
-    }
-
-    // Roll all dice
-    const allRolls = [];
-    for (let i = 0; i < count; i++) {
-      allRolls.push(this.rollSingle(sides));
-    }
-
-    // Sort and keep appropriate dice
-    const sortedRolls = [...allRolls].sort((a, b) => b - a); // Descending order
-    this._rolls =
-      keepType === "h"
-        ? sortedRolls.slice(0, keepCount) // Keep highest
-        : sortedRolls.slice(-keepCount); // Keep lowest
-
-    this._total = this._rolls.reduce((sum, roll) => sum + roll, 0);
-
-    // Create breakdown string
-    const keptStr = keepType === "h" ? "highest" : "lowest";
-    this._breakdown = `[${allRolls.join(
-      ", "
-    )}] keep ${keptStr} ${keepCount}: [${this._rolls.join(", ")}] = ${
-      this._total
-    }`;
-  }
-
-  private rollSingle(sides: number): number {
-    return Math.floor(Math.random() * sides) + 1;
+    const breakdown = `${breakdownParts.join("")} = ${total}`;
+    return { total, rolls: allRolls, notation, breakdown };
   }
 }
 
-// Convenience function that matches the original library's interface
-export class DiceRoll {
-  private _roll: SimpleDiceRoll;
-
-  constructor(notation: string) {
-    this._roll = new SimpleDiceRoll(notation);
-  }
-
-  get total(): number {
-    return this._roll.total;
-  }
-
-  get output(): string {
-    return this._roll.output;
-  }
-
-  get notation(): string {
-    return this._roll.notation;
-  }
+export class DiceRoll extends SimpleDiceRoll {
+  // Wrapper class for compatibility
 }
 
-// Quick roll function for simple cases
-export const roll = (notation: string): DiceRollResult => {
+export function roll(notation: string): DiceResult {
   const diceRoll = new SimpleDiceRoll(notation);
   return {
     total: diceRoll.total,
@@ -278,4 +179,4 @@ export const roll = (notation: string): DiceRollResult => {
     notation: diceRoll.notation,
     breakdown: diceRoll.output,
   };
-};
+}
