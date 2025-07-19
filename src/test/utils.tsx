@@ -63,16 +63,6 @@ export const mockCardData = {
       },
     ],
   },
-  dice: {
-    title: "Test Dice Card",
-    contentType: "dice" as const,
-    content: {
-      diceType: "d6",
-      rollCount: 2,
-      modifier: 1,
-      description: "Roll 2d6+1",
-    },
-  },
 };
 
 // Helper to create DOM elements with data attributes

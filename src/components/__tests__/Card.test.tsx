@@ -4,7 +4,7 @@ import Card from "../Card";
 import { mockCardData } from "@/test/utils";
 
 describe("Card Component", () => {
-  const sampleCard = mockCardData.dice;
+  const sampleCard = mockCardData.text;
 
   it("renders card with title and content", () => {
     render(<Card {...sampleCard} />);

@@ -1,5 +1,5 @@
 // Central type exports for better organization
-export type { CardProps, TableData, DiceConfig } from "@/data/definitions";
+export type { CardProps, TableData } from "@/data/definitions";
 
 // Re-export design tokens for easier access
 export { DESIGN_TOKENS, getToken } from "@/styles/tokens";

@@ -1,13 +1,12 @@
 import React from "react";
 import clsx from "clsx";
-import { CardProps, TableData, DiceConfig } from "@/data/definitions";
+import { CardProps, TableData } from "@/data/definitions";
 import { DESIGN_TOKENS } from "@/styles/tokens";
 import {
   CardContentText,
   CardContentList,
   CardContentTable,
   CardContentImage,
-  CardContentDice,
   CardContentPostContent,
 } from "@/components/content";
 
@@ -31,8 +30,6 @@ const Card: React.FC<CardProps> = ({
         );
       case "image":
         return <CardContentImage content={content as string} title={title} />;
-      case "dice":
-        return <CardContentDice content={content as DiceConfig} />;
       default:
         return (
           <p className="text-gray-300">
