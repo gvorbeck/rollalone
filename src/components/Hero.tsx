@@ -68,11 +68,9 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Floating elements */}
-            {generateFloatingElements("heroDecorative").map(
-              (className, index) => (
-                <div key={index} className={className} />
-              )
-            )}
+            {generateFloatingElements().map((className, index) => (
+              <div key={index} className={className} />
+            ))}
           </div>
         </div>
       </div>
