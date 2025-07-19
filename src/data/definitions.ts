@@ -1,6 +1,6 @@
 export interface CardProps {
   title: string;
-  contentType: "text" | "list" | "image" | "table";
+  contentType: "text" | "list" | "table";
   content: string | string[] | TableData | TableData[];
   preContent?: string;
   postContent?: string[];

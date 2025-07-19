@@ -10,7 +10,7 @@ describe("Card Component", () => {
     render(<Card {...sampleCard} />);
 
     expect(screen.getByText(sampleCard.title)).toBeInTheDocument();
-    expect(screen.getByText(/roll 2d6/i)).toBeInTheDocument();
+    expect(screen.getByText(sampleCard.content as string)).toBeInTheDocument();
   });
 
   it("applies data-card-title attribute", () => {
@@ -41,10 +41,6 @@ describe("Card Component", () => {
     const { rerender } = render(<Card {...textCard} />);
 
     expect(screen.getByText(textCard.content as string)).toBeInTheDocument();
-
-    // Test dice card
-    rerender(<Card {...sampleCard} />);
-    expect(screen.getByText(/roll 2d6/i)).toBeInTheDocument();
 
     // Test list card
     const listCard = mockCardData.list;

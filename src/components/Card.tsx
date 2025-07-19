@@ -6,7 +6,6 @@ import {
   CardContentText,
   CardContentList,
   CardContentTable,
-  CardContentImage,
   CardContentPostContent,
 } from "@/components/content";
 
@@ -28,8 +27,6 @@ const Card: React.FC<CardProps> = ({
         return (
           <CardContentTable content={content as TableData | TableData[]} />
         );
-      case "image":
-        return <CardContentImage content={content as string} title={title} />;
       default:
         return (
           <p className="text-gray-300">
