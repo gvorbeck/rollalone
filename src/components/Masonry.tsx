@@ -18,8 +18,7 @@ const Masonry: React.FC<MasonryProps> = ({
       const width = window.innerWidth;
       if (width < 768) return 1;
       else if (width < 1024) return 2;
-      else if (width < 1280) return 3;
-      else return 4;
+      else return 3;
     }
     return 1; // Safe fallback - start with 1 column for SSR/mobile-first
   });
@@ -38,8 +37,7 @@ const Masonry: React.FC<MasonryProps> = ({
         const width = window.innerWidth;
         if (width < 768) setColumns(1);
         else if (width < 1024) setColumns(2);
-        else if (width < 1280) setColumns(3);
-        else setColumns(4);
+        else setColumns(3);
       };
 
       updateColumns();
