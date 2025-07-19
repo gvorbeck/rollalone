@@ -255,9 +255,7 @@ describe("App Component", () => {
     // All FABs should be in the same flex container now
     const fabContainer = screen
       .getByRole("main")
-      .parentElement?.querySelector(
-        "div.fixed.bottom-4.right-4.flex.gap-4.z-50"
-      );
+      .parentElement?.querySelector(".fab-container");
     expect(fabContainer).toBeInTheDocument();
     expect(fabContainer).toContainElement(tocFAB.closest("div"));
     expect(fabContainer).toContainElement(cardDrawerFAB.closest("div"));
