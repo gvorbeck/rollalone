@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { CardProps, TableData } from "@/data/definitions";
 import { DESIGN_TOKENS } from "@/styles/tokens";
+import { parseFormattedText } from "@/utils/textFormatting";
 import {
   CardContentText,
   CardContentList,
@@ -45,7 +46,9 @@ const Card: React.FC<CardProps> = ({
       <header>
         <h2 className={DESIGN_TOKENS.card.title}>{title}</h2>
         {preContent && (
-          <p className={DESIGN_TOKENS.card.preContent}>{preContent}</p>
+          <p className={DESIGN_TOKENS.card.preContent}>
+            {parseFormattedText(preContent)}
+          </p>
         )}
       </header>
       {renderContent()}

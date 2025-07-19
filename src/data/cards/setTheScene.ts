@@ -4,7 +4,7 @@ const setTheScene: CardProps = {
   title: "Set the Scene",
   contentType: "table",
   preContent:
-    "Describe where your character is and what they are trying to accomplish, then roll or choose a scene complication.",
+    "Describe where your character is and what they are trying to accomplish, then roll or choose a scene complication. **Afterward, roll another d6—on a 5+ it is an Altered Scene.**",
   content: [
     {
       title: "Scene Complication (d6)",
@@ -29,7 +29,6 @@ const setTheScene: CardProps = {
       ],
     },
   ],
-  postContent: ["**Roll 1d6, on a 5+, it is an ALTERED SCENE**"],
 };
 
 export default setTheScene;
