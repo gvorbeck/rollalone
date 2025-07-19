@@ -42,19 +42,30 @@ const Card: React.FC<CardProps> = ({
       className={clsx(DESIGN_TOKENS.card.container, className)}
       data-card-title={title}
       data-testid="card"
+      id={title.replace(/\s+/g, '-').toLowerCase()}
+      aria-labelledby={`card-title-${title.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <header>
-        <h2 className={DESIGN_TOKENS.card.title}>{title}</h2>
+        <h2 
+          className={DESIGN_TOKENS.card.title}
+          id={`card-title-${title.replace(/\s+/g, '-').toLowerCase()}`}
+        >
+          {title}
+        </h2>
         {preContent && (
-          <p className={DESIGN_TOKENS.card.preContent}>
+          <div className={DESIGN_TOKENS.card.preContent}>
             {parseFormattedText(preContent)}
-          </p>
+          </div>
         )}
       </header>
-      {renderContent()}
-      <footer>
-        {postContent && <CardContentPostContent postContent={postContent} />}
-      </footer>
+      <main>
+        {renderContent()}
+      </main>
+      {postContent && (
+        <footer>
+          <CardContentPostContent postContent={postContent} />
+        </footer>
+      )}
     </article>
   );
 };

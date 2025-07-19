@@ -1,12 +1,41 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import createSitemap from "vite-plugin-sitemap";
 import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
   base: "/", // For custom domain, use root path
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(), 
+    tailwindcss(),
+    createSitemap({
+      hostname: "https://rollal.one",
+      outDir: "dist"
+    })
+  ],
+  build: {
+    // Optimize for better performance
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['clsx', 'tailwind-merge']
+        }
+      }
+    },
+    // Ensure assets are properly hashed for caching
+    assetsInlineLimit: 4096,
+    reportCompressedSize: false,
+    chunkSizeWarningLimit: 1000
+  },
+  server: {
+    // Better development experience
+    headers: {
+      'Cache-Control': 'no-cache',
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

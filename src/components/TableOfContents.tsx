@@ -82,33 +82,41 @@ const TableOfContents: React.FC = () => {
           title="Table of Contents"
           className="absolute bottom-16 right-0 w-72 max-w-[calc(100vw-2rem)] max-h-96 overflow-y-auto custom-scrollbar"
         >
-          <div
-            id="table-of-contents-title"
-            className="text-white text-sm mb-3 font-medium"
+          <nav 
+            aria-labelledby="table-of-contents-title"
+            role="navigation"
+            aria-label="Page content navigation"
           >
-            Table of Contents
-          </div>
+            <h2
+              id="table-of-contents-title"
+              className="text-white text-sm mb-3 font-medium"
+            >
+              Table of Contents
+            </h2>
 
-          {TOC_SECTIONS.map((section, sectionIndex) => (
-            <div key={section.title} className={sectionIndex > 0 ? "mt-4" : ""}>
-              <div className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
-                {section.title}
-              </div>
-              <div className="space-y-1">
-                {section.cards.map((card) => (
-                  <Button
-                    key={card.id}
-                    onClick={() => handleCardClick(card.id)}
-                    variant="ghost"
-                    size="sm"
-                    className="w-full justify-start px-2 py-1.5 text-sm text-gray-300 hover:text-white"
-                  >
-                    {card.title}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          ))}
+            {TOC_SECTIONS.map((section, sectionIndex) => (
+              <section key={section.title} className={sectionIndex > 0 ? "mt-4" : ""}>
+                <h3 className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
+                  {section.title}
+                </h3>
+                <ul className="space-y-1" role="list">
+                  {section.cards.map((card) => (
+                    <li key={card.id} role="listitem">
+                      <Button
+                        onClick={() => handleCardClick(card.id)}
+                        variant="ghost"
+                        size="sm"
+                        className="w-full justify-start px-2 py-1.5 text-sm text-gray-300 hover:text-white"
+                        aria-label={`Navigate to ${card.title} section`}
+                      >
+                        {card.title}
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </nav>
         </AnimatedPanel>
       </div>
 

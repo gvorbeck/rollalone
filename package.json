@@ -1,7 +1,32 @@
 {
-  "name": "solo",
+  "name": "roll-alone",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Your complete toolkit for solo tabletop RPG adventures. Features advanced dice roller, oracle systems, generators, and decision-making tools for any TTRPG system.",
+  "keywords": [
+    "solo rpg",
+    "tabletop rpg",
+    "ttrpg",
+    "dice roller",
+    "oracle",
+    "solo gaming",
+    "rpg tools",
+    "game master",
+    "solo engine"
+  ],
+  "homepage": "https://rollal.one",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gvorbeck/rollalone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gvorbeck/rollalone/issues"
+  },
+  "author": {
+    "name": "Roll Alone",
+    "url": "https://rollal.one"
+  },
+  "license": "Mixed",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -41,6 +66,7 @@
     "jsdom": "^26.1.0",
     "typescript": "^5.8.3",
     "vite": "^7.0.4",
+    "vite-plugin-sitemap": "^0.8.2",
     "vitest": "^3.2.4"
   }
 }

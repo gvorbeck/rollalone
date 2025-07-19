@@ -1,0 +1,25 @@
+{
+  "name": "Roll Alone - Solo TTRPG Toolkit",
+  "short_name": "Roll Alone",
+  "description": "Your complete toolkit for solo tabletop RPG adventures",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#1f2937",
+  "categories": ["games", "entertainment", "productivity"],
+  "icons": [
+    {
+      "src": "/src/assets/favicon.webp",
+      "sizes": "any",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/src/assets/hero.webp",
+      "sizes": "1200x800",
+      "type": "image/webp"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://rollal.one/sitemap.xml
+
+# Block crawling of development files
+Disallow: /src/
+Disallow: /*.ts
+Disallow: /*.tsx
+Disallow: /node_modules/

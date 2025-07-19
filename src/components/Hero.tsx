@@ -21,6 +21,11 @@ const Hero: React.FC = () => {
               <p className="text-xl sm:text-2xl text-gray-300 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Your complete toolkit for solo tabletop RPG adventures
               </p>
+              <p className="sr-only">
+                Roll Alone is a comprehensive digital toolkit for solo tabletop role-playing games, 
+                featuring advanced dice rolling, oracle systems, generators, and decision-making tools 
+                that work with any TTRPG system without requiring a Game Master.
+              </p>
             </div>
 
             {/* Key Features */}
@@ -59,8 +64,12 @@ const Hero: React.FC = () => {
               {/* Main hero image */}
               <img
                 src={heroImage}
-                alt="Solo TTRPG adventurer"
+                alt="Solo tabletop RPG adventurer with dice, cards, and mystical elements - Roll Alone toolkit for solo TTRPG gaming"
                 className="relative z-10 w-full h-auto max-w-lg drop-shadow-2xl rounded-lg"
+                loading="eager"
+                decoding="async"
+                width="512"
+                height="341"
               />
 
               {/* Subtle frame effect */}
