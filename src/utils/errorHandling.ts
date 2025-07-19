@@ -16,12 +16,18 @@ export const errorHandlers = {
       try {
         return document.querySelector(selector);
       } catch (error) {
-        console.warn(`Failed to find element with selector: ${selector}`, error);
+        console.warn(
+          `Failed to find element with selector: ${selector}`,
+          error
+        );
         return null;
       }
     },
 
-    scrollToElement: (element: Element, options?: ScrollIntoViewOptions): boolean => {
+    scrollToElement: (
+      element: Element,
+      options?: ScrollIntoViewOptions
+    ): boolean => {
       try {
         element.scrollIntoView(options);
         return true;
