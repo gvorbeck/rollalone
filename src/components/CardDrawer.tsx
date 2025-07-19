@@ -75,7 +75,7 @@ const CardDrawer: React.FC = () => {
     <>
       {/* Card Draw Result Popup */}
       {showResult && (
-        <div className="fixed bottom-22 right-24 z-50 bg-gray-800 text-white p-4 rounded-lg shadow-lg max-w-xs animate-fade-in">
+        <div className="fixed bottom-22 right-4 sm:right-24 z-50 bg-gray-800 text-white p-4 rounded-lg shadow-lg max-w-[calc(100vw-2rem)] sm:max-w-xs animate-fade-in">
           <div className="text-center">
             <div className="text-2xl mb-2">{lastDrawnCard?.display}</div>
             <div className="text-sm whitespace-pre-line">{resultMessage}</div>
@@ -84,12 +84,12 @@ const CardDrawer: React.FC = () => {
       )}
 
       {/* Expanded Panel */}
-      <div className="fixed bottom-6 right-24 z-50">
+      <div className="fixed bottom-6 right-4 sm:right-24 z-50">
         <AnimatedPanel
           isOpen={isOpen}
           variant="floating"
           title="Card Drawer"
-          className="absolute bottom-16 right-0 w-80"
+          className="absolute bottom-16 right-0 w-80 max-w-[calc(100vw-2rem)]"
         >
           <div className="flex justify-between items-center mb-4">
             <h3

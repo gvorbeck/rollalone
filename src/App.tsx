@@ -58,7 +58,7 @@ const App: FC = () => {
           <main className="container mx-auto px-4 py-10" role="main">
             <Masonry className="w-full">{cardElements}</Masonry>
           </main>
-          <div className="fixed bottom-4 right-4 flex gap-4 z-50">
+          <div className="fixed bottom-4 right-4 flex gap-2 sm:gap-4 z-50 fab-container">
             <TableOfContents />
             <CardDrawer />
             <DiceRoller />

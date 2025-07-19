@@ -12,7 +12,17 @@ const Masonry: React.FC<MasonryProps> = ({
   itemClassName = "",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [columns, setColumns] = useState(3);
+  const [columns, setColumns] = useState(() => {
+    // Initialize with correct column count based on window width
+    if (typeof window !== "undefined") {
+      const width = window.innerWidth;
+      if (width < 768) return 1;
+      else if (width < 1024) return 2;
+      else if (width < 1280) return 3;
+      else return 4;
+    }
+    return 1; // Safe fallback - start with 1 column for SSR/mobile-first
+  });
   const [supportsMasonry, setSupportsMasonry] = useState(false);
 
   useEffect(() => {
@@ -29,6 +39,7 @@ const Masonry: React.FC<MasonryProps> = ({
         if (width < 768) setColumns(1);
         else if (width < 1024) setColumns(2);
         else if (width < 1280) setColumns(3);
+        else setColumns(4);
       };
 
       updateColumns();

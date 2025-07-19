@@ -75,12 +75,12 @@ const TableOfContents: React.FC = () => {
   return (
     <>
       {/* TOC Panel with Animation */}
-      <div className="fixed bottom-6 right-44 z-50">
+      <div className="fixed bottom-6 right-4 sm:right-44 z-50">
         <AnimatedPanel
           isOpen={isOpen}
           variant="floating"
           title="Table of Contents"
-          className="absolute bottom-16 right-0 w-72 max-h-96 overflow-y-auto custom-scrollbar"
+          className="absolute bottom-16 right-0 w-72 max-w-[calc(100vw-2rem)] max-h-96 overflow-y-auto custom-scrollbar"
         >
           <div
             id="table-of-contents-title"
