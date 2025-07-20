@@ -1,5 +1,8 @@
 import React from "react";
-import heroImage from "@/assets/hero.webp";
+import heroImage400 from "@/assets/hero-400w.webp";
+import heroImage600 from "@/assets/hero-600w.webp";
+import heroImage800 from "@/assets/hero-800w.webp";
+import heroImage1200 from "@/assets/hero-1200w.webp";
 import { generateFloatingElements } from "@/utils/decorative";
 
 const Hero: React.FC = () => {
@@ -64,7 +67,14 @@ const Hero: React.FC = () => {
 
               {/* Main hero image */}
               <img
-                src={heroImage}
+                src={heroImage800}
+                srcSet={`
+                  ${heroImage400} 400w,
+                  ${heroImage600} 600w,
+                  ${heroImage800} 800w,
+                  ${heroImage1200} 1200w
+                `}
+                sizes="(max-width: 640px) 400px, (max-width: 768px) 600px, (max-width: 1024px) 800px, 1200px"
                 alt="Solo tabletop RPG adventurer with dice, cards, and mystical elements - Roll Alone toolkit for solo TTRPG gaming"
                 className="relative z-10 w-full h-auto max-w-lg drop-shadow-2xl rounded-lg"
                 loading="eager"
