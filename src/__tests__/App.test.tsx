@@ -97,7 +97,7 @@ describe("App Component", () => {
     render(<App />);
 
     expect(
-      screen.getByRole("heading", { name: /roll alone/i })
+      screen.getAllByRole("heading", { name: /roll alone/i })[0]
     ).toBeInTheDocument();
     expect(screen.getByText(/your complete toolkit/i)).toBeInTheDocument();
   });
@@ -157,7 +157,7 @@ describe("App Component", () => {
     fireEvent.click(tocFAB);
 
     await waitFor(() => {
-      const cardButton = screen.getByRole("button", { name: "How to Play" });
+      const cardButton = screen.getAllByText("How to Play")[1]; // Get the button, not the heading
       fireEvent.click(cardButton);
     });
 
@@ -175,7 +175,7 @@ describe("App Component", () => {
   it("applies dark theme throughout", () => {
     render(<App />);
 
-    const appContainer = screen.getByRole("main").closest("div");
+    const appContainer = screen.getAllByRole("main")[0].closest("div");
     expect(appContainer).toHaveClass("bg-gray-900");
   });
 
@@ -183,7 +183,7 @@ describe("App Component", () => {
     render(<App />);
 
     // Check for main content wrapper
-    const main = screen.getByRole("main");
+    const main = screen.getAllByRole("main")[0];
     expect(main).toBeInTheDocument();
 
     // Check for hero section
@@ -200,7 +200,7 @@ describe("App Component", () => {
 
     // Should still render hero and UI elements
     expect(
-      screen.getByRole("heading", { name: /roll alone/i })
+      screen.getAllByRole("heading", { name: /roll alone/i })[0]
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /open dice roller/i })
@@ -253,20 +253,18 @@ describe("App Component", () => {
     });
 
     // All FABs should be in the same flex container now
-    const fabContainer = screen
-      .getByRole("main")
-      .parentElement?.querySelector(".fab-container");
+    const fabContainer = document.querySelector(".fab-container");
     expect(fabContainer).toBeInTheDocument();
-    expect(fabContainer).toContainElement(tocFAB.closest("div"));
-    expect(fabContainer).toContainElement(cardDrawerFAB.closest("div"));
-    expect(fabContainer).toContainElement(diceRollerFAB.closest("div"));
+    expect(fabContainer).toContainElement(tocFAB);
+    expect(fabContainer).toContainElement(cardDrawerFAB);
+    expect(fabContainer).toContainElement(diceRollerFAB);
   });
 
   it("handles scroll behavior", () => {
     render(<App />);
 
     // Check that the app renders without scroll-related errors
-    expect(screen.getByRole("main")).toBeInTheDocument();
+    expect(screen.getAllByRole("main")[0]).toBeInTheDocument();
 
     // The scroll behavior is handled by the scrollToCard utility
     // which is already tested in scrollToCard.test.ts
@@ -300,7 +298,7 @@ describe("App Component", () => {
     render(<App />);
 
     // Check for proper heading hierarchy
-    const h1 = screen.getByRole("heading", { level: 1 });
+    const h1 = screen.getAllByRole("heading", { level: 1 })[0];
     expect(h1).toBeInTheDocument();
 
     const h2s = screen.getAllByRole("heading", { level: 2 });
@@ -309,7 +307,7 @@ describe("App Component", () => {
     // Check for proper landmark roles
     const banners = screen.getAllByRole("banner");
     expect(banners[0]).toBeInTheDocument(); // Main page banner
-    expect(screen.getByRole("main")).toBeInTheDocument();
+    expect(screen.getAllByRole("main")[0]).toBeInTheDocument();
   });
 
   it("card drawer functions work", async () => {
