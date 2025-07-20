@@ -3,10 +3,11 @@ export const DESIGN_TOKENS = {
   // Card styling
   card: {
     container:
-      "bg-gray-800 shadow-md rounded-lg p-6 transition-shadow hover:shadow-lg",
-    title: "text-xl font-semibold text-white mb-4",
-    preContent: "text-gray-400 mb-4",
-    postContent: "text-gray-400 mt-4",
+      "bg-gray-800 shadow-md rounded-lg p-6 transition-shadow hover:shadow-lg flex flex-col gap-4",
+    header: "flex flex-col gap-2 items-start",
+    title: "text-xl font-semibold text-white",
+    preContent: "text-gray-400",
+    postContent: "text-gray-400",
   },
 
   // Text content styling

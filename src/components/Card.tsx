@@ -10,6 +10,8 @@ import {
   CardContentPostContent,
 } from "@/components/content";
 import { Button } from "./ui/Button";
+import { useFAB } from "@/contexts/FABContext";
+import { DiceIcons } from "./ui/Icons";
 
 const Card: React.FC<CardProps> = ({
   title,
@@ -20,6 +22,14 @@ const Card: React.FC<CardProps> = ({
   rollable,
   className = "",
 }) => {
+  const { openDiceRollerWithFormula } = useFAB();
+
+  const handleRollClick = () => {
+    if (rollable) {
+      openDiceRollerWithFormula(rollable);
+    }
+  };
+
   const renderContent = () => {
     switch (contentType) {
       case "text":
@@ -47,14 +57,25 @@ const Card: React.FC<CardProps> = ({
       id={title.replace(/\s+/g, "-").toLowerCase()}
       aria-labelledby={`card-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
     >
-      <header>
+      <header className={DESIGN_TOKENS.card.header}>
         <h2
           className={DESIGN_TOKENS.card.title}
           id={`card-title-${title.replace(/\s+/g, "-").toLowerCase()}`}
         >
           {title}
         </h2>
-        {rollable && <Button />}
+        {rollable && (
+          <Button
+            onClick={handleRollClick}
+            variant="secondary"
+            size="sm"
+            className="flex items-center gap-1"
+            title={`Roll ${rollable}`}
+          >
+            <DiceIcons.D6 />
+            {rollable}
+          </Button>
+        )}
         {preContent && (
           <div className={DESIGN_TOKENS.card.preContent}>
             {parseFormattedText(preContent)}

@@ -7,6 +7,9 @@ interface FABContextType {
   activeFAB: FABType;
   setActiveFAB: (fab: FABType) => void;
   toggleFAB: (fab: FABType) => void;
+  openDiceRollerWithFormula: (formula: string) => void;
+  diceFormula: string | null;
+  clearDiceFormula: () => void;
 }
 
 const FABContext = createContext<FABContextType | undefined>(undefined);
@@ -17,13 +20,32 @@ interface FABProviderProps {
 
 export const FABProvider: React.FC<FABProviderProps> = ({ children }) => {
   const [activeFAB, setActiveFAB] = useState<FABType>(null);
+  const [diceFormula, setDiceFormula] = useState<string | null>(null);
 
   const toggleFAB = (fab: FABType) => {
     setActiveFAB((current) => (current === fab ? null : fab));
   };
 
+  const openDiceRollerWithFormula = (formula: string) => {
+    setDiceFormula(formula);
+    setActiveFAB("diceRoller");
+  };
+
+  const clearDiceFormula = () => {
+    setDiceFormula(null);
+  };
+
   return (
-    <FABContext.Provider value={{ activeFAB, setActiveFAB, toggleFAB }}>
+    <FABContext.Provider
+      value={{
+        activeFAB,
+        setActiveFAB,
+        toggleFAB,
+        openDiceRollerWithFormula,
+        diceFormula,
+        clearDiceFormula,
+      }}
+    >
       {children}
     </FABContext.Provider>
   );

@@ -2,6 +2,7 @@ import { CardProps } from "@/data/definitions";
 
 const setTheScene: CardProps = {
   title: "Set the Scene",
+  rollable: "2d6",
   contentType: "table",
   preContent:
     "Describe where your character is and what they are trying to accomplish, then roll or choose a scene complication. **Afterward, roll another d6—on a 5+ it is an Altered Scene.**",

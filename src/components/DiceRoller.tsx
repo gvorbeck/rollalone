@@ -23,7 +23,7 @@ const DICE_TYPES = [
 ] as const;
 
 const DiceRoller: React.FC = () => {
-  const { activeFAB, toggleFAB } = useFAB();
+  const { activeFAB, toggleFAB, diceFormula, clearDiceFormula } = useFAB();
   const isOpen = activeFAB === "diceRoller";
   const [diceInput, setDiceInput] = useState<string>("");
   const [lastRoll, setLastRoll] = useState<string>("");
@@ -34,6 +34,14 @@ const DiceRoller: React.FC = () => {
   useEffect(() => {
     setHistory(diceHistory.getHistory());
   }, []);
+
+  // Set dice input when formula is provided from context
+  useEffect(() => {
+    if (diceFormula && isOpen) {
+      setDiceInput(diceFormula);
+      clearDiceFormula(); // Clear the formula after using it
+    }
+  }, [diceFormula, isOpen, clearDiceFormula]);
 
   const addDie = (dieType: string) => {
     if (!diceInput) {

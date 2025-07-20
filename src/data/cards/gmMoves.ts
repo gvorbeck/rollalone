@@ -2,6 +2,7 @@ import { CardProps } from "@/data/definitions";
 
 const gmMoves: CardProps = {
   title: "GM Moves",
+  rollable: "d6",
   contentType: "table",
   preContent:
     "When you need to advance the action, roll on the tables below and describe the results as the GM normally would.",

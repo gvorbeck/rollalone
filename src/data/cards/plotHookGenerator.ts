@@ -2,6 +2,7 @@ import { CardProps } from "@/data/definitions";
 
 const plotHookGenerator: CardProps = {
   title: "Plot Hook Generator",
+  rollable: "3d6",
   contentType: "table",
   preContent:
     "Use this to generate plot hooks, quests, or missions for the PCs to follow.",
