@@ -1,0 +1,3 @@
+# Prevent formatting of Husky hooks
+.husky/* linguist-generated=true
+.husky/pre-commit -text
