@@ -8,33 +8,33 @@ import path from "path";
 export default defineConfig({
   base: "/", // For custom domain, use root path
   plugins: [
-    react(), 
+    react(),
     tailwindcss(),
     createSitemap({
       hostname: "https://rollal.one",
-      outDir: "dist"
-    })
+      outDir: "dist",
+    }),
   ],
   build: {
     // Optimize for better performance
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['clsx', 'tailwind-merge']
-        }
-      }
+          vendor: ["react", "react-dom"],
+          ui: ["clsx", "tailwind-merge"],
+        },
+      },
     },
     // Ensure assets are properly hashed for caching
     assetsInlineLimit: 4096,
     reportCompressedSize: false,
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
   },
   server: {
     // Better development experience
     headers: {
-      'Cache-Control': 'no-cache',
-    }
+      "Cache-Control": "no-cache",
+    },
   },
   resolve: {
     alias: {

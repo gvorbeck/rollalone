@@ -22,9 +22,10 @@ const Hero: React.FC = () => {
                 Your complete toolkit for solo tabletop RPG adventures
               </p>
               <p className="sr-only">
-                Roll Alone is a comprehensive digital toolkit for solo tabletop role-playing games, 
-                featuring advanced dice rolling, oracle systems, generators, and decision-making tools 
-                that work with any TTRPG system without requiring a Game Master.
+                Roll Alone is a comprehensive digital toolkit for solo tabletop
+                role-playing games, featuring advanced dice rolling, oracle
+                systems, generators, and decision-making tools that work with
+                any TTRPG system without requiring a Game Master.
               </p>
             </div>
 

@@ -82,7 +82,7 @@ const TableOfContents: React.FC = () => {
           title="Table of Contents"
           className="absolute bottom-16 right-0 w-72 max-w-[calc(100vw-2rem)] max-h-96 overflow-y-auto custom-scrollbar"
         >
-          <nav 
+          <nav
             aria-labelledby="table-of-contents-title"
             role="navigation"
             aria-label="Page content navigation"
@@ -95,7 +95,10 @@ const TableOfContents: React.FC = () => {
             </h2>
 
             {TOC_SECTIONS.map((section, sectionIndex) => (
-              <section key={section.title} className={sectionIndex > 0 ? "mt-4" : ""}>
+              <section
+                key={section.title}
+                className={sectionIndex > 0 ? "mt-4" : ""}
+              >
                 <h3 className="text-gray-400 text-xs font-medium mb-2 uppercase tracking-wide">
                   {section.title}
                 </h3>
