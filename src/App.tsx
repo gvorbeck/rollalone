@@ -48,6 +48,7 @@ const App: FC = () => {
       content={card.content}
       preContent={card.preContent}
       postContent={card.postContent}
+      rollable={card.rollable}
     />
   ));
 

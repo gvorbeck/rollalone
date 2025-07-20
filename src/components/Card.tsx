@@ -9,6 +9,7 @@ import {
   CardContentTable,
   CardContentPostContent,
 } from "@/components/content";
+import { Button } from "./ui/Button";
 
 const Card: React.FC<CardProps> = ({
   title,
@@ -16,6 +17,7 @@ const Card: React.FC<CardProps> = ({
   content,
   preContent,
   postContent,
+  rollable,
   className = "",
 }) => {
   const renderContent = () => {
@@ -52,6 +54,7 @@ const Card: React.FC<CardProps> = ({
         >
           {title}
         </h2>
+        {rollable && <Button />}
         {preContent && (
           <div className={DESIGN_TOKENS.card.preContent}>
             {parseFormattedText(preContent)}

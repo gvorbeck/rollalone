@@ -5,6 +5,7 @@ export interface CardProps {
   preContent?: string;
   postContent?: string[];
   className?: string;
+  rollable?: string;
 }
 
 export interface TableData {

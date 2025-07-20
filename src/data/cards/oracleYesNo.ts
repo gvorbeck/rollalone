@@ -2,6 +2,7 @@ import { CardProps } from "@/data/definitions";
 
 const oracleYesNo: CardProps = {
   title: "Oracle (Yes/No)",
+  rollable: "d6",
   contentType: "table",
   preContent:
     "When you need to ask a simple question, choose the likelihood and roll 2d6.",
