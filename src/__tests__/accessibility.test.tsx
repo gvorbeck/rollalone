@@ -25,7 +25,9 @@ describe("Accessibility Tests", () => {
   it("images have proper alt text", () => {
     render(<App />);
 
-    const heroImage = screen.getByAltText(/Solo tabletop RPG adventurer with dice, cards, and mystical elements/i);
+    const heroImage = screen.getByAltText(
+      /Solo tabletop RPG adventurer with dice, cards, and mystical elements/i
+    );
     expect(heroImage).toBeInTheDocument();
     expect(heroImage).toHaveAttribute("alt");
   });

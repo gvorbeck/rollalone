@@ -33,7 +33,9 @@ describe("Performance Tests", () => {
   it("hero image loads with proper attributes", () => {
     render(<App />);
 
-    const heroImage = screen.getByAltText(/Solo tabletop RPG adventurer with dice, cards, and mystical elements/i);
+    const heroImage = screen.getByAltText(
+      /Solo tabletop RPG adventurer with dice, cards, and mystical elements/i
+    );
     expect(heroImage).toHaveAttribute("src");
     // Skip loading attribute check as it's not set in test environment
   });
@@ -155,7 +157,9 @@ describe("Performance Tests", () => {
   it("image optimization is implemented", () => {
     render(<App />);
 
-    const heroImage = screen.getByAltText(/Solo tabletop RPG adventurer with dice, cards, and mystical elements/i);
+    const heroImage = screen.getByAltText(
+      /Solo tabletop RPG adventurer with dice, cards, and mystical elements/i
+    );
     const imageSrc = heroImage.getAttribute("src");
 
     // Check that WebP format is used

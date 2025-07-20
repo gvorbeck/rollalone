@@ -41,7 +41,9 @@ describe("Hero Component", () => {
   it("contains hero image", () => {
     render(<Hero />);
 
-    const heroImage = screen.getByAltText(/Solo tabletop RPG adventurer with dice, cards, and mystical elements/i);
+    const heroImage = screen.getByAltText(
+      /Solo tabletop RPG adventurer with dice, cards, and mystical elements/i
+    );
     expect(heroImage).toBeInTheDocument();
     expect(heroImage).toHaveAttribute("src");
   });
@@ -65,7 +67,9 @@ describe("Hero Component", () => {
   it("applies proper accessibility attributes", () => {
     render(<Hero />);
 
-    const image = screen.getByAltText(/Solo tabletop RPG adventurer with dice, cards, and mystical elements/i);
+    const image = screen.getByAltText(
+      /Solo tabletop RPG adventurer with dice, cards, and mystical elements/i
+    );
     expect(image).toBeInTheDocument();
 
     const banner = screen.getByRole("banner");
