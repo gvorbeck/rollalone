@@ -85,7 +85,7 @@ const hexMapper: CardProps = {
     },
     {
       title: "Point of Interest",
-      subtitle: "Roll d6. On a 1, the hex has a point of interest (1d12).",
+      subtitle: "Roll a d6. On a 1, the hex has a point of interest (1d12).",
       rows: [
         ["1-2", "Settlement"],
         ["3-4", "Ruins"],
