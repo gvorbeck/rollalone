@@ -62,12 +62,12 @@ const App: FC = () => {
           `[data-card-title="${cardTitle}"]`
         );
         if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
           // Add highlight animation
           element.classList.add("highlight-animation");
           setTimeout(() => {
             element.classList.remove("highlight-animation");
-          }, 2000);
+          }, 3000);
         }
       }, 100);
     }
