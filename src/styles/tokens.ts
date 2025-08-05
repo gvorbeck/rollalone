@@ -22,7 +22,7 @@ export const DESIGN_TOKENS = {
     container: "min-w-full border-collapse border border-gray-600",
     row: "border-b border-gray-600 hover:bg-gray-700 transition-colors",
     cellBorder: "border-r border-gray-600",
-    headerCell: "font-semibold text-center bg-gray-700 text-white",
+    headerCell: "font-semibold text-center bg-gray-700 text-white whitespace-nowrap",
     regularCell: "text-gray-300",
     title: "text-lg font-medium text-white mb-2",
     subtitle: "text-sm text-gray-400 mb-3",

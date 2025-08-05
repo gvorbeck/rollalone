@@ -32,7 +32,7 @@ const CollapsibleTable: React.FC<CollapsibleTableProps> = ({ table }) => {
                     key={cellIndex}
                     className={`px-4 py-3 ${DESIGN_TOKENS.table.cellBorder} ${
                       cellIndex === 0
-                        ? DESIGN_TOKENS.table.headerCell
+                        ? `${DESIGN_TOKENS.table.headerCell} whitespace-nowrap`
                         : DESIGN_TOKENS.table.regularCell
                     }`}
                   >
@@ -78,7 +78,7 @@ const CollapsibleTable: React.FC<CollapsibleTableProps> = ({ table }) => {
                     key={cellIndex}
                     className={`px-4 py-3 ${DESIGN_TOKENS.table.cellBorder} ${
                       cellIndex === 0
-                        ? DESIGN_TOKENS.table.headerCell
+                        ? `${DESIGN_TOKENS.table.headerCell} whitespace-nowrap`
                         : DESIGN_TOKENS.table.regularCell
                     }`}
                   >

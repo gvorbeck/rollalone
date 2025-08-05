@@ -4,15 +4,17 @@ const hexTravel: CardProps = {
   title: "Hex Travel",
   contentType: "table",
   preContent:
-    "Use this to generate overland exploration. Start by rolling for your first hex. When entering adjacent hexes, roll 3d12 to generate the next Hex.",
+    "Use this to guide your PCs' exploration. Use Movement Points to determine how far they can travel in a day.",
   content: [
     {
-      title: "Danger Level (d6)",
+      title: "Movement Points (MP)",
+      subtitle:
+        "Base Movement Points per day: 12 + Agility/Speed/ETC modifier. Party moves as fast as the slowest member of your party.",
       rows: [
-        ["1", "Safe"],
-        ["2-3", "Unsafe"],
-        ["4-5", "Risky"],
-        ["6", "Deadly"],
+        ["Dense Forest/Mountain/Swamp", "14 MP"],
+        ["Desert/Forest/Hills", "9 MP"],
+        ["Plains/Grassland", "6 MP (base)"],
+        ["Road/River", "Half cost (min 6 MP)"],
       ],
     },
     {
@@ -23,22 +25,6 @@ const hexTravel: CardProps = {
         ["6", "RANDOM EVENT then SET THE SCENE"],
       ],
     },
-    {
-      title: "Travel Time (d6 hours)",
-      rows: [
-        ["Desert/Arctic", "+2 hours (harsh conditions)"],
-        ["Swamp", "+3 hours (difficult terrain)"],
-        ["Grassland", "Base time (easy travel)"],
-        ["Forest/Jungle", "+1 hour (dense vegetation)"],
-        ["River/Coast", "Base time (following paths/shores)"],
-        ["Ocean/Lake", "Special (requires boats/swimming)"],
-        ["Mountain", "+4 hours (steep, treacherous)"],
-      ],
-    },
-  ],
-  postContent: [
-    "*Terrain steps are circular:",
-    "*Desert → Swamp → Grassland → Forest → River → Ocean → Mountain → Desert",
   ],
 };
 

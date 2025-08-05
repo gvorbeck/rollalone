@@ -1,7 +1,7 @@
 import React from "react";
 
 const HexMapperPostContent: React.FC = () => {
-  const hexSideCls = "absolute";
+  const hexSideCls = "absolute font-bold bg-blue-600 px-2 rounded-full";
   return (
     <>
       <p>
@@ -19,11 +19,13 @@ const HexMapperPostContent: React.FC = () => {
           />
         </svg>
         <span className={`${hexSideCls} top-0`}>1</span>
-        <span className={`${hexSideCls} top-11 right-[5.5rem]`}>2</span>
-        <span className={`${hexSideCls} bottom-15 right-[5.5rem]`}>3</span>
+        <span className={`${hexSideCls} top-[3.25rem] right-[5.5rem]`}>2</span>
+        <span className={`${hexSideCls} bottom-[4.5rem] right-[5.5rem]`}>
+          3
+        </span>
         <span className={`${hexSideCls} bottom-4`}>4</span>
-        <span className={`${hexSideCls} bottom-15 left-[5.5rem]`}>5</span>
-        <span className={`${hexSideCls} top-11 left-[5.5rem]`}>6</span>
+        <span className={`${hexSideCls} bottom-[4.5rem] left-[5.5rem]`}>5</span>
+        <span className={`${hexSideCls} top-[3.25rem] left-[5.5rem]`}>6</span>
       </div>
     </>
   );
