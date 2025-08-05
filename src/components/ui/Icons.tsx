@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "@/utils/cn";
 
 // Base icon props
-export interface IconProps {
+interface IconProps {
   className?: string;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
 }
@@ -159,6 +159,19 @@ export const UIIcons = {
     </BaseIcon>
   ),
 
+  ChevronDown: ({ className, size = "md" }: IconProps) => (
+    <BaseIcon className={className} size={size} viewBox="0 0 24 24">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        stroke="currentColor"
+        fill="none"
+        d="M6 9l6 6 6-6"
+      />
+    </BaseIcon>
+  ),
+
   PlayingCard: ({ className, size = "lg" }: IconProps) => (
     <BaseIcon className={className} size={size} viewBox="0 0 24 24">
       {/* Playing card shape */}
@@ -242,6 +255,3 @@ export const UIIcons = {
     </BaseIcon>
   ),
 };
-
-// Export commonly used icons
-export { BaseIcon };

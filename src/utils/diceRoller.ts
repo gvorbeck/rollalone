@@ -1,4 +1,4 @@
-export interface DiceResult {
+interface DiceResult {
   total: number;
   rolls: number[];
   notation: string;

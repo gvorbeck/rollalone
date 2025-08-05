@@ -3,7 +3,7 @@ import { cn } from "@/utils/cn";
 import { createPanelStates } from "@/utils/animations";
 
 // Reusable animated panel component
-export interface AnimatedPanelProps {
+interface AnimatedPanelProps {
   children: ReactNode;
   isOpen: boolean;
   title?: string;

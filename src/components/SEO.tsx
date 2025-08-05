@@ -8,7 +8,7 @@ interface SEOProps {
   ogImage?: string;
 }
 
-export const SEO: React.FC<SEOProps> = ({
+const SEO: React.FC<SEOProps> = ({
   title = "Roll Alone - Solo TTRPG Toolkit | Complete Solo RPG Engine",
   description = "Your complete toolkit for solo tabletop RPG adventures. Features advanced dice roller, oracle systems, generators, and decision-making tools for any TTRPG system. No Game Master required!",
   keywords = "solo RPG, tabletop RPG, TTRPG, dice roller, oracle, solo gaming, RPG tools, game master, solo engine, OPSE",

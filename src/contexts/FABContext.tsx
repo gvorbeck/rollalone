@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 // Types for FAB management
-export type FABType = "toc" | "cardDrawer" | "diceRoller" | null;
+type FABType = "toc" | "cardDrawer" | "diceRoller" | null;
 
 interface FABContextType {
   activeFAB: FABType;

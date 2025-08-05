@@ -2,7 +2,7 @@ import React, { ButtonHTMLAttributes } from "react";
 import { cn } from "@/utils/cn";
 
 // Reusable button component with consistent styling
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "danger" | "ghost";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;

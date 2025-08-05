@@ -7,7 +7,7 @@ import {
 } from "@/utils/animations";
 
 // Base FAB component to eliminate duplication
-export interface FABProps {
+interface FABProps {
   children: ReactNode;
   onClick: () => void;
   title: string;

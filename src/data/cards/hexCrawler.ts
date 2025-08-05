@@ -7,14 +7,16 @@ const hexCrawler: CardProps = {
     "Use this to generate overland exploration. Start by rolling HEX TERRAIN for your first hex. When entering adjacent hexes, use NEW HEX to determine terrain based on your current location.",
   content: [
     {
-      title: "Hex Terrain - Starting/Random (2d6)",
+      title: "Hex Terrain - Starting/Random (1d12)",
+      collapsible: true,
+      defaultCollapsed: true,
       rows: [
-        ["2", "Desert/Arctic"],
-        ["3", "Swamp"],
-        ["4-6", "Grassland"],
-        ["7-8", "Forest/Jungle"],
-        ["9-10", "River/Coast"],
-        ["11", "Ocean/Lake"],
+        ["1", "Desert/Arctic"],
+        ["2", "Swamp"],
+        ["3-5", "Grassland"],
+        ["6-7", "Forest/Jungle"],
+        ["8-9", "River/Coast"],
+        ["10-11", "Ocean/Lake"],
         ["12", "Mountain"],
       ],
     },

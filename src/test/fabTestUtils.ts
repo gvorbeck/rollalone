@@ -1,7 +1,7 @@
 // Consolidated test utilities for FAB (Floating Action Button) components
 import { screen, fireEvent, waitFor } from "@testing-library/react";
 
-export interface FABTestConfig {
+interface FABTestConfig {
   fabName: string;
   panelText: string;
   fabClass?: string;
@@ -124,53 +124,3 @@ export const FAB_CONFIGS = {
     expectedPosition: "44",
   },
 } as const;
-
-// Utility for testing FAB integration patterns
-export const testFABIntegration = {
-  async testMutualExclusion() {
-    const tocFAB = screen.getByRole("button", {
-      name: /open table of contents/i,
-    });
-    const cardDrawerFAB = screen.getByRole("button", {
-      name: /draw playing card/i,
-    });
-    const diceRollerFAB = screen.getByRole("button", {
-      name: /open dice roller/i,
-    });
-
-    // Initially all should be closed
-    expect(tocFAB).toHaveAttribute("aria-expanded", "false");
-
-    // Open table of contents
-    fireEvent.click(tocFAB);
-    expect(tocFAB).toHaveAttribute("aria-expanded", "true");
-
-    // Open card drawer - should close table of contents
-    fireEvent.click(cardDrawerFAB);
-    expect(tocFAB).toHaveAttribute("aria-expanded", "false");
-    expect(screen.getByText("Card Drawer")).toBeInTheDocument();
-
-    // Open dice roller - should close card drawer
-    fireEvent.click(diceRollerFAB);
-    expect(screen.getByText("Quick Dice Roller")).toBeInTheDocument();
-
-    const cardDrawerPanel = screen
-      .getByText("Card Drawer")
-      .closest(".absolute");
-    expect(cardDrawerPanel).toHaveClass("opacity-0", "pointer-events-none");
-  },
-
-  async testToggleBehavior() {
-    const tocFAB = screen.getByRole("button", {
-      name: /open table of contents/i,
-    });
-
-    // Open table of contents
-    fireEvent.click(tocFAB);
-    expect(tocFAB).toHaveAttribute("aria-expanded", "true");
-
-    // Click again to close
-    fireEvent.click(tocFAB);
-    expect(tocFAB).toHaveAttribute("aria-expanded", "false");
-  },
-};

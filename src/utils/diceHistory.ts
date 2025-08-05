@@ -18,14 +18,20 @@ let historyCache: DiceHistoryEntry[] | null = null;
 const getHistory = (): DiceHistoryEntry[] => {
   if (historyCache === null) {
     const stored = loadFromStorage<DiceHistoryEntry[]>(STORAGE_KEY, []);
-    // Convert timestamp strings back to Date objects
-    historyCache = stored.map((entry) => ({
-      ...entry,
-      timestamp:
-        typeof entry.timestamp === "string"
-          ? new Date(entry.timestamp)
-          : entry.timestamp,
-    }));
+
+    // Simple validation - if not array, reset
+    if (!Array.isArray(stored)) {
+      historyCache = [];
+    } else {
+      // Convert timestamp strings back to Date objects
+      historyCache = stored.map((entry) => ({
+        ...entry,
+        timestamp:
+          typeof entry.timestamp === "string"
+            ? new Date(entry.timestamp)
+            : entry.timestamp,
+      }));
+    }
   }
   return historyCache;
 };

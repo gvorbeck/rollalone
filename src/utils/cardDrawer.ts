@@ -16,7 +16,7 @@ export interface CardDrawResult {
   deckReshuffled: boolean;
 }
 
-export interface DeckState {
+interface DeckState {
   availableCards: PlayingCard[];
   drawnCards: PlayingCard[];
   lastDrawn: PlayingCard | null;
@@ -95,7 +95,18 @@ const createFreshDeck = (): DeckState => {
 
 const getState = (): DeckState => {
   if (deckState === null) {
-    deckState = loadFromStorage(STORAGE_KEY, createFreshDeck());
+    const loaded = loadFromStorage(STORAGE_KEY, createFreshDeck());
+
+    // Simple validation - if arrays don't exist, create fresh deck
+    if (
+      !loaded ||
+      !Array.isArray(loaded.availableCards) ||
+      !Array.isArray(loaded.drawnCards)
+    ) {
+      deckState = createFreshDeck();
+    } else {
+      deckState = loaded;
+    }
   }
   return deckState;
 };
@@ -159,11 +170,12 @@ export const cardDrawer = {
     shuffleCount: number;
   } {
     const state = getState();
+
     return {
-      remainingCards: state.availableCards.length,
-      drawnCards: state.drawnCards.length,
-      lastDrawn: state.lastDrawn,
-      shuffleCount: state.shuffleCount,
+      remainingCards: state.availableCards?.length || 0,
+      drawnCards: state.drawnCards?.length || 0,
+      lastDrawn: state.lastDrawn || null,
+      shuffleCount: state.shuffleCount || 0,
     };
   },
 

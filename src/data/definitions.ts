@@ -11,4 +11,6 @@ export interface CardProps {
 export interface TableData {
   title?: string;
   rows: string[][];
+  collapsible?: boolean;
+  defaultCollapsed?: boolean;
 }

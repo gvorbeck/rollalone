@@ -111,9 +111,7 @@ const INTERNAL_LINK_TERMS = [
  * @param text - The text to parse for internal links
  * @returns Array of React elements with clickable internal links
  */
-export const parseInternalLinks = (
-  text: string
-): (string | React.ReactElement)[] => {
+const parseInternalLinks = (text: string): (string | React.ReactElement)[] => {
   const result: (string | React.ReactElement)[] = [];
   let remaining = text;
   let elementKey = 0;
