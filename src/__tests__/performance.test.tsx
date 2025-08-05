@@ -135,9 +135,18 @@ describe("Performance Tests", () => {
     // This is more of a build-time test, but we can check for efficient imports
     render(<App />);
 
-    // Check that components are using tree-shaking friendly imports
-    // This would typically be validated by build tools
-    expect(screen.getAllByRole("main")).toHaveLength(18); // Updated to reflect current card count
+    // Check that we have exactly one main content area (proper semantic HTML)
+    const mainElements = screen.getAllByRole("main");
+    expect(mainElements).toHaveLength(1);
+    expect(mainElements[0]).toHaveAttribute("id", "main-content");
+    
+    // Check that the tabbed interface is loaded efficiently
+    const tabButtons = screen.getAllByRole("tab");
+    expect(tabButtons.length).toBeGreaterThan(0);
+    
+    // Verify the masonry layout is present (efficient rendering pattern)
+    const masonryContainer = document.querySelector('.masonry-container');
+    expect(masonryContainer || document.querySelector('[class*="masonry"]')).toBeTruthy();
   });
 
   it("animations are hardware accelerated", () => {

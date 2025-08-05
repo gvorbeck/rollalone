@@ -82,7 +82,7 @@ const Card: React.FC<CardProps> = ({
           </div>
         )}
       </header>
-      <main>{renderContent()}</main>
+      <div>{renderContent()}</div>
       {postContent && (
         <footer>
           <CardContentPostContent postContent={postContent} />

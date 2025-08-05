@@ -2,6 +2,7 @@ import { FC } from "react";
 import Hero from "@/components/Hero";
 import Card from "@/components/Card";
 import Masonry from "@/components/Masonry";
+import Tabs, { TabItem } from "@/components/Tabs";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import DiceRoller from "@/components/DiceRoller";
 import CardDrawer from "@/components/CardDrawer";
@@ -13,44 +14,86 @@ import { CardProps } from "@/data/definitions";
 // Import all cards from centralized index
 import * as cards from "@/data/cards";
 
-// Flatten all cards into a single array for masonry layout
-const allCards: CardProps[] = [
-  // Core Gameplay
+// Organize cards into categories
+const infoCards: CardProps[] = [
   cards.howToPlay,
+  cards.randomEvents,
+  cards.gameplayTips,
+  cards.playingCards,
+  cards.acknowledgements,
+  cards.advancedMoves,
+];
+
+const oracleCards: CardProps[] = [
   cards.oracleYesNo,
   cards.oracleHow,
   cards.setTheScene,
   cards.gmMoves,
-  cards.randomEvents,
   cards.oracleFocus,
+];
 
-  // Generators & Tools
-  cards.plotHookGenerator,
+const travelMapCards: CardProps[] = [
+  cards.hexTravel,
+  cards.hexMapper,
+  cards.dungeonCrawler,
+];
+
+const generatorCards: CardProps[] = [
   cards.npcGenerator,
   cards.genericGenerator,
-  cards.dungeonCrawler,
-  cards.hexMapper,
-  cards.hexTravel,
-  cards.advancedMoves,
-
-  // Information & Credits
-  cards.gameplayTips,
-  cards.playingCards,
-  cards.acknowledgements,
+  cards.plotHookGenerator,
 ];
 
 const App: FC = () => {
-  const cardElements = allCards.map((card, index) => (
-    <Card
-      key={`card-${index}`}
-      title={card.title}
-      contentType={card.contentType}
-      content={card.content}
-      preContent={card.preContent}
-      postContent={card.postContent}
-      rollable={card.rollable}
-    />
-  ));
+  // Helper function to create card elements from card data
+  const createCardElements = (cardList: CardProps[]) =>
+    cardList.map((card, index) => (
+      <Card
+        key={`card-${index}`}
+        title={card.title}
+        contentType={card.contentType}
+        content={card.content}
+        preContent={card.preContent}
+        postContent={card.postContent}
+        rollable={card.rollable}
+      />
+    ));
+
+  // Create tab items with masonry layouts
+  const tabItems: TabItem[] = [
+    {
+      id: "info",
+      label: "Info",
+      content: (
+        <Masonry className="w-full">{createCardElements(infoCards)}</Masonry>
+      ),
+    },
+    {
+      id: "oracles",
+      label: "Oracles",
+      content: (
+        <Masonry className="w-full">{createCardElements(oracleCards)}</Masonry>
+      ),
+    },
+    {
+      id: "travel-maps",
+      label: "Travel/Maps",
+      content: (
+        <Masonry className="w-full">
+          {createCardElements(travelMapCards)}
+        </Masonry>
+      ),
+    },
+    {
+      id: "generators",
+      label: "Generators",
+      content: (
+        <Masonry className="w-full">
+          {createCardElements(generatorCards)}
+        </Masonry>
+      ),
+    },
+  ];
 
   return (
     <ErrorBoundary>
@@ -74,7 +117,7 @@ const App: FC = () => {
           >
             <h1 className="sr-only">Roll Alone - Solo Tabletop RPG Toolkit</h1>
             <section aria-label="RPG toolkit cards">
-              <Masonry className="w-full">{cardElements}</Masonry>
+              <Tabs items={tabItems} defaultTab="info" />
             </section>
           </main>
           <nav
