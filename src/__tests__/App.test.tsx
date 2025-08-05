@@ -70,6 +70,11 @@ vi.mock("@/data/cards", () => ({
     contentType: "text",
     content: "Hex exploration",
   },
+  hexTravel: {
+    title: "Hex Travel",
+    contentType: "text",
+    content: "Travel through hexes",
+  },
   advancedMoves: {
     title: "Advanced GM Moves",
     contentType: "text",
@@ -79,11 +84,6 @@ vi.mock("@/data/cards", () => ({
     title: "Gameplay Tips & Interpretation",
     contentType: "text",
     content: "Tips for gameplay",
-  },
-  cardSystemNotes: {
-    title: "Using Playing Cards",
-    contentType: "text",
-    content: "Card system notes",
   },
   acknowledgements: {
     title: "Acknowledgements & Credits",

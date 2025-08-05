@@ -17,7 +17,6 @@ import * as cards from "@/data/cards";
 const allCards: CardProps[] = [
   // Core Gameplay
   cards.howToPlay,
-  cards.playingCards,
   cards.oracleYesNo,
   cards.oracleHow,
   cards.setTheScene,
@@ -31,11 +30,12 @@ const allCards: CardProps[] = [
   cards.genericGenerator,
   cards.dungeonCrawler,
   cards.hexMapper,
+  cards.hexTravel,
   cards.advancedMoves,
 
   // Information & Credits
   cards.gameplayTips,
-  cards.cardSystemNotes,
+  cards.playingCards,
   cards.acknowledgements,
 ];
 

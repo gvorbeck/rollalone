@@ -1,7 +1,7 @@
 import { CardProps } from "@/data/definitions";
 
 const hexTravel: CardProps = {
-  title: "Hex Mapper",
+  title: "Hex Travel",
   contentType: "table",
   preContent:
     "Use this to generate overland exploration. Start by rolling for your first hex. When entering adjacent hexes, roll 3d12 to generate the next Hex.",

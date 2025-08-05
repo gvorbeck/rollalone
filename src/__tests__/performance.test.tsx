@@ -137,7 +137,7 @@ describe("Performance Tests", () => {
 
     // Check that components are using tree-shaking friendly imports
     // This would typically be validated by build tools
-    expect(screen.getAllByRole("main")).toHaveLength(18); // Adjusted to expect multiple main elements
+    expect(screen.getAllByRole("main")).toHaveLength(18); // Updated to reflect current card count
   });
 
   it("animations are hardware accelerated", () => {
