@@ -41,29 +41,47 @@ const Tabs: FC<TabsProps> = ({
   return (
     <div className={cn("w-full", className)}>
       {/* Tab Navigation */}
-      <div className="border-b border-gray-700 mb-6">
-        <nav className="flex space-x-8" aria-label="Card categories">
+      <div className="mb-8">
+        <nav
+          className="flex flex-wrap gap-2 sm:gap-3 justify-center sm:justify-start"
+          aria-label="Card categories"
+        >
           {items.map((item) => (
             <button
               key={item.id}
               onClick={() => handleTabChange(item.id)}
               className={cn(
-                "py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200",
+                "relative px-6 py-3 sm:px-8 sm:py-4 rounded-xl text-lg sm:text-md",
+                "transition-all duration-300 ease-out transform hover:scale-105",
+                "shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-red-500/50",
+                "border-2 backdrop-blur-sm",
                 activeTab === item.id
-                  ? "border-red-500 text-red-400"
-                  : "border-transparent text-gray-400 hover:text-gray-300 hover:border-gray-600"
+                  ? "bg-gradient-to-r from-red-600 to-red-500 text-white border-red-400 shadow-red-500/25"
+                  : "bg-gradient-to-r from-gray-800/80 to-gray-700/80 text-gray-300 border-gray-600 hover:from-gray-700/90 hover:to-gray-600/90 hover:text-white hover:border-gray-500"
               )}
               aria-selected={activeTab === item.id}
               role="tab"
             >
-              {item.label}
+              {/* Active tab indicator */}
+              {activeTab === item.id && (
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-red-600/20 to-red-500/20 animate-pulse" />
+              )}
+
+              {/* Tab icon based on category */}
+              <span className="relative flex items-center gap-2">
+                {item.label}
+              </span>
             </button>
           ))}
         </nav>
       </div>
 
       {/* Tab Content */}
-      <div role="tabpanel" aria-labelledby={`tab-${activeTab}`}>
+      <div
+        role="tabpanel"
+        aria-labelledby={`tab-${activeTab}`}
+        className="animate-fade-in"
+      >
         {activeContent}
       </div>
     </div>
