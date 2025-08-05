@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TableData } from "@/data/definitions";
 import { DESIGN_TOKENS } from "@/styles/tokens";
 import { UIIcons } from "@/components/ui/Icons";
+import { parseMarkdownBold } from "@/utils/textFormatting";
 
 interface CollapsibleTableProps {
   table: TableData;
@@ -32,7 +33,7 @@ const CollapsibleTable: React.FC<CollapsibleTableProps> = ({ table }) => {
                         : DESIGN_TOKENS.table.regularCell
                     }`}
                   >
-                    {cell}
+                    {parseMarkdownBold(cell)}
                   </td>
                 ))}
               </tr>
@@ -78,7 +79,7 @@ const CollapsibleTable: React.FC<CollapsibleTableProps> = ({ table }) => {
                         : DESIGN_TOKENS.table.regularCell
                     }`}
                   >
-                    {cell}
+                    {parseMarkdownBold(cell)}
                   </td>
                 ))}
               </tr>
