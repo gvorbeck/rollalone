@@ -1,4 +1,5 @@
 import { CardProps } from "@/data/definitions";
+import HexMapperPostContent from "@/components/content/HexMapperPostContent";
 
 const hexMapper: CardProps = {
   title: "Hex Mapper",
@@ -97,6 +98,7 @@ const hexMapper: CardProps = {
       ],
     },
   ],
+  postContent: [HexMapperPostContent],
 };
 
 export default hexMapper;
