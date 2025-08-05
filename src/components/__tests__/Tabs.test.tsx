@@ -70,15 +70,35 @@ describe("Tabs", () => {
     const tab2Button = tabButtons[1]; // Second tab (Tab 2)
 
     // Tab 1 should be active initially (has gradient red background and white text)
-    expect(tab1Button).toHaveClass("from-red-600", "to-red-500", "text-white", "border-red-400");
-    expect(tab2Button).toHaveClass("from-gray-800/80", "to-gray-700/80", "text-gray-300", "border-gray-600");
+    expect(tab1Button).toHaveClass(
+      "from-red-600",
+      "to-red-500",
+      "text-white",
+      "border-red-400"
+    );
+    expect(tab2Button).toHaveClass(
+      "from-gray-800/80",
+      "to-gray-700/80",
+      "text-gray-300",
+      "border-gray-600"
+    );
 
     // Click Tab 2
     fireEvent.click(tab2Button);
 
     // Tab 2 should now be active
-    expect(tab1Button).toHaveClass("from-gray-800/80", "to-gray-700/80", "text-gray-300", "border-gray-600");
-    expect(tab2Button).toHaveClass("from-red-600", "to-red-500", "text-white", "border-red-400");
+    expect(tab1Button).toHaveClass(
+      "from-gray-800/80",
+      "to-gray-700/80",
+      "text-gray-300",
+      "border-gray-600"
+    );
+    expect(tab2Button).toHaveClass(
+      "from-red-600",
+      "to-red-500",
+      "text-white",
+      "border-red-400"
+    );
   });
 
   it("has proper accessibility attributes", () => {
