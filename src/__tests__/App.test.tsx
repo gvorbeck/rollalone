@@ -65,8 +65,8 @@ vi.mock("@/data/cards", () => ({
     contentType: "text",
     content: "Dungeon exploration",
   },
-  hexCrawler: {
-    title: "Hex Crawler",
+  hexMapper: {
+    title: "Hex Mapper",
     contentType: "text",
     content: "Hex exploration",
   },

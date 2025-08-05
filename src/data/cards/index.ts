@@ -16,7 +16,8 @@ export { default as plotHookGenerator } from "./plotHookGenerator";
 export { default as npcGenerator } from "./npcGenerator";
 export { default as genericGenerator } from "./genericGenerator";
 export { default as dungeonCrawler } from "./dungeonCrawler";
-export { default as hexCrawler } from "./hexCrawler";
+export { default as hexMapper } from "./hexMapper";
+export { default as hexTravel } from "./hexTravel";
 export { default as advancedMoves } from "./advancedMoves";
 
 // Row 3: Information & Credits

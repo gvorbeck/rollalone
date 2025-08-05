@@ -24,7 +24,8 @@ export const DESIGN_TOKENS = {
     cellBorder: "border-r border-gray-600",
     headerCell: "font-semibold text-center bg-gray-700 text-white",
     regularCell: "text-gray-300",
-    title: "text-lg font-medium text-white mb-3",
+    title: "text-lg font-medium text-white mb-2",
+    subtitle: "text-sm text-gray-400 mb-3",
   },
 
   // Post content (note) styling

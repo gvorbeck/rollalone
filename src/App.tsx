@@ -30,7 +30,7 @@ const allCards: CardProps[] = [
   cards.npcGenerator,
   cards.genericGenerator,
   cards.dungeonCrawler,
-  cards.hexCrawler,
+  cards.hexMapper,
   cards.advancedMoves,
 
   // Information & Credits

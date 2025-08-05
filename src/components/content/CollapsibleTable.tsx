@@ -20,6 +20,9 @@ const CollapsibleTable: React.FC<CollapsibleTableProps> = ({ table }) => {
         {table.title && (
           <h3 className={DESIGN_TOKENS.table.title}>{table.title}</h3>
         )}
+        {table.subtitle && (
+          <h4 className={DESIGN_TOKENS.table.subtitle}>{table.subtitle}</h4>
+        )}
         <table className={DESIGN_TOKENS.table.container}>
           <tbody>
             {table.rows.map((row, rowIndex) => (
