@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState, useCallback } from "react";
 import Hero from "@/components/Hero";
 import Card from "@/components/Card";
 import Masonry from "@/components/Masonry";
@@ -10,6 +10,7 @@ import TableOfContents from "@/components/TableOfContents";
 import SEO from "@/components/SEO";
 import { FABProvider } from "@/contexts/FABContext";
 import { CardProps } from "@/data/definitions";
+import { cardToTabMap } from "@/utils/navigation";
 
 // Import all cards from centralized index
 import * as cards from "@/data/cards";
@@ -45,18 +46,46 @@ const generatorCards: CardProps[] = [
 ];
 
 const App: FC = () => {
+  const [activeTab, setActiveTab] = useState<string>("info");
+
+  const handleTabChange = useCallback((tabId: string) => {
+    setActiveTab(tabId);
+  }, []);
+
+  const handleNavigateToCard = useCallback((cardTitle: string) => {
+    const tabId = cardToTabMap[cardTitle];
+    if (tabId) {
+      setActiveTab(tabId);
+      // Small delay to ensure tab content is rendered before scrolling
+      setTimeout(() => {
+        const element = document.querySelector(
+          `[data-card-title="${cardTitle}"]`
+        );
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
+          // Add highlight animation
+          element.classList.add("highlight-animation");
+          setTimeout(() => {
+            element.classList.remove("highlight-animation");
+          }, 2000);
+        }
+      }, 100);
+    }
+  }, []);
+
   // Helper function to create card elements from card data
   const createCardElements = (cardList: CardProps[]) =>
     cardList.map((card, index) => (
-      <Card
-        key={`card-${index}`}
-        title={card.title}
-        contentType={card.contentType}
-        content={card.content}
-        preContent={card.preContent}
-        postContent={card.postContent}
-        rollable={card.rollable}
-      />
+      <div key={`card-${index}`} data-card-title={card.title}>
+        <Card
+          title={card.title}
+          contentType={card.contentType}
+          content={card.content}
+          preContent={card.preContent}
+          postContent={card.postContent}
+          rollable={card.rollable}
+        />
+      </div>
     ));
 
   // Create tab items with masonry layouts
@@ -117,14 +146,19 @@ const App: FC = () => {
           >
             <h1 className="sr-only">Roll Alone - Solo Tabletop RPG Toolkit</h1>
             <section aria-label="RPG toolkit cards">
-              <Tabs items={tabItems} defaultTab="info" />
+              <Tabs
+                items={tabItems}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+                defaultTab="info"
+              />
             </section>
           </main>
           <nav
             className="fixed bottom-4 right-4 flex gap-2 sm:gap-4 z-50 fab-container"
             aria-label="Floating action buttons"
           >
-            <TableOfContents />
+            <TableOfContents onNavigateToCard={handleNavigateToCard} />
             <CardDrawer />
             <DiceRoller />
           </nav>

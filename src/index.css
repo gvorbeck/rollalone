@@ -98,6 +98,26 @@
   }
 }
 
+/* Highlight animation for ToC navigation */
+@keyframes highlight {
+  0% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+  50% {
+    background-color: rgb(239 68 68 / 0.15);
+    transform: scale(1.02);
+  }
+  100% {
+    background-color: transparent;
+    transform: scale(1);
+  }
+}
+
+.highlight-animation {
+  animation: highlight 2s ease-in-out;
+}
+
 /* Custom Scrollbar Styles */
 /* For Webkit browsers (Chrome, Safari, Edge) */
 .custom-scrollbar::-webkit-scrollbar {

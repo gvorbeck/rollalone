@@ -1,74 +1,71 @@
 import React from "react";
-import { scrollToCard } from "@/utils/scrollToCard";
 import { useFAB } from "@/contexts/FABContext";
 import { FAB } from "@/components/ui/FAB";
 import { Button } from "@/components/ui/Button";
 import { AnimatedPanel } from "@/components/ui/AnimatedPanel";
 import { UIIcons } from "@/components/ui/Icons";
 
-// Table of Contents data - organized by logical sections
+// Table of Contents data - organized by the same tab structure as the main app
 const TOC_SECTIONS = [
   {
-    title: "Core Gameplay",
+    title: "Info",
     cards: [
       { title: "How to Play", id: "How to Play" },
-      { title: "Using Playing Cards", id: "Using Playing Cards" },
-      { title: "Quick Reference", id: "Quick Reference" },
-      {
-        title: "Gameplay Tips & Interpretation",
-        id: "Gameplay Tips & Interpretation",
-      },
-    ],
-  },
-  {
-    title: "Oracles & Decisions",
-    cards: [
-      { title: "Oracle (Yes/No)", id: "Oracle (Yes/No)" },
-      { title: "Oracle (How)", id: "Oracle (How)" },
-      { title: "Oracle (Focus)", id: "Oracle (Focus)" },
-    ],
-  },
-  {
-    title: "Scene & Story",
-    cards: [
-      { title: "Set the Scene", id: "Set the Scene" },
-      { title: "Plot Hook Generator", id: "Plot Hook Generator" },
       {
         title: "Random Events & Complex Questions",
         id: "Random Events & Complex Questions",
       },
-      { title: "GM Moves", id: "GM Moves" },
-    ],
-  },
-  {
-    title: "Characters & Generators",
-    cards: [
-      { title: "NPC Generator", id: "NPC Generator" },
-      { title: "Generic Generator", id: "Generic Generator" },
+      {
+        title: "Gameplay Tips & Interpretation",
+        id: "Gameplay Tips & Interpretation",
+      },
+      { title: "Using Playing Cards", id: "Using Playing Cards" },
+      { title: "Acknowledgements & Credits", id: "Acknowledgements & Credits" },
       { title: "Advanced GM Moves", id: "Advanced GM Moves" },
     ],
   },
   {
-    title: "Exploration",
+    title: "Oracles",
     cards: [
-      { title: "Dungeon Crawler", id: "Dungeon Crawler" },
-      { title: "Hex Crawler", id: "Hex Crawler" },
+      { title: "Oracle (Yes/No)", id: "Oracle (Yes/No)" },
+      { title: "Oracle (How)", id: "Oracle (How)" },
+      { title: "Set the Scene", id: "Set the Scene" },
+      { title: "GM Moves", id: "GM Moves" },
+      { title: "Oracle (Focus)", id: "Oracle (Focus)" },
     ],
   },
   {
-    title: "Information",
+    title: "Travel/Maps",
     cards: [
-      { title: "Acknowledgements & Credits", id: "Acknowledgements & Credits" },
+      { title: "Hex Crawler", id: "Hex Crawler" },
+      { title: "Hex Mapper", id: "Hex Mapper" },
+      { title: "Dungeon Crawler", id: "Dungeon Crawler" },
+    ],
+  },
+  {
+    title: "Generators",
+    cards: [
+      { title: "NPC Generator", id: "NPC Generator" },
+      { title: "Generic Generator", id: "Generic Generator" },
+      { title: "Plot Hook Generator", id: "Plot Hook Generator" },
     ],
   },
 ] as const;
 
-const TableOfContents: React.FC = () => {
+interface TableOfContentsProps {
+  onNavigateToCard?: (cardTitle: string) => void;
+}
+
+const TableOfContents: React.FC<TableOfContentsProps> = ({
+  onNavigateToCard,
+}) => {
   const { activeFAB, toggleFAB } = useFAB();
   const isOpen = activeFAB === "toc";
 
   const handleCardClick = (cardId: string) => {
-    scrollToCard(cardId);
+    if (onNavigateToCard) {
+      onNavigateToCard(cardId);
+    }
     toggleFAB("toc"); // Close TOC after navigation
   };
 

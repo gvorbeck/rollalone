@@ -10,11 +10,31 @@ export interface TabItem {
 interface TabsProps {
   items: TabItem[];
   defaultTab?: string;
+  activeTab?: string; // Controlled active tab
+  onTabChange?: (tabId: string) => void; // Callback when tab changes
   className?: string;
 }
 
-const Tabs: FC<TabsProps> = ({ items, defaultTab, className }) => {
-  const [activeTab, setActiveTab] = useState(defaultTab || items[0]?.id);
+const Tabs: FC<TabsProps> = ({
+  items,
+  defaultTab,
+  activeTab: controlledActiveTab,
+  onTabChange,
+  className,
+}) => {
+  const [internalActiveTab, setInternalActiveTab] = useState(
+    defaultTab || items[0]?.id
+  );
+
+  // Use controlled active tab if provided, otherwise use internal state
+  const activeTab = controlledActiveTab ?? internalActiveTab;
+
+  const handleTabChange = (tabId: string) => {
+    if (controlledActiveTab === undefined) {
+      setInternalActiveTab(tabId);
+    }
+    onTabChange?.(tabId);
+  };
 
   const activeContent = items.find((item) => item.id === activeTab)?.content;
 
@@ -26,7 +46,7 @@ const Tabs: FC<TabsProps> = ({ items, defaultTab, className }) => {
           {items.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => handleTabChange(item.id)}
               className={cn(
                 "py-2 px-1 border-b-2 font-medium text-sm transition-colors duration-200",
                 activeTab === item.id

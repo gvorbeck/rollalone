@@ -7,16 +7,9 @@ import { createLocalStorageMock } from "@/test/mockUtils";
 // Mock localStorage
 createLocalStorageMock();
 
-// Mock the scrollToCard utility
-vi.mock("@/utils/scrollToCard", () => ({
-  scrollToCard: vi.fn(),
-}));
-
-import { scrollToCard } from "@/utils/scrollToCard";
-const mockScrollToCard = vi.mocked(scrollToCard);
-
 describe("TableOfContents Component", () => {
   let fabHelper: FABTestHelper;
+  const mockOnNavigateToCard = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -24,57 +17,62 @@ describe("TableOfContents Component", () => {
   });
 
   it("renders floating action button", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
     await fabHelper.testFABRender();
   });
 
   it("opens and closes navigation panel", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
     await fabHelper.testPanelOpenClose();
   });
 
   it("displays all navigation sections", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
 
     await waitFor(() => {
-      expect(screen.getByText("Core Gameplay")).toBeInTheDocument();
-      expect(screen.getByText("Oracles & Decisions")).toBeInTheDocument();
-      expect(screen.getByText("Scene & Story")).toBeInTheDocument();
-      expect(screen.getByText("Characters & Generators")).toBeInTheDocument();
-      expect(screen.getByText("Exploration")).toBeInTheDocument();
-      expect(screen.getByText("Information")).toBeInTheDocument();
+      expect(screen.getByText("Info")).toBeInTheDocument();
+      expect(screen.getByText("Oracles")).toBeInTheDocument();
+      expect(screen.getByText("Travel/Maps")).toBeInTheDocument();
+      expect(screen.getByText("Generators")).toBeInTheDocument();
     });
   });
 
   it("displays cards within each section", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
 
     await waitFor(() => {
-      // Core Gameplay section
+      // Info section
       expect(screen.getByText("How to Play")).toBeInTheDocument();
       expect(screen.getByText("Using Playing Cards")).toBeInTheDocument();
-      expect(screen.getByText("Quick Reference")).toBeInTheDocument();
+      expect(
+        screen.getByText("Random Events & Complex Questions")
+      ).toBeInTheDocument();
 
-      // Oracles & Decisions section
+      // Oracles section
       expect(screen.getByText("Oracle (Yes/No)")).toBeInTheDocument();
       expect(screen.getByText("Oracle (How)")).toBeInTheDocument();
       expect(screen.getByText("Oracle (Focus)")).toBeInTheDocument();
 
-      // Scene & Story section
-      expect(screen.getByText("Set the Scene")).toBeInTheDocument();
+      // Travel/Maps section
+      expect(screen.getByText("Hex Crawler")).toBeInTheDocument();
+      expect(screen.getByText("Hex Mapper")).toBeInTheDocument();
+      expect(screen.getByText("Dungeon Crawler")).toBeInTheDocument();
+
+      // Generators section
+      expect(screen.getByText("NPC Generator")).toBeInTheDocument();
+      expect(screen.getByText("Generic Generator")).toBeInTheDocument();
       expect(screen.getByText("Plot Hook Generator")).toBeInTheDocument();
-      expect(screen.getByText("GM Moves")).toBeInTheDocument();
     });
   });
 
   it("navigates to card when clicked", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
@@ -89,11 +87,11 @@ describe("TableOfContents Component", () => {
       fireEvent.click(cardButton);
     });
 
-    expect(mockScrollToCard).toHaveBeenCalledWith("How to Play");
+    expect(mockOnNavigateToCard).toHaveBeenCalledWith("How to Play");
   });
 
   it("closes panel after navigation", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
@@ -119,7 +117,7 @@ describe("TableOfContents Component", () => {
   });
 
   it("has proper accessibility attributes", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     expect(fab).toHaveAttribute("aria-expanded", "false");
@@ -135,7 +133,7 @@ describe("TableOfContents Component", () => {
   });
 
   it("shows correct number of cards in each section", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
@@ -146,25 +144,32 @@ describe("TableOfContents Component", () => {
     });
 
     await waitFor(() => {
-      // Count buttons in Core Gameplay section (4 cards)
-      const coreGameplaySection = screen
-        .getByText("Core Gameplay")
-        .closest("section");
-      const coreGameplayButtons =
-        coreGameplaySection?.querySelectorAll("button");
-      expect(coreGameplayButtons).toHaveLength(4);
+      // Count buttons in Info section (6 cards)
+      const infoSection = screen.getByText("Info").closest("section");
+      const infoButtons = infoSection?.querySelectorAll("button");
+      expect(infoButtons).toHaveLength(6);
 
-      // Count buttons in Oracles & Decisions section (3 cards)
-      const oracleSection = screen
-        .getByText("Oracles & Decisions")
-        .closest("section");
+      // Count buttons in Oracles section (5 cards)
+      const oracleSection = screen.getByText("Oracles").closest("section");
       const oracleButtons = oracleSection?.querySelectorAll("button");
-      expect(oracleButtons).toHaveLength(3);
+      expect(oracleButtons).toHaveLength(5);
+
+      // Count buttons in Travel/Maps section (3 cards)
+      const travelSection = screen.getByText("Travel/Maps").closest("section");
+      const travelButtons = travelSection?.querySelectorAll("button");
+      expect(travelButtons).toHaveLength(3);
+
+      // Count buttons in Generators section (3 cards)
+      const generatorsSection = screen
+        .getByText("Generators")
+        .closest("section");
+      const generatorsButtons = generatorsSection?.querySelectorAll("button");
+      expect(generatorsButtons).toHaveLength(3);
     });
   });
 
   it("handles navigation interactions", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab); // Use click instead of keyDown for simplicity
@@ -181,11 +186,11 @@ describe("TableOfContents Component", () => {
     const firstCardButton = screen.getByText("How to Play");
     fireEvent.click(firstCardButton); // Use click instead of keyDown
 
-    expect(mockScrollToCard).toHaveBeenCalledWith("How to Play");
+    expect(mockOnNavigateToCard).toHaveBeenCalledWith("How to Play");
   });
 
   it("positions FAB correctly relative to dice roller", () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     // With the new flex container layout, we just verify the FAB is present
     const fab = screen.getByRole("button", { name: /open table of contents/i });
@@ -193,7 +198,7 @@ describe("TableOfContents Component", () => {
   });
 
   it("applies smooth animations", async () => {
-    render(<TableOfContents />);
+    render(<TableOfContents onNavigateToCard={mockOnNavigateToCard} />);
 
     const fab = screen.getByRole("button", { name: /open table of contents/i });
     fireEvent.click(fab);
