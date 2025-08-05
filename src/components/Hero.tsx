@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
     >
       {/* Hero Image Container */}
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 min-h-[70vh] items-center gap-8 px-4 py-16 lg:py-24">
+        <div className="grid lg:grid-cols-2 min-h-[70vh] items-center gap-8 px-4 pt-16">
           {/* Left Column - Text Content */}
           <div className="space-y-8 text-center lg:text-left order-2 lg:order-1">
             <div className="space-y-4">
